@@ -1,0 +1,327 @@
+/* ---- Design tokens ---- */
+:root {
+  --indigo: #4f46e5;
+  --indigo-dark: #4338ca;
+  --indigo-soft: #eef2ff;
+  --green: #16a34a;
+  --green-soft: #dcfce7;
+  --red: #dc2626;
+  --red-soft: #fee2e2;
+  --amber-soft: #fef3c7;
+  --amber-text: #92400e;
+  --ink: #1e293b;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --card-bg: #ffffff;
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(30, 41, 59, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: linear-gradient(160deg, #eef2ff 0%, #e0f2fe 50%, #f0fdfa 100%);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+.app {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+
+/* ---- Header ---- */
+.app-header { text-align: center; margin-bottom: 24px; }
+.app-header h1 { margin: 0; font-size: 2rem; color: var(--indigo-dark); }
+.tagline { margin: 4px 0 0; color: var(--muted); }
+.userbar { margin: 8px 0 0; font-size: 0.85rem; color: var(--muted); }
+
+/* Text-style button (log out, switch login/register). */
+.link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--indigo);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.auth-switch { margin-top: 16px; font-size: 0.9rem; color: var(--muted); text-align: center; }
+
+/* ---- Cards ---- */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px;
+}
+.card h2 { margin-top: 0; }
+.card.center { text-align: center; }
+
+/* ---- Banners ---- */
+.banner { padding: 12px 16px; border-radius: 12px; margin-bottom: 16px; }
+.banner-error { background: var(--red-soft); color: var(--red); }
+
+/* ---- Start screen ---- */
+.field-label { font-weight: 600; margin: 18px 0 8px; display: block; }
+.text-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.text-input:focus { border-color: var(--indigo); box-shadow: 0 0 0 3px var(--indigo-soft); }
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.topic-btn {
+  padding: 14px;
+  font-size: 0.95rem;
+  text-align: left;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.topic-btn:hover { border-color: var(--indigo); }
+.topic-btn.selected { border-color: var(--indigo); background: var(--indigo-soft); font-weight: 600; }
+
+/* Topic suggestion chips (Phase 3: topic is a free-text input). */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0 4px; }
+.chips-label { font-size: 0.85rem; color: var(--muted); }
+.chip {
+  background: var(--indigo-soft);
+  color: var(--indigo-dark);
+  border: none;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.chip:hover { background: #e0e7ff; }
+
+/* Grade selector — reuses the topic-button look, centred, four across. */
+.grade-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.grade-btn {
+  padding: 12px;
+  font-size: 0.95rem;
+  text-align: center;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.grade-btn:hover { border-color: var(--indigo); }
+.grade-btn.selected { border-color: var(--indigo); background: var(--indigo-soft); font-weight: 600; }
+
+/* "Based on: ... textbook" provenance line shown under a grounded story. */
+.sources {
+  margin: -10px 0 18px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ---- Buttons ---- */
+.primary-btn {
+  margin-top: 22px;
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--indigo);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.05s;
+}
+.primary-btn:hover:not(:disabled) { background: var(--indigo-dark); }
+.primary-btn:active:not(:disabled) { transform: translateY(1px); }
+.primary-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ---- Status bar ---- */
+.status-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.pill {
+  background: #f1f5f9;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.pill-points { background: var(--amber-soft); color: var(--amber-text); }
+
+/* difficulty dots */
+.dots { display: inline-flex; gap: 4px; margin-left: 4px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: #cbd5e1; }
+.dot.filled { background: var(--indigo); }
+
+/* ---- Story + question ---- */
+.segment {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  background: #f8fafc;
+  border-left: 4px solid var(--indigo);
+  padding: 16px 18px;
+  border-radius: 0 12px 12px 0;
+  margin: 0 0 22px;
+}
+.question { font-size: 1.15rem; margin: 0 0 14px; }
+
+/* Chapter (Phase 2): a title + a block of paragraphs, then per-question blocks. */
+.chapter-title { margin: 0 0 14px; font-size: 1.4rem; color: var(--indigo-dark); }
+.story {
+  background: #f8fafc;
+  border-left: 4px solid var(--indigo);
+  padding: 16px 18px;
+  border-radius: 0 12px 12px 0;
+  margin: 0 0 18px;
+}
+.story p { margin: 0 0 12px; line-height: 1.7; font-size: 1.02rem; }
+.story p:last-child { margin-bottom: 0; }
+.question-block { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border); }
+.chapter-done { margin-top: 22px; text-align: center; }
+
+/* "Finish & see results" — end a story early (Phase: finish-early). */
+.finish-early { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); text-align: center; }
+
+/* ---- Options ---- */
+.options { display: flex; flex-direction: column; gap: 10px; }
+.option-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  padding: 14px 16px;
+  font-size: 1rem;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.option-btn:hover:not(:disabled) { border-color: var(--indigo); background: var(--indigo-soft); }
+.option-btn:disabled { cursor: default; }
+.option-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #f1f5f9;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+/* answered states */
+.option-btn.picked { border-color: var(--indigo); background: var(--indigo-soft); }
+.option-btn.correct { border-color: var(--green); background: var(--green-soft); }
+.option-btn.correct .option-letter { background: var(--green); color: #fff; }
+.option-btn.wrong { border-color: var(--red); background: var(--red-soft); }
+.option-btn.wrong .option-letter { background: var(--red); color: #fff; }
+.option-btn.dimmed { opacity: 0.55; }
+
+/* ---- Feedback ---- */
+.feedback { margin-top: 22px; padding: 18px; border-radius: 12px; }
+.feedback p { margin: 0 0 10px; }
+.feedback-correct { background: var(--green-soft); }
+.feedback-wrong { background: var(--red-soft); }
+.badge-toast { font-weight: 600; color: var(--amber-text); }
+
+/* ---- Badges ---- */
+.badges { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.badge-chip {
+  background: var(--amber-soft);
+  color: var(--amber-text);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.badges-small .badge-chip { font-size: 0.78rem; padding: 4px 10px; }
+
+/* ---- Complete screen ---- */
+.final-points { font-size: 3rem; font-weight: 800; color: var(--indigo-dark); margin: 8px 0 16px; }
+.center .badges { justify-content: center; margin-bottom: 8px; }
+.muted { color: var(--muted); }
+
+/* Progress view (Phase 4): per-concept mastery bars. */
+.progress-topic { margin-bottom: 18px; }
+.progress-topic h3 { margin: 0 0 8px; }
+.progress-row {
+  display: grid;
+  grid-template-columns: 1fr 120px 48px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.progress-concept { font-size: 0.9rem; }
+.mastery-bar { background: #eef2ff; border-radius: 999px; height: 10px; overflow: hidden; }
+.mastery-fill { display: block; height: 100%; background: var(--green); }
+.progress-num { font-size: 0.8rem; color: var(--muted); text-align: right; }
+
+/* Grounded Q&A panel (Phase 5). */
+.qna { margin-top: 24px; border-top: 1px solid var(--border); padding-top: 16px; }
+.qna-toggle {
+  background: none; border: none; padding: 0; cursor: pointer;
+  font-weight: 600; font-size: 1rem; color: var(--indigo-dark);
+}
+.qna-body { margin-top: 12px; }
+.qna-row { display: flex; gap: 8px; }
+.qna-row .text-input { flex: 1; }
+.qna-ask { margin-top: 0; width: auto; padding: 12px 18px; }
+.qna-error { color: var(--red); font-size: 0.85rem; }
+.qna-answer { margin-top: 12px; background: var(--indigo-soft); border-radius: 12px; padding: 14px; }
+.qna-answer p { margin: 0 0 8px; }
+.qna-answer p:last-child { margin-bottom: 0; }
+.qna-refused { background: var(--amber-soft); color: var(--amber-text); }
+
+/* Loading state (Phase A) — spinner + cycling message during generation. */
+.loading { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 36px 0; }
+.spinner {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 4px solid var(--indigo-soft);
+  border-top-color: var(--indigo);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-msg { margin: 0; color: var(--muted); font-weight: 600; }
+
+/* ---- Small screens ---- */
+@media (max-width: 520px) {
+  .topic-grid { grid-template-columns: 1fr; }
+  .grade-grid { grid-template-columns: repeat(2, 1fr); }
+  .app-header h1 { font-size: 1.6rem; }
+}
