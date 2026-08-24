@@ -11,6 +11,8 @@ backend/db.sqlite3
 # --- RAG: source textbooks and the built vector index (never commit these) ---
 backend/textbooks/
 backend/chroma_store/
+# Pre-repair snapshot of the index, kept for the duration of the evaluation programme.
+backend/chroma_store_backup_prefix/
 
 # --- Node / Vite (frontend) ---
 frontend/node_modules/
@@ -21,3 +23,12 @@ frontend/dist/
 .idea/
 .DS_Store
 Thumbs.db
+
+# --- Evaluation harness ---
+# Generated results are reproducible by re-running the eval_* commands, so they are
+# not version-controlled...
+backend/evaluation/results/
+# ...with one exception: the pre-repair index measurement cannot be reproduced once
+# the index is rebuilt, so the defect-and-repair evidence is kept under version control.
+!backend/evaluation/results/index_quality_before.csv
+!backend/evaluation/results/index_quality_after.csv

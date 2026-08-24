@@ -17,6 +17,7 @@ Usage:
 """
 
 import re
+from collections import Counter
 from pathlib import Path
 
 import pdfplumber
@@ -38,7 +39,20 @@ CHUNK_OVERLAP = 40
 # digits. That stops numbered list items ("01. Tap root"), figure/measurement lines
 # ("60 N 3 m2") and table-of-contents entries ("1.1 Title 12", which end in a page
 # number) from being mistaken for headings.
-CHAPTER_RE = re.compile(r"^(\d{2})\s+([A-Z][A-Za-z][A-Za-z &',()\-]{1,58})$")
+#
+# The title is additionally capped at SIX words and may not contain a comma. Numbered
+# TABLE rows are typographically indistinguishable from a chapter heading once the
+# layout is flattened to text, and in this corpus they are the dominant source of
+# false headings: the materials-properties table on G6 p.44 yielded rows such as
+# "01 Hardness The property of resistance to Diamond , Iron", which a heading pattern
+# with no length bound accepted and then applied to the remaining 124 chunks of the
+# book. Every genuine chapter title in the corpus is one to six words long (the
+# longest is "The Correct Use of the Microscope"), so the bound separates the two
+# cleanly. Single-word table rows that survive this test are rejected structurally
+# instead - see _chapter_heading_pages().
+CHAPTER_RE = re.compile(
+    r"^(\d{2})\s+([A-Z][A-Za-z][A-Za-z&'()\-]*(?:\s+[A-Za-z][A-Za-z&'()\-]*){0,5})$"
+)
 SECTION_RE = re.compile(r"^(\d{1,2}\.\d{1,2})\s+([A-Z][A-Za-z][A-Za-z &',()\-]{1,68})$")
 
 # Map the "fancy" quote characters found in the books to plain ASCII quotes.
@@ -84,20 +98,44 @@ def clean_page_text(raw):
 
 def split_into_word_chunks(text, size=CHUNK_WORDS, overlap=CHUNK_OVERLAP):
     """Split a long passage into ~`size`-word chunks overlapping by ~`overlap`
-    words, so ideas aren't cut mid-thought. Short passages return as one chunk."""
+    words, so ideas aren't cut mid-thought. Short passages return as one chunk.
+
+    Returns [(chunk_text, start_word_index), ...]. The start index lets the caller
+    map a chunk back to the page its OWN first word came from, which is what the
+    chunk's `page` metadata has to record.
+    """
     words = text.split()
     if not words:
         return []
     if len(words) <= size:
-        return [text.strip()]
+        return [(text.strip(), 0)]
     chunks = []
     start = 0
     while start < len(words):
-        chunks.append(" ".join(words[start:start + size]))
+        chunks.append((" ".join(words[start:start + size]), start))
         if start + size >= len(words):
             break
         start += size - overlap
     return chunks
+
+
+def _chapter_heading_pages(cleaned_pages):
+    """Return the set of pages carrying exactly ONE chapter-heading candidate.
+
+    A genuine chapter heading is the only one on its page, because a chapter runs
+    for many pages. A numbered TABLE row is typographically identical to a heading
+    once the layout is flattened ("01 Talc"), but such rows always appear several
+    to a page. This corpus contains two of them - the Mohs hardness scale on G9P2
+    p.171 (ten rows, "Talc" ... "Diamond") and the materials-properties table on
+    G6 p.44 (five rows) - and both are rejected by requiring uniqueness, while
+    every genuine heading in the corpus sits alone on its page and survives.
+    """
+    per_page = Counter()
+    for page_no, text in cleaned_pages:
+        for line in text.splitlines():
+            if CHAPTER_RE.match(line.strip()):
+                per_page[page_no] += 1
+    return {page_no for page_no, count in per_page.items() if count == 1}
 
 
 def build_chunks_for_file(pages, grade, source_file):
@@ -108,20 +146,36 @@ def build_chunks_for_file(pages, grade, source_file):
     whenever a heading is detected — the headings are used for metadata, not to
     decide what to keep. The small amount of front matter (foreword/contents) that
     gets included is harmless: a science query won't match it.
+
+    Page attribution: body text is buffered across page boundaries until the next
+    heading flushes it, so a buffer routinely spans several pages. The page each
+    LINE came from is therefore carried alongside the line, and every emitted chunk
+    is stamped with the page its own first word sits on. Recording the page of the
+    most recent heading instead would collapse whole books onto a handful of page
+    numbers and make the learner-facing citations wrong.
     """
     chunks = []
     chunk_index = 0
     current_chapter = "(document)"   # until the first real chapter heading is seen
     current_section = ""
-    buf_lines = []
-    buf_page = None
+    buf = []                         # [(page_no, line), ...] awaiting the next flush
 
     def flush():
-        nonlocal buf_lines, chunk_index
-        if not buf_lines:
+        nonlocal buf, chunk_index
+        if not buf:
             return
-        paragraph = re.sub(r"\s+", " ", " ".join(buf_lines)).strip()
-        for piece in split_into_word_chunks(paragraph):
+        # Flatten the buffer to a word list, keeping a parallel list of the page
+        # each word came from so a chunk can be traced back to its own page.
+        words, word_pages = [], []
+        for page_no, line in buf:
+            line_words = line.split()
+            words.extend(line_words)
+            word_pages.extend([page_no] * len(line_words))
+        buf = []
+        if not words:
+            return
+        paragraph = " ".join(words)
+        for piece, start in split_into_word_chunks(paragraph):
             if len(piece.split()) < 8:      # drop tiny leftovers
                 continue
             chunks.append({
@@ -130,32 +184,32 @@ def build_chunks_for_file(pages, grade, source_file):
                 "source_file": source_file,
                 "chapter": current_chapter or "",
                 "section": current_section or "",
-                "page": buf_page or 0,
+                "page": word_pages[start],
                 "chunk_index": chunk_index,
             })
             chunk_index += 1
-        buf_lines = []
 
-    for page_no, raw in pages:
-        for line in clean_page_text(raw).split("\n"):
+    # Clean every page once, then pre-scan for the pages that carry a lone chapter
+    # heading; candidates on any other page are numbered table rows and stay body text.
+    cleaned = [(page_no, clean_page_text(raw)) for page_no, raw in pages]
+    solo_heading_pages = _chapter_heading_pages(cleaned)
+
+    for page_no, text in cleaned:
+        for line in text.splitlines():
             line = line.strip()
             if not line:
                 continue
             chapter_match = CHAPTER_RE.match(line)
             section_match = SECTION_RE.match(line)
-            if chapter_match:
+            if chapter_match and page_no in solo_heading_pages:
                 flush()
                 current_chapter = chapter_match.group(2).strip()
                 current_section = ""
-                buf_page = page_no
             elif section_match:
                 flush()
                 current_section = section_match.group(2).strip()
-                buf_page = page_no
             else:
-                if buf_page is None:
-                    buf_page = page_no
-                buf_lines.append(line)
+                buf.append((page_no, line))
     flush()
     return chunks
 
