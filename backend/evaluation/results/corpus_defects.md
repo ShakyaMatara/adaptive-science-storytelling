@@ -16,6 +16,7 @@ documented as a limitation, and the before/after measurement.
 | 4 | Mojibake from legacy Sinhala/Tamil font encodings | Manual spot-check | Documented |
 | 5 | Duplicated two-page spreads indexed twice | Supervisor spot-check challenge | Documented, impact measured |
 | 6 | Single-page citation for chunks spanning up to five pages | Span audit | **Repaired** |
+| 7 | Symbol-font ticks lost to Private Use Area codepoints | Review of worked examples | Documented |
 
 ---
 
@@ -119,8 +120,18 @@ the worse trade. Documented as a limitation. Worked examples in
 Sinhala and Tamil columns use legacy non-Unicode fonts. Their bytes are recovered as
 unrelated Latin characters and indexed as though they were English prose.
 
-**Incidence: 199/1101 chunks (18.1%)** carry at least ten such characters - Grade 9
-75 (22.2%), Grade 8 60 (18.1%), Grade 7 40 (14.5%), Grade 6 24 (15.4%).
+**Incidence: 97/1101 chunks (8.8%)** - Grade 9 35 (10.4%), Grade 8 26 (7.8%),
+Grade 6 15 (9.6%), Grade 7 21 (7.6%).
+
+**Detector correction.** An earlier draft of this measurement reported 199/1101
+(18.1%) by counting any chunk carrying ten or more non-ASCII characters. That
+heuristic was wrong: it swept in characters the books use deliberately - the bullet
+glyph U+00B2, the ellipsis runs of fill-in-the-blank exercises, the ohm sign and
+Greek mu - and six of ten sampled examples turned out not to be mojibake at all. The
+detector now identifies non-ASCII **letters** specifically, excluding the Greek and
+Letterlike Symbols blocks. English prose contains no such letters, whereas the
+legacy-font output is dense with them. Every one of the ten worked examples in
+`text_quality_impact.md` was re-checked as genuine after the change.
 
 **Disposition: not repaired.** Decoding the legacy encodings is a research problem in
 its own right. Stripping the runs was considered and rejected: the glossary lines
@@ -137,16 +148,34 @@ glyph), gives the honest picture:
 
 | Corrupted share of chunk | Chunks in index | % | Retrieved passages (k=8) | % |
 |---|---|---|---|---|
-| clean (0%) | 837 | **76.0%** | 254 | **79.4%** |
-| trace (<2%) | 82 | 7.4% | 11 | 3.4% |
-| light (2-10%) | 120 | 10.9% | 33 | 10.3% |
-| heavy (>=10%) | 62 | **5.6%** | 22 | **6.9%** |
+| clean (0%) | 911 | **82.7%** | 269 | **84.1%** |
+| trace (<2%) | 35 | 3.2% | 6 | 1.9% |
+| light (2-10%) | 98 | 8.9% | 24 | 7.5% |
+| heavy (>=10%) | 57 | **5.2%** | 21 | **6.6%** |
 
 Corrupted chunks are retrieved at approximately their base rate, so the defects are
-neither preferentially retrieved nor avoided. **Three-quarters of the index is
-entirely clean, and 6.9% of passages actually reaching the generator are heavily
-corrupted.** That last figure is the one that bears on generation quality and it is
-the one reported in Chapter 7.
+neither preferentially retrieved nor avoided. **82.7% of the index is entirely clean,
+and 6.6% of passages actually reaching the generator are heavily corrupted.** That
+last figure is the one that bears on generation quality and it is the one reported in
+Chapter 7.
+
+As an upper bound, 190/1101 chunks (17.3%) and 51/320 retrieved passages (15.9%)
+contain at least one corrupted token. That figure counts a chunk as affected for a
+single bad token and should not be quoted as the level of corruption.
+
+## FINDING-7 - symbol-font glyphs lost to the Private Use Area (DOCUMENTED)
+
+Tick and cross marks in comparison tables are drawn from a symbol font (Wingdings and
+similar) and extract as Private Use Area codepoints such as U+F0FC, which carry no
+Unicode meaning and render as nothing. A table row reading
+"Having a mass [tick] / Does not [cross]" reaches the index as
+"Having a mass -  Have not -". This is worse than noise: the distinction the table
+was teaching is silently deleted while the surrounding sentence still reads as
+well-formed English, so neither the retriever nor the generator has any signal that
+information is missing. Incidence is 27 glyph occurrences across 9/1101 chunks
+(0.8%) - Grade 6 four chunks, Grade 9 three, Grade 7 two. Found while reviewing the
+worked examples for FINDING-4, recorded for completeness, and not investigated
+further.
 
 ## FINDING-5 - duplicated two-page spreads (DOCUMENTED, impact measured)
 
