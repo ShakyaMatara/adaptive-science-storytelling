@@ -72,6 +72,8 @@ def retrieve(grade, query, k=4):
             "page": meta.get("page"),
             "chapter": meta.get("chapter"),
             "section": meta.get("section"),
+            "page_label_start": meta.get("page_label_start"),
+            "page_label_end": meta.get("page_label_end"),
             "source_file": meta.get("source_file"),
             "distance": distances[i] if i < len(distances) else None,
         })

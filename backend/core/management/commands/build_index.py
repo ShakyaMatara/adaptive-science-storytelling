@@ -55,6 +55,18 @@ CHAPTER_RE = re.compile(
 )
 SECTION_RE = re.compile(r"^(\d{1,2}\.\d{1,2})\s+([A-Z][A-Za-z][A-Za-z &',()\-]{1,68})$")
 
+# Printed page numbers ("folios") live in the running footer, which clean_page_text
+# discards. They must therefore be read from the RAW page text. Two layouts occur:
+#   spread -> "<left folio> Science | Title Science | Title <right folio>"
+#             one PDF page carries a two-page spread, i.e. TWO printed pages
+#   single -> "Science | Title <folio>"  or  "<folio> Science | Title"
+# "PB" stands in for the folio of the unnumbered page facing printed page 1.
+# A PDF page index is meaningless to a learner holding the book; the folio is the
+# number actually printed on the page, so citations are built from these.
+FOOTER_SPREAD_RE = re.compile(r"^(\d+|PB)\s+Science\s*\|.*Science\s*\|.*?(\d+)\s*$")
+FOOTER_RIGHT_RE = re.compile(r"^Science\s*\|.*?(\d+)\s*$")
+FOOTER_LEFT_RE = re.compile(r"^(\d+)\s+Science\s*\|")
+
 # Map the "fancy" quote characters found in the books to plain ASCII quotes.
 QUOTE_MAP = {
     0x2018: "'", 0x2019: "'", 0x201A: "'", 0x201B: "'",   # ' ' ‚ ‛
@@ -94,6 +106,35 @@ def clean_page_text(raw):
     # 4) Collapse runs of spaces/tabs.
     text = re.sub(r"[ \t]+", " ", text)
     return text
+
+
+def printed_folios(raw_page_text):
+    """Return (first_folio, last_folio) printed on one PDF page, as strings.
+
+    Returns (None, None) when the footer is absent or unparseable - about 11% of
+    pages, mostly chapter openers and front/back matter - and callers then fall
+    back to the numeric PDF page rather than emitting a folio that might be wrong.
+
+    On a spread page the two halves cannot be told apart once the layout is
+    flattened to text, so the pair spans the whole spread. A citation derived from
+    it is therefore conservative: it may name one folio more than the text truly
+    occupies, which is preferable to naming a single wrong page.
+    """
+    for line in raw_page_text.split("\n"):
+        stripped = line.strip()
+        if "Science" not in stripped or "|" not in stripped:
+            continue
+        match = FOOTER_SPREAD_RE.match(stripped)
+        if match:
+            left = None if match.group(1) == "PB" else match.group(1)
+            return (left or match.group(2), match.group(2))
+        match = FOOTER_RIGHT_RE.match(stripped)
+        if match:
+            return (match.group(1), match.group(1))
+        match = FOOTER_LEFT_RE.match(stripped)
+        if match:
+            return (match.group(1), match.group(1))
+    return (None, None)
 
 
 def split_into_word_chunks(text, size=CHUNK_WORDS, overlap=CHUNK_OVERLAP):
@@ -176,8 +217,15 @@ def build_chunks_for_file(pages, grade, source_file):
             return
         paragraph = " ".join(words)
         for piece, start in split_into_word_chunks(paragraph):
-            if len(piece.split()) < 8:      # drop tiny leftovers
+            length = len(piece.split())
+            if length < 8:      # drop tiny leftovers
                 continue
+            # A chunk routinely runs past the page it starts on, so record the folio
+            # it starts on and the folio it ends on; the citation collapses them when
+            # they match. Missing folios stay empty and the caller falls back.
+            end = min(start + length - 1, len(word_pages) - 1)
+            label_start = folios.get(word_pages[start], (None, None))[0]
+            label_end = folios.get(word_pages[end], (None, None))[1]
             chunks.append({
                 "text": piece,
                 "grade": grade,
@@ -185,12 +233,16 @@ def build_chunks_for_file(pages, grade, source_file):
                 "chapter": current_chapter or "",
                 "section": current_section or "",
                 "page": word_pages[start],
+                "page_label_start": label_start or "",
+                "page_label_end": label_end or "",
                 "chunk_index": chunk_index,
             })
             chunk_index += 1
 
     # Clean every page once, then pre-scan for the pages that carry a lone chapter
     # heading; candidates on any other page are numbered table rows and stay body text.
+    # Folios come from the RAW text: clean_page_text strips the footer they live in.
+    folios = {page_no: printed_folios(raw) for page_no, raw in pages}
     cleaned = [(page_no, clean_page_text(raw)) for page_no, raw in pages]
     solo_heading_pages = _chapter_heading_pages(cleaned)
 
@@ -294,6 +346,8 @@ class Command(BaseCommand):
                     "chapter": c["chapter"],
                     "section": c["section"],
                     "page": c["page"],
+                    "page_label_start": c["page_label_start"],
+                    "page_label_end": c["page_label_end"],
                     "chunk_index": c["chunk_index"],
                 } for c in part],
             )

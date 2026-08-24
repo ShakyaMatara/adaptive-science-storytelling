@@ -479,7 +479,7 @@ function QnAPanel({ sessionId }) {
               <p>{result.answer}</p>
               {result.sources && result.sources.length > 0 && (
                 <p className="sources">
-                  📖 Sources: {[...new Set(result.sources.map((s) => `p.${s.page}`))].join(", ")}
+                  📖 Sources: {[...new Set(result.sources.map((s) => s.page_citation || `p. ${s.page}`))].join(", ")}
                 </p>
               )}
             </div>
@@ -620,8 +620,8 @@ function Loading() {
 // Renders nothing in mock mode (no sources) or if the chapter wasn't grounded.
 function SourceNote({ grade, sources }) {
   if (!sources || sources.length === 0) return null;
-  const pages = [...new Set(sources.map((s) => s.page).filter((p) => p != null))];
-  const pageText = pages.length ? ` (p.${pages.join(", p.")})` : "";
+  const pages = [...new Set(sources.map((s) => s.page_citation || (s.page != null ? `p. ${s.page}` : "")).filter(Boolean))];
+  const pageText = pages.length ? ` (${pages.join(", ")})` : "";
   return <p className="sources">📖 Based on: Grade {grade} textbook{pageText}</p>;
 }
 

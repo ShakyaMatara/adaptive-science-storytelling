@@ -32,3 +32,7 @@ backend/evaluation/results/
 # the index is rebuilt, so the defect-and-repair evidence is kept under version control.
 !backend/evaluation/results/index_quality_before.csv
 !backend/evaluation/results/index_quality_after.csv
+!backend/evaluation/results/corpus_defects.md
+!backend/evaluation/results/text_quality_impact.md
+!backend/evaluation/results/duplicate_impact.csv
+!backend/evaluation/results/chunk_page_spans.csv
