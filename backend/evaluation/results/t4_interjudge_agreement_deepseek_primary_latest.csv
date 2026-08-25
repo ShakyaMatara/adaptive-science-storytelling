@@ -1,0 +1,2 @@
+n,judge1,judge2,judge1_mean,judge1_sd,judge2_mean,judge2_sd,mean_abs_difference,spearman_rho,exact_agreement,within_0.10
+6,deepseek/deepseek-v4-flash-0731,google/gemini-3.7-flash,0.722,0.443,0.636,0.404,0.1519,0.7184,3,4

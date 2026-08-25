@@ -1,3 +1,3 @@
 grounding,n,mean_faithfulness,sd,mean_unsupported
-text layer only,15,0.789,0.311,1.667
-includes recovered,2,0.617,0.401,2.5
+text layer only,20,0.759,0.282,1.5
+includes recovered,4,0.717,0.284,2.75

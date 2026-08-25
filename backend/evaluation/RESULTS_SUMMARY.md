@@ -12,13 +12,14 @@ that command. No figure has been entered by hand.
 |---|---|
 | Date of runs | 2026-08-25 |
 | Generation model | `openai/gpt-5.4-mini` (the configured model, unchanged) |
-| Judge model, T4 | `deepseek/deepseek-v4-flash-0731` |
-| Second judge, T4 | `google/gemini-3.7-flash` (six chapters, for agreement) |
+| Judge model, T4 (reported run) | `google/gemini-3.7-flash` |
+| Second judge, T4 | `deepseek/deepseek-v4-flash-0731` (six chapters, for agreement) |
+| Judge model, T4 (first run, retained) | `deepseek/deepseek-v4-flash-0731`, with gemini secondary |
 | Provider | OpenRouter, `https://openrouter.ai/api/v1/` |
 | `USE_MOCK_LLM` | `false` throughout; `backend/.env` was never modified |
 | Index | Chroma collection `textbooks`, **1,122 chunks** |
 | Embedding | Chroma default, computed locally |
-| Total API spend | **≈ US$0.49** of a US$5.00 cap (see section 10) |
+| Total API spend | **≈ US$0.57** of a US$5.00 cap (see section 10) |
 
 ### Index composition
 
@@ -274,41 +275,101 @@ in generated chapters.
 excerpts supplied and once without, and both chapters were scored by an LLM judge
 against the same textbook evidence. Six chapters were additionally scored by a second,
 independent judge on identical evidence and prose so that inter-judge agreement could be
-reported.
+reported. The experiment was run twice with the two judges exchanging roles, because
+the first run lost 29% of its judgements.
 
-| Condition | n | Mean faithfulness | sd | Mean claims | **Mean unsupported** | Mean contradicted |
+### Reported result — `google/gemini-3.7-flash` as primary judge
+
+| Condition | **n** | Mean faithfulness | **sd** | Mean claims | **Mean unsupported** | Mean contradicted |
 |---|---|---|---|---|---|---|
-| RAG on | 10 | **0.990** | 0.032 | 10.7 | **0.10** | 0.0 |
-| RAG off | 7 | **0.454** | 0.249 | 7.4 | **4.14** | 0.0 |
+| RAG on | **12** | **0.953** | **0.096** | 9.5 | **0.42** | 0.08 |
+| RAG off | **12** | **0.552** | **0.250** | 7.2 | **3.00** | 0.00 |
 
-Faithfulness rises by **0.536** with retrieval enabled; unsupported claims per chapter
-fall **41-fold**.
+**No judgement failed**: 24 of 24 usable, a balanced design with no exclusions.
 
-### Inter-judge agreement (n = 6)
+### Significance
 
-| Statistic | Value |
-|---|---|
-| Spearman ρ | +0.718 |
-| Mean absolute difference | 0.152 |
-| Exact agreement | 3 / 6 |
-| Within 0.10 | 4 / 6 |
-| Largest divergence | `Weather` rag_on: 1.000 against 0.286 |
+| Statistic | Faithfulness | Unsupported claims |
+|---|---|---|
+| Difference in means | **+0.401** | −2.58 per chapter |
+| Cohen's d | **+2.118** | — |
+| Mann–Whitney U | **10.0** | 14.0 |
+| z | 3.690 | 3.529 |
+| **p (two-tailed)** | **0.00022** | 0.00042 |
+
+Mann–Whitney U is non-parametric and assumes no distributional form, which suits
+bounded scores in small samples. At n = 12 per group the normal approximation used to
+obtain p is appropriate; tie and continuity corrections are applied.
+
+**The difference is unlikely to be sampling noise.** The RAG-off standard deviation of
+0.250 is more than twice the RAG-on figure of 0.096, so ungrounded generation is both
+less faithful *and* far less consistent; quoting 0.552 without its spread would imply
+precision the data do not carry.
+
+### First run — `deepseek/deepseek-v4-flash-0731` as primary judge
+
+Retained permanently. It is not superseded data but evidence about the method.
+
+| Condition | n | Mean faithfulness | sd | Mean unsupported |
+|---|---|---|---|---|
+| RAG on | 10 | 0.990 | 0.032 | 0.10 |
+| RAG off | 7 | 0.454 | 0.249 | 4.14 |
+
+**7 of 24 judgements failed** (29%), all `deepseek` returning invalid JSON, all excluded
+from the means. The design was left unbalanced at 10 against 7.
+
+### What the two runs together show
+
+| | deepseek primary | gemini primary |
+|---|---|---|
+| Usable judgements | 17 / 24 (71%) | **24 / 24 (100%)** |
+| Design | unbalanced, 10 vs 7 | balanced, 12 vs 12 |
+| Measured effect | +0.536 | **+0.401** |
+
+**Judge choice materially affects both the usable sample and the measured effect size.**
+The effect survives the change of judge — it is large and significant under both — but
+its magnitude moved by 0.135 purely from swapping the scorer, on identical prose. That
+is a finding about LLM-as-judge methodology in its own right: a single unvalidated judge
+reports an effect size that is partly a property of the judge.
+
+### Inter-judge agreement
+
+Six chapters were scored by both models on identical evidence and prose, in both runs.
+
+| | deepseek primary | gemini primary |
+|---|---|---|
+| Spearman ρ | +0.718 | +0.727 |
+| Mean absolute difference | 0.152 | 0.186 |
+| Exact agreement | 3 / 6 | 3 / 6 |
+| Within 0.10 | 4 / 6 | 3 / 6 |
+
+Agreement is stable at ρ ≈ 0.72 regardless of which model leads. `Weather` rag_on
+diverged severely in **both** runs — 1.000 against 0.286 in the first, 0.700 against
+0.000 in the second — so it is a persistently contentious chapter rather than a one-off
+disagreement, and is the obvious first candidate for human adjudication.
 
 ### Provenance
 
 | Grounding | n | Mean faithfulness | Mean unsupported |
 |---|---|---|---|
-| text layer only | 15 | 0.789 | 1.67 |
-| includes recovered text | **2** | 0.617 | 2.50 |
+| text layer only | 20 | 0.759 | 1.50 |
+| includes recovered text | **4** | 0.717 | 2.75 |
 
-At n = 2 the recovered-text row supports no conclusion. Where grounding includes
+At n = 4 the recovered-text row still supports no inference. Where grounding includes
 recovered text the judge scores against a model transcription of a page image rather
 than the book's text layer, so that score measures consistency with the transcription.
 
-**Finding 5.** Retrieval grounding raises measured faithfulness from 0.454 to 0.990 and
-reduces unsupported claims from 4.14 to 0.10 per chapter, which is a safety property
-rather than an accuracy improvement, though the figure carries judge-dependent
-uncertainty and awaits human validation.
+**Finding 5.** Retrieval grounding raises measured faithfulness from 0.552 (sd 0.250,
+n = 12) to 0.953 (sd 0.096, n = 12), a difference of 0.401 that is statistically
+significant (Mann–Whitney U = 10.0, p = 0.00022) and reduces unsupported claims from
+3.00 to 0.42 per chapter, which is a safety property rather than an accuracy
+improvement.
+
+**Precision caveat.** With twelve chapters per condition the *existence* and
+*direction* of the effect are firmly established, and its size is large by any
+conventional standard (d = 2.118). Its *magnitude* nevertheless carries wide
+uncertainty: the two judges differ by 0.135 on the same underlying generations, and the
+figure remains an automated estimate until the human validation template is scored.
 
 ---
 
@@ -350,10 +411,17 @@ Per-level FKGL ranges overlap heavily: L3 spans 6.6–11.5 and L5 spans 7.1–16
 level-5 chapter can be easier than a level-3 chapter. Variance grows four-fold across
 the ladder.
 
+**Sample size.** Each level rests on **n = 8** generations (2 topics x 4 repetitions).
+The Cohen's d values above are computed on 8 against 8 and are therefore themselves
+imprecise: with samples this small, d is a point estimate whose confidence interval is
+wide, and the boundary between "partial" and "collapsed" at d = 0.8 should not be read
+as a sharp threshold. What the data support is the ordering and the direction, not the
+exact effect size of any single adjacent pair.
+
 **Finding 6.** The difficulty ladder is a real gradient whose extremes are strongly
 separated (d = 2.61) and whose surface measures move monotonically, but adjacent levels
-above level 2 do not separate, so it reliably resolves two or three bands rather than
-five.
+above level 2 do not separate at n = 8 per level, so it reliably resolves two or three
+bands rather than five.
 
 ---
 
@@ -420,12 +488,17 @@ limitations. Full detail in `results/corpus_defects.md`.
 
 ### 9.3 Residual failures in the reported results
 
-- **T4: 7 of 24 judgements failed** (29%) and are excluded from the means. All were
-  `deepseek-v4-flash` returning invalid JSON. The exclusion does not threaten the
-  conclusion — the RAG-on side has sd 0.032 against an effect of 0.536 — but a 29%
-  exclusion rate is a weakness.
-- **T4 inter-judge divergence.** Two judges disagreed by 0.714 on one of six chapters.
-  The faithfulness figure is judge-dependent and requires human validation.
+- **T4 judge failures, first run: 7 of 24** (29%), all `deepseek-v4-flash` returning
+  invalid JSON, leaving an unbalanced 10-against-7 design. Re-running with the judges
+  exchanged gave **24 of 24** usable and a balanced 12-against-12 design. Both runs are
+  reported; the first is retained as evidence that judge choice determines the usable
+  sample.
+- **T4 effect size is judge-dependent.** The same generations yield +0.536 under one
+  judge and +0.401 under the other. The effect is large and significant either way, but
+  its magnitude is partly a property of the scorer.
+- **T4 inter-judge divergence.** The judges disagreed by 0.714 and 0.700 on the same
+  chapter (`Weather` rag_on) in the two runs respectively. Persistently contentious, and
+  the first candidate for human adjudication.
 - **T6: 11 of 30 first-attempt generations failed.** Two distinct shapes: mid-object
   truncation where the model ran long, and genuinely malformed output (`qwen`, an
   unterminated string and an empty response). The application's single retry recovers
@@ -465,13 +538,14 @@ limitations. Full detail in `results/corpus_defects.md`.
 | T6 model benchmark (first, voided run) | 30 | yes | US$0.0831 |
 | T6 model benchmark (reported run) | 30 | yes | US$0.1078 |
 | T4 faithfulness (first, voided run) | 55 | yes | US$0.0273 |
-| T4 faithfulness (reported run) | 54 | yes | US$0.0249 |
+| T4 faithfulness (deepseek primary, retained) | 54 | yes | US$0.0249 |
+| T4 faithfulness (gemini primary, reported) | 56 | yes | US$0.0827 |
 | T5 difficulty | 40 | no | ≈ US$0.18 (derived) |
 | T3b ablation | 16 | no | ≈ US$0.07 (derived) |
 | Model availability probe | 1 | no | < US$0.001 |
-| **Total** | **226** | | **≈ US$0.49** |
+| **Total** | **282** | | **≈ US$0.57** |
 
-Against a US$5.00 cap from a US$10.00 balance. Instrumented spend is US$0.2431; the
+Against a US$5.00 cap from a US$10.00 balance. Instrumented spend is US$0.3258; the
 remainder is derived from the token profile measured in T6 for the same model. The
 provider account reports lifetime usage only, and no pre-run baseline was taken, so the
 account figure cannot corroborate this total. Prices are those in force on 2026-08-25
@@ -482,6 +556,29 @@ and are recorded in `harness.PRICES_PER_MTOK`; costs are indicative.
 ## 11. Threshold recommendations
 
 Recommendations only. **No constant was changed in response to any sweep.**
+
+### Why one change was applied and another was not
+
+Exactly one constant changed during this programme, and the contrast with the change
+that was *not* made is the clearest evidence that the repair was principled rather
+than fitted.
+
+| | FINDING-9 (**applied**) | `GATE_MAX_DISTANCE` = 1.10 (**not applied**) |
+|---|---|---|
+| What it changes | **What is measured** — the keep-window stopped depending on how well the query matched | **A threshold value** — the same quantity, evaluated at a different cut-point |
+| Why it was raised | A measure of how much content exists correlated **+0.545** with the best hit's distance: a sign error visible without reference to any target metric | 1.10 scores better than 1.15 on the sweep |
+| Validation | A magnitude-matched control reproduced the repair's passage count and **none** of its improvement (rho -0.133 against -0.134), excluding the rival explanation | None available; the evidence *is* the sweep |
+| Value chosen | 1.15, which is **not** the correlation-maximising value (0.95 and 1.20 both score higher) | 1.10 would be chosen precisely *because* it scores higher |
+
+Changing a threshold after seeing which value scores better is what Rule 2 exists to
+prevent, and it applies to the 1.10 recommendation however sound the recommendation is.
+FINDING-9 was admitted because the defect was identifiable from the mechanism alone,
+because a control experiment excluded the alternative explanation, and because the
+value adopted was demonstrably worse on the target metric than alternatives already
+measured. Absent all three conditions, a change is a fit rather than a repair.
+
+The 1.10 recommendation is therefore recorded below for future work and left
+unapplied.
 
 | Constant | Configured | Sweep optimum | Recommendation |
 |---|---|---|---|
@@ -513,9 +610,11 @@ Recommendations only. **No constant was changed in response to any sweep.**
    judges agreed at ρ = +0.718 with one severe divergence over six chapters. The
    validation template at `t4_judge_validation_TEMPLATE_latest.csv` is unfilled; until it
    is, T4's faithfulness figure is an automated estimate, not a validated measurement.
-6. **Small samples.** T4 rests on 17 usable chapters, T5 on 8 generations per level, T6
-   on 6 prompts per model, and the inter-judge agreement on 6 chapters. Effect sizes are
-   reported so the reader can judge what the samples support.
+6. **Small samples.** T4 rests on 12 chapters per condition, T5 on 8 generations per
+   level, T6 on 6 prompts per model, and inter-judge agreement on 6 chapters. Effect
+   sizes and standard deviations are reported throughout so the reader can judge what
+   the samples support. Where an effect is large enough to test, a non-parametric test
+   is given; where n is too small to test meaningfully, none is computed.
 7. **3.2% of the index is recovered from page images** rather than read from a text
    layer. Each experiment reports its exposure; T4's recovered-text row has n = 2 and
    supports no conclusion.

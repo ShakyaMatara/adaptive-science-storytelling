@@ -68,6 +68,11 @@ backend/evaluation/results/*
 !backend/evaluation/results/t4_judge_validation_TEMPLATE_latest.csv
 !backend/evaluation/results/t5_difficulty_latest.csv
 !backend/evaluation/results/t6_models_latest.csv
+!backend/evaluation/results/t4_faithfulness_deepseek_primary_latest.csv
+!backend/evaluation/results/t4_faithfulness_summary_deepseek_primary_latest.csv
+!backend/evaluation/results/t4_faithfulness_by_provenance_deepseek_primary_latest.csv
+!backend/evaluation/results/t4_interjudge_agreement_deepseek_primary_latest.csv
+!backend/evaluation/results/t4_significance_latest.csv
 !backend/evaluation/results/figures/
 !backend/evaluation/results/midpoint_corrections.md
 !backend/evaluation/results/corpus_defects.md

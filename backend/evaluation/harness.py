@@ -224,6 +224,54 @@ def spearman(xs, ys):
     return round(num / den, 4) if den else 0.0
 
 
+def mann_whitney_u(a, b):
+    """Mann-Whitney U with a normal approximation, implemented without SciPy.
+
+    Returns (u, z, p_two_tailed, note). The test is non-parametric and makes no
+    normality assumption, which suits small samples of bounded scores. The p-value
+    uses the normal approximation WITH tie correction and a continuity correction;
+    below roughly n=8 per group that approximation is rough, and the returned note
+    says so rather than letting a precise-looking p stand unqualified.
+    """
+    n1, n2 = len(a), len(b)
+    if n1 == 0 or n2 == 0:
+        return 0.0, 0.0, 1.0, "empty group"
+    combined = sorted(a + b)
+    ranks = _rank(combined)
+    lookup = {}
+    for value, rank in zip(combined, ranks):
+        lookup.setdefault(value, []).append(rank)
+    used = {}
+    def rank_of(v):
+        i = used.get(v, 0)
+        used[v] = i + 1
+        return lookup[v][i]
+    r1 = sum(rank_of(v) for v in sorted(a))
+    u1 = r1 - n1 * (n1 + 1) / 2.0
+    u2 = n1 * n2 - u1
+    u = min(u1, u2)
+
+    mean_u = n1 * n2 / 2.0
+    tie_groups = {}
+    for v in combined:
+        tie_groups[v] = tie_groups.get(v, 0) + 1
+    n = n1 + n2
+    tie_term = sum(t ** 3 - t for t in tie_groups.values())
+    var_u = (n1 * n2 / 12.0) * ((n + 1) - tie_term / float(n * (n - 1))) if n > 1 else 0.0
+    if var_u <= 0:
+        return round(u, 2), 0.0, 1.0, "zero variance"
+    z = max(0.0, abs(u - mean_u) - 0.5) / math.sqrt(var_u)
+    p = 2.0 * (1.0 - _norm_cdf(z))
+    note = ("normal approximation is rough below n=8 per group"
+            if min(n1, n2) < 8 else "normal approximation")
+    return round(u, 2), round(z, 4), round(min(1.0, max(0.0, p)), 5), note
+
+
+def _norm_cdf(z):
+    """Standard normal CDF via the error function."""
+    return 0.5 * (1.0 + math.erf(z / math.sqrt(2.0)))
+
+
 def mean_sd(values):
     """Sample mean and standard deviation (n-1 denominator)."""
     values = [v for v in values if v is not None]
