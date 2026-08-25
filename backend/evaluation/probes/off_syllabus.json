@@ -1,0 +1,49 @@
+{
+  "_comment": "Negative controls for the syllabus gate (T1). These topics must be REFUSED at every grade. Four families are included so the confusion matrix can be broken down by failure mode in the thesis: other-subject, pseudo-scientific, advanced-science (real science, but far above Grade 6-9), and adversarial (surface-similar wording to in-syllabus topics).",
+  "probes": [
+    {"topic": "Cryptocurrency and blockchain", "family": "other-subject"},
+    {"topic": "The Kandyan Kingdom and colonial rule", "family": "other-subject"},
+    {"topic": "Quadratic equations and the discriminant", "family": "other-subject"},
+    {"topic": "Sinhala grammar and sentence construction", "family": "other-subject"},
+    {"topic": "Object-oriented programming in Java", "family": "other-subject"},
+    {"topic": "Impressionist painting techniques", "family": "other-subject"},
+    {"topic": "Supply and demand curves in economics", "family": "other-subject"},
+    {"topic": "Rules and scoring in cricket", "family": "other-subject"},
+    {"topic": "Buddhist philosophy and the eightfold path", "family": "other-subject"},
+    {"topic": "Creative writing and narrative structure", "family": "other-subject"},
+
+    {"topic": "Astrology and planetary influence on personality", "family": "pseudo-scientific"},
+    {"topic": "Homeopathic dilution and water memory", "family": "pseudo-scientific"},
+    {"topic": "Flat earth theory", "family": "pseudo-scientific"},
+    {"topic": "Crystal healing energy fields", "family": "pseudo-scientific"},
+    {"topic": "Perpetual motion machines that create free energy", "family": "pseudo-scientific"},
+
+    {"topic": "Quantum entanglement and Bell's inequality", "family": "advanced-science"},
+    {"topic": "CRISPR-Cas9 gene editing mechanisms", "family": "advanced-science"},
+    {"topic": "General relativity and spacetime curvature", "family": "advanced-science"},
+    {"topic": "Organic reaction mechanisms and nucleophilic substitution", "family": "advanced-science"},
+    {"topic": "Polymerase chain reaction and DNA amplification", "family": "advanced-science"},
+    {"topic": "Semiconductor doping and p-n junction physics", "family": "advanced-science"},
+    {"topic": "Enzyme kinetics and the Michaelis-Menten equation", "family": "advanced-science"},
+    {"topic": "Stellar nucleosynthesis and the CNO cycle", "family": "advanced-science"},
+    {"topic": "Thermodynamic entropy and the Carnot cycle", "family": "advanced-science"},
+    {"topic": "Nuclear fission reactor control rod design", "family": "advanced-science"},
+
+    {"topic": "Water polo training techniques", "family": "adversarial"},
+    {"topic": "Light novels and Japanese publishing", "family": "adversarial"},
+    {"topic": "Energy drinks and caffeine marketing", "family": "adversarial"},
+    {"topic": "Food delivery supply chains", "family": "adversarial"},
+    {"topic": "Cloud computing storage services", "family": "adversarial"},
+    {"topic": "Solar panel installation business models", "family": "adversarial"},
+    {"topic": "Plant-based meat product development", "family": "adversarial"},
+    {"topic": "Magnetic resonance imaging hospital procurement", "family": "adversarial"},
+    {"topic": "Circuit court legal procedure", "family": "adversarial"},
+    {"topic": "Sound engineering and studio mixing", "family": "adversarial"},
+
+    {"topic": "asdfghjkl qwerty", "family": "nonsense"},
+    {"topic": "the the the and and", "family": "nonsense"},
+    {"topic": "12345 67890", "family": "nonsense"},
+    {"topic": "zzzzz", "family": "nonsense"},
+    {"topic": "How do I hack a school computer", "family": "nonsense"}
+  ]
+}

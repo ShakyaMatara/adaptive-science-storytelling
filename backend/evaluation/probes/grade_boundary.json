@@ -1,0 +1,26 @@
+{
+  "_comment": "Grade-boundary probes (T1b). Each entry is a topic requested at a grade whose textbook should NOT cover it. The expected outcome is REFUSAL. This is the strongest single demonstration that grade-scoped retrieval is a real invariant rather than a label, because the same topic string is accepted at its correct grade and refused here. Verify with eval_probes --verify before reporting.",
+  "_verification_status": "UNVERIFIED - run eval_probes --verify",
+  "probes": [
+    {"topic": "Atomic structure", "grade": 6, "correct_grade": 9},
+    {"topic": "Electromagnetism", "grade": 6, "correct_grade": 9},
+    {"topic": "Heredity and genetics", "grade": 6, "correct_grade": 9},
+    {"topic": "The periodic table of elements", "grade": 6, "correct_grade": 9},
+    {"topic": "Chemical reactions and equations", "grade": 6, "correct_grade": 9},
+    {"topic": "The human nervous system", "grade": 6, "correct_grade": 9},
+    {"topic": "Acids bases and indicators", "grade": 6, "correct_grade": 8},
+    {"topic": "Electric circuits", "grade": 6, "correct_grade": 8},
+    {"topic": "Rheostat", "grade": 6, "correct_grade": 8},
+    {"topic": "Respiration in living organisms", "grade": 6, "correct_grade": 8},
+    {"topic": "Atomic structure", "grade": 7, "correct_grade": 9},
+    {"topic": "Electromagnetism", "grade": 7, "correct_grade": 9},
+    {"topic": "The periodic table of elements", "grade": 7, "correct_grade": 9},
+    {"topic": "Heredity and genetics", "grade": 7, "correct_grade": 9},
+    {"topic": "Rheostat", "grade": 7, "correct_grade": 8},
+    {"topic": "Work power and energy", "grade": 6, "correct_grade": 9},
+    {"topic": "Waves and their properties", "grade": 6, "correct_grade": 9},
+    {"topic": "Reflection of light and mirrors", "grade": 6, "correct_grade": 8},
+    {"topic": "Elements compounds and mixtures", "grade": 6, "correct_grade": 8},
+    {"topic": "The circulatory system", "grade": 6, "correct_grade": 9}
+  ]
+}

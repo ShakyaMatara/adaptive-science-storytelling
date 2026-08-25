@@ -257,15 +257,22 @@ project's headline claim. Near-duplicate chunk pairs were identified by 5-gram
 shingle containment at a 0.80 threshold:
 
 - 47 near-duplicate pairs, forming 22 duplicate groups
-- 55/1101 chunks (5.0%) belong to a duplicate group
-- 33 redundant copies (3.0% of the index): Grade 7 11, Grade 8 15, Grade 9 7,
+- 55/1122 chunks (4.9%) belong to a duplicate group
+- 33 redundant copies (2.9% of the index): Grade 7 11, Grade 8 15, Grade 9 7,
   Grade 6 0
-- **Mean inflation of `total_relevant`: 0.74%** (worst single topic 4.35%)
+- **Mean inflation of `total_relevant`: 0.76%** across a ten-topic sample spread over
+  the grades, **0.99%** across all 26 probes the gate accepts; worst single topic 4.35%
 
 **Disposition: NOT deduplicated.** The pre-agreed decision rule was to deduplicate
-only at 5% or above. Measured inflation is 0.74%, so the index is left as built and
+only at 5% or above. Measured inflation is below 1%, so the index is left as built and
 the figure is reported as a limitation. Deduplicating would have changed the corpus
 underneath the experiments in exchange for a sub-1% correction.
+
+**Re-measured after recovery.** The figures above are for the current 1122-chunk
+index. On the earlier 1101-chunk index the same measurement gave 55/1101 (5.0%),
+33 redundant copies (3.0%) and 0.74% mean inflation, so recovering the 21 G9P1 chunks
+did not introduce duplication: the absolute count of duplicate pairs is unchanged at
+47, and the proportion falls slightly because the index grew.
 
 ## FINDING-6 - single-page citations for multi-page chunks (REPAIRED)
 
