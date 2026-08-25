@@ -109,6 +109,13 @@ class Command(BaseCommand):
         budget = harness.Budget("t6_models")
         done, total = 0, len(models) * len(topics)
 
+        # Use the application's OWN token budget. A fixed cap below what a chapter
+        # needs does not measure a model's schema compliance, it measures the cap:
+        # at max_tokens=1400 google/gemini-3.7-flash returned exactly 1396 completion
+        # tokens on all six prompts and scored 0/6, which is truncation, not a
+        # formatting failure. _max_tokens_for is what generate_chapter uses in
+        # production, so the benchmark now matches deployed behaviour.
+        max_tokens = llm._max_tokens_for(4, 2)
         for model_id in models:
             self.stdout.write(self.style.HTTP_INFO(f"\n  {model_id}"))
             for topic, grade in topics:
@@ -130,7 +137,7 @@ class Command(BaseCommand):
 
                 try:
                     with harness.use_model(model_id):
-                        text, usage, latency = harness.raw_call(messages, max_tokens=1400, model=model_id)
+                        text, usage, latency = harness.raw_call(messages, max_tokens=max_tokens, model=model_id)
                     row["latency_s"] = latency
                     row["prompt_tokens"] = usage["prompt_tokens"]
                     row["completion_tokens"] = usage["completion_tokens"]
