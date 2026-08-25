@@ -34,6 +34,10 @@ class Command(BaseCommand):
         parser.add_argument("--suggest", action="store_true", help="List section labels held in the index.")
         parser.add_argument("--grade", type=int, default=None, help="Restrict --suggest to one grade.")
         parser.add_argument("--limit", type=int, default=40, help="Max labels per grade for --suggest.")
+        parser.add_argument(
+            "--positives", default="in_syllabus",
+            help="Positive probe set to verify: in_syllabus (contents-page wording) or "
+                 "in_syllabus_paraphrased (learner phrasing).")
 
     def handle(self, *args, **options):
         if not options["verify"] and not options["suggest"]:
@@ -42,7 +46,7 @@ class Command(BaseCommand):
         if options["suggest"]:
             self._suggest(options["grade"], options["limit"])
         if options["verify"]:
-            self._verify()
+            self._verify(options["positives"])
 
     # --- mining candidate topics from the index --------------------------------
 
@@ -102,19 +106,21 @@ class Command(BaseCommand):
         scored = [p["distance"] for p in passages if p.get("distance") is not None]
         return min(scored) if scored else None
 
-    def _verify(self):
+    def _verify(self, positives="in_syllabus"):
         gate = retrieval.GATE_MAX_DISTANCE
         self.stdout.write(self.style.MIGRATE_HEADING(
             f"\nVerifying probe sets against GATE_MAX_DISTANCE = {gate}"))
 
+        self.stdout.write(f"Positive set: {positives}")
+
         rows, problems = [], []
 
         # Positives: should be ACCEPTED, i.e. best distance <= gate.
-        for probe in harness.load_probes("in_syllabus")["probes"]:
+        for probe in harness.load_probes(positives)["probes"]:
             grade, topic = probe["grade"], probe["topic"]
             best = self._probe_distance(grade, topic)
             ok = best is not None and best <= gate
-            rows.append({"set": "in_syllabus", "grade": grade, "topic": topic,
+            rows.append({"set": positives, "grade": grade, "topic": topic,
                          "best_distance": round(best, 4) if best is not None else "",
                          "expected": "accept", "would": "accept" if ok else "REFUSE", "ok": ok})
             if not ok:
