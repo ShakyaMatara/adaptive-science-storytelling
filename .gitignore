@@ -40,8 +40,12 @@ backend/evaluation/results/*
 !backend/evaluation/results/chunk_page_spans.csv
 !backend/evaluation/results/duplicate_impact.csv
 !backend/evaluation/results/ocr_dual_extraction.csv
+!backend/evaluation/results/t1_false_positive_analysis.md
+!backend/evaluation/results/t1_verbatim_vs_paraphrased.csv
 !backend/evaluation/results/corpus_defects.md
 !backend/evaluation/results/text_quality_impact.md
 !backend/evaluation/results/duplicate_impact.csv
 !backend/evaluation/results/ocr_dual_extraction.csv
+!backend/evaluation/results/t1_false_positive_analysis.md
+!backend/evaluation/results/t1_verbatim_vs_paraphrased.csv
 !backend/evaluation/results/chunk_page_spans.csv

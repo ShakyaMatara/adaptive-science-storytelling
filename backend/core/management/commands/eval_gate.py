@@ -42,6 +42,10 @@ class Command(BaseCommand):
         parser.add_argument("--sweep-step", type=float, default=0.05)
         parser.add_argument("--layer2", action="store_true",
                             help="Also run the model adjudication layer (makes paid calls).")
+        parser.add_argument(
+            "--positives", default="in_syllabus",
+            help="Positive probe set: in_syllabus (contents-page wording, the ceiling) "
+                 "or in_syllabus_paraphrased (learner phrasing, the operational case).")
         parser.add_argument("--limit", type=int, default=0,
                             help="Cap the number of probes sent to layer 2.")
 
@@ -50,7 +54,10 @@ class Command(BaseCommand):
         self.stdout.write(self.style.MIGRATE_HEADING(
             f"\nT1 — Syllabus gate evaluation (current GATE_MAX_DISTANCE = {gate})"))
 
-        rows = self._measure()
+        self.condition = ("verbatim" if options["positives"] == "in_syllabus"
+                          else "paraphrased")
+        self.stdout.write(f"Condition: {self.condition}  (positive set: {options['positives']})")
+        rows = self._measure(options["positives"])
         if not rows:
             self.stdout.write(self.style.ERROR("No probes measured — is the Chroma index built?"))
             return
@@ -58,6 +65,8 @@ class Command(BaseCommand):
         metrics = self._score(rows, gate)
         self._report_headline(metrics, rows, gate)
         self._report_provenance(rows)
+        self._report_margins(rows, gate)
+        self._report_counterfactual(rows, gate)
         self._report_by_family(rows, gate)
 
         if options["sweep"]:
@@ -67,11 +76,98 @@ class Command(BaseCommand):
             self._layer2(rows, options["limit"])
 
         path = harness.write_csv(
-            "t1_gate", rows,
+            f"t1_gate_{self.condition}", rows,
             ["set", "family", "topic", "grade", "correct_grade", "expected",
-             "best_distance", "kept_passages", "ocr_passages", "ocr_share",
+             "best_distance", "best_distance_clean", "kept_passages",
+             "ocr_passages", "ocr_share",
              "layer1_accept", "layer2_in_syllabus", "layer2_reason", "correct"])
         self.stdout.write(self.style.SUCCESS(f"\nPer-probe detail: {path}"))
+
+    def _report_margins(self, rows, threshold):
+        """How much headroom each decision has, not merely whether it was right.
+
+        A pass count treats a topic that clears the threshold by 0.005 and one that
+        clears it by 0.4 as identical, which hides exactly the fragility that matters
+        under rephrasing. The margin is the distance from the decision boundary:
+        positive when the decision has headroom, negative when it is already wrong.
+        """
+        self.stdout.write(self.style.HTTP_INFO("\nDecision margins (distance from the threshold)"))
+        table_rows = []
+        for label, subset in (
+            ("in-syllabus (want accept)",
+             [r for r in rows if r["expected"] == "accept" and r["best_distance"] is not None]),
+            ("off-syllabus (want refuse)",
+             [r for r in rows if r["expected"] == "refuse" and r["best_distance"] is not None]),
+        ):
+            if not subset:
+                continue
+            margins = []
+            for r in subset:
+                slack = threshold - r["best_distance"]
+                margins.append(slack if r["expected"] == "accept" else -slack)
+            mean, sd = harness.mean_sd(margins)
+            ordered = sorted(margins)
+            table_rows.append({
+                "class": label, "n": len(subset), "mean_margin": mean, "sd": sd,
+                "min": round(ordered[0], 4),
+                "p25": round(ordered[len(ordered) // 4], 4),
+                "median": round(ordered[len(ordered) // 2], 4),
+                "max": round(ordered[-1], 4),
+                "within_0.05": sum(1 for m in margins if 0 <= m < 0.05),
+                "wrong_side": sum(1 for m in margins if m < 0),
+            })
+        self.stdout.write(harness.table(
+            table_rows, ["class", "n", "mean_margin", "sd", "min", "p25", "median", "max",
+                         "within_0.05", "wrong_side"]))
+        harness.write_csv(f"t1_gate_margins_{self.condition}", table_rows,
+                          ["class", "n", "mean_margin", "sd", "min", "p25", "median",
+                           "max", "within_0.05", "wrong_side"])
+        self.stdout.write(
+            "  A decision inside 0.05 of the threshold is one rephrasing away from flipping.")
+
+    def _report_counterfactual(self, rows, threshold):
+        """Specificity as measured, and on a hypothetically clean corpus.
+
+        FINDING-4 leaves legacy-font corruption in the index. Some off-syllabus topics
+        are accepted only because a query lands near that corruption rather than near
+        any science content, so the measured specificity charges the gate for a corpus
+        defect. Recomputing with corrupted chunks excluded separates the two. The
+        counterfactual is reported ALONGSIDE the real figure and never in place of it:
+        the corpus that was actually evaluated is the one that was built.
+        """
+        negatives = [r for r in rows if r["expected"] == "refuse"]
+        if not negatives:
+            return
+        fp = [r for r in negatives if self._accepts(r, threshold)]
+        caused = [r for r in fp
+                  if r["best_distance_clean"] is None or r["best_distance_clean"] > threshold]
+        tn_real = len(negatives) - len(fp)
+        spec_real = tn_real / len(negatives)
+        spec_clean = (tn_real + len(caused)) / len(negatives)
+
+        self.stdout.write(self.style.HTTP_INFO(
+            "\nSpecificity: as measured, and on a hypothetically clean corpus"))
+        self.stdout.write(f"  negatives                                : {len(negatives)}")
+        self.stdout.write(f"  false positives as measured              : {len(fp)}")
+        self.stdout.write(f"  ...of which caused by FINDING-4 corruption: {len(caused)}")
+        self.stdout.write(f"  specificity AS MEASURED                  : {spec_real:.4f}")
+        self.stdout.write(self.style.WARNING(
+            f"  specificity COUNTERFACTUAL (clean corpus): {spec_clean:.4f}   <- not the real figure"))
+        for r in caused:
+            clean = r["best_distance_clean"]
+            self.stdout.write(
+                f"     G{r['grade']} {r['topic'][:46]:<46} {r['best_distance']:.4f} -> "
+                f"{('%.4f' % clean) if clean is not None else 'no clean chunk'}")
+        self.stdout.write(
+            "  The measured figure UNDERSTATES the gate's discrimination by this margin,\n"
+            "  because a documented, unrepaired corpus defect produces some of its errors.")
+        harness.write_csv(f"t1_gate_counterfactual_{self.condition}", [{
+            "condition": self.condition, "threshold": threshold, "negatives": len(negatives),
+            "false_positives": len(fp), "caused_by_finding4": len(caused),
+            "specificity_measured": round(spec_real, 4),
+            "specificity_clean_corpus": round(spec_clean, 4),
+        }], ["condition", "threshold", "negatives", "false_positives", "caused_by_finding4",
+             "specificity_measured", "specificity_clean_corpus"])
 
     def _report_provenance(self, rows):
         """How much of the accepted evidence is text recovered from page images."""
@@ -103,18 +199,25 @@ class Command(BaseCommand):
         scored = [p["distance"] for p in passages if p.get("distance") is not None]
         return min(scored) if scored else None
 
-    def _measure(self):
+    def _best_distance_clean(self, grade, topic):
+        """Best distance ignoring chunks carrying FINDING-4 corruption."""
+        passages = harness.clean_passages(retrieval.retrieve(grade, topic, k=10))
+        scored = [p["distance"] for p in passages if p.get("distance") is not None]
+        return min(scored) if scored else None
+
+    def _measure(self, positives="in_syllabus"):
         """One retrieval per probe; record the raw distance for offline sweeping."""
         rows = []
 
-        for probe in harness.load_probes("in_syllabus")["probes"]:
+        for probe in harness.load_probes(positives)["probes"]:
             grade, topic = probe["grade"], probe["topic"]
             content = retrieval.gather_topic_content(grade, topic)
             recovered, total, share = harness.provenance(content["passages"])
             rows.append({
-                "set": "in_syllabus", "family": "positive", "topic": topic, "grade": grade,
+                "set": positives, "family": "positive", "topic": topic, "grade": grade,
                 "correct_grade": grade, "expected": "accept",
                 "best_distance": self._best_distance(grade, topic),
+                "best_distance_clean": self._best_distance_clean(grade, topic),
                 "kept_passages": content["total_relevant"],
                 "ocr_passages": recovered,
                 "ocr_share": round(share, 4),
@@ -128,6 +231,7 @@ class Command(BaseCommand):
                     "set": "off_syllabus", "family": family, "topic": topic, "grade": grade,
                     "correct_grade": "", "expected": "refuse",
                     "best_distance": self._best_distance(grade, topic),
+                "best_distance_clean": self._best_distance_clean(grade, topic),
                     "kept_passages": content["total_relevant"],
                 })
 
@@ -138,6 +242,7 @@ class Command(BaseCommand):
                 "set": "grade_boundary", "family": "grade-boundary", "topic": topic, "grade": grade,
                 "correct_grade": probe.get("correct_grade", ""), "expected": "refuse",
                 "best_distance": self._best_distance(grade, topic),
+                "best_distance_clean": self._best_distance_clean(grade, topic),
                 "kept_passages": content["total_relevant"],
             })
 
@@ -209,7 +314,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.HTTP_INFO("\nBreakdown by probe family"))
         self.stdout.write(harness.table(table_rows,
                                         ["family", "n", "correct", "rate", "mean_best_distance", "sd"]))
-        harness.write_csv("t1_gate_by_family", table_rows,
+        harness.write_csv(f"t1_gate_by_family_{self.condition}", table_rows,
                           ["family", "n", "correct", "rate", "mean_best_distance", "sd"])
 
     # --- threshold sweep (free) --------------------------------------------------
@@ -234,7 +339,7 @@ class Command(BaseCommand):
         # Re-score at the configured threshold so the CSV reflects live behaviour.
         self._score(rows, current)
 
-        path = harness.write_csv("t1_gate_sweep", sweep_rows,
+        path = harness.write_csv(f"t1_gate_sweep_{self.condition}", sweep_rows,
                                  ["threshold", "tp", "fp", "tn", "fn", "accuracy",
                                   "precision", "recall", "specificity", "f1", "is_current"])
         self.stdout.write(self.style.SUCCESS(

@@ -25,6 +25,7 @@ import math
 import os
 import re
 import time
+import unicodedata
 from contextlib import contextmanager
 from datetime import datetime
 from pathlib import Path
@@ -67,6 +68,44 @@ def write_csv(name, rows, fieldnames=None):
             for row in rows:
                 writer.writerow({k: row.get(k, "") for k in fieldnames})
     return stamped
+
+
+# --- Corpus text quality -------------------------------------------------------
+# FINDING-4: the trilingual glossaries use legacy non-Unicode fonts and are recovered
+# as unrelated Latin characters, then indexed as though they were English. The defect
+# is documented rather than repaired (see results/corpus_defects.md), so experiments
+# that could be affected by it report a clean-corpus counterfactual alongside the
+# real figure.
+#
+# Detection targets non-ASCII LETTERS specifically. English prose contains none,
+# whereas the legacy-font output is dense with them; counting non-ASCII characters
+# generally would sweep in the bullet and ellipsis glyphs the books use deliberately.
+
+_MICRO_SIGN = "µ"
+
+
+def _is_scientific_letter(ch):
+    """Greek and Letterlike Symbols are notation - mu for micro, the ohm sign."""
+    code = ord(ch)
+    return 0x0370 <= code <= 0x03FF or 0x2100 <= code <= 0x214F
+
+
+def is_mojibake_char(ch):
+    if ord(ch) <= 127 or ch == _MICRO_SIGN or _is_scientific_letter(ch):
+        return False
+    if 0xE000 <= ord(ch) <= 0xF8FF:      # Private Use Area is a different defect
+        return False
+    return unicodedata.category(ch).startswith("L")
+
+
+def has_mojibake(text):
+    """True when any whitespace token carries legacy-font corruption."""
+    return any(any(is_mojibake_char(c) for c in token) for token in (text or "").split())
+
+
+def clean_passages(passages):
+    """The passages that are free of legacy-font corruption."""
+    return [p for p in passages if not has_mojibake(p.get("text") or "")]
 
 
 # --- Provenance and printed pages ----------------------------------------------
