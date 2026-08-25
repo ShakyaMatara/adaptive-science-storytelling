@@ -1,0 +1,2 @@
+paraphrase_n,paraphrase_mean,paraphrase_sd,paraphrase_min,paraphrase_max,legitimate_n,legitimate_mean,legitimate_sd,legitimate_min,legitimate_max,mean_difference,cohens_d,best_threshold,best_accuracy
+12,0.357,0.103,0.176,0.512,12,0.354,0.115,0.1333,0.5253,0.003,0.0275,0.2817,0.5833

@@ -95,10 +95,13 @@ class Command(BaseCommand):
         plt.close(fig)
         return name
 
+    # matplotlib 3.9 deprecated boxplot(labels=...) and 3.11 removed it in favour of
+    # tick_labels. This harness runs on 3.11, so the newer spelling is used.
+
     # --- T1 -------------------------------------------------------------------
 
     def _t1_sweep(self, plt):
-        rows = self._read("t1_gate_sweep")
+        rows = self._read("t1_gate_sweep_verbatim")
         x = [self._f(r, "threshold") for r in rows]
         fig, ax = plt.subplots(figsize=(6, 3.4))
         ax.plot(x, [self._f(r, "recall") for r in rows], marker="o", ms=3,
@@ -106,6 +109,11 @@ class Command(BaseCommand):
         ax.plot(x, [self._f(r, "specificity") for r in rows], marker="s", ms=3,
                 label="Specificity (off-syllabus refused)")
         ax.plot(x, [self._f(r, "f1") for r in rows], marker="^", ms=3, label="F1")
+        para = self._read("t1_gate_sweep_paraphrased")
+        if para:
+            ax.plot([self._f(r, "threshold") for r in para],
+                    [self._f(r, "recall") for r in para], marker="o", ms=3, ls=":",
+                    color="tab:blue", alpha=0.8, label="Recall (learner phrasing)")
         current = next((self._f(r, "threshold") for r in rows if r.get("is_current")), None)
         if current is not None:
             ax.axvline(current, color="crimson", ls="--", lw=1,
@@ -113,12 +121,12 @@ class Command(BaseCommand):
         ax.set_xlabel("GATE_MAX_DISTANCE threshold")
         ax.set_ylabel("Score")
         ax.set_ylim(0, 1.05)
-        ax.set_title("Syllabus gate performance across retrieval-distance thresholds")
+        ax.set_title("Syllabus gate across thresholds: contents-page vs learner phrasing")
         ax.legend(fontsize=7, loc="lower center", ncol=2)
         return self._save(plt, fig, "fig_t1_sweep.png")
 
     def _t1_distances(self, plt):
-        rows = self._read("t1_gate")
+        rows = self._read("t1_gate_verbatim")
         families, data = [], []
         for row in rows:
             fam = row.get("family") or "other"
@@ -130,7 +138,7 @@ class Command(BaseCommand):
         families = [f for f, d in zip(families, data) if d]
         data = [d for d in data if d]
         fig, ax = plt.subplots(figsize=(6.5, 3.4))
-        ax.boxplot(data, labels=families, showfliers=True)
+        ax.boxplot(data, tick_labels=families, showfliers=True)
         try:
             from core import retrieval
             ax.axhline(retrieval.GATE_MAX_DISTANCE, color="crimson", ls="--", lw=1,

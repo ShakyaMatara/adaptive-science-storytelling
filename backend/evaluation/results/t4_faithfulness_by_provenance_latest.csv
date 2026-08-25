@@ -1,0 +1,3 @@
+grounding,n,mean_faithfulness,sd,mean_unsupported
+text layer only,15,0.789,0.311,1.667
+includes recovered,2,0.617,0.401,2.5

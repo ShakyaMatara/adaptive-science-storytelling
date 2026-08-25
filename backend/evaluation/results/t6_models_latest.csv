@@ -1,0 +1,31 @@
+model,topic,grade,first_attempt_valid,schema_complete,parse_error,paragraphs,questions,options_ok,sources,fkgl,fre,words,latency_s,prompt_tokens,completion_tokens,cost_usd
+openai/gpt-5.4-mini,Nanotechnology,9,True,True,,4,2,True,4,10.57,47.59,350,7.022,1683,704,0.00443
+openai/gpt-5.4-mini,Images formed by plane mirrors,7,False,False,"JSONDecodeError: Expecting ',' delimiter: line 1 column 1704 (char 1703)",0,0,False,4,0.0,0.0,0,5.705,1604,569,0.003763
+openai/gpt-5.4-mini,Generating Electricity,6,True,True,,4,2,True,4,8.47,56.46,323,5.818,1736,644,0.0042
+openai/gpt-5.4-mini,Structure and function of the human eye,9,True,True,,4,1,True,4,7.57,70.72,319,4.806,1956,537,0.003884
+openai/gpt-5.4-mini,Photosynthesis,8,True,True,,4,2,True,4,8.45,61.93,324,5.521,1577,616,0.003955
+openai/gpt-5.4-mini,Morphological features of flowering plants,7,True,True,,5,1,True,4,8.81,63.4,424,6.147,1924,741,0.004778
+openai/gpt-5.6-luna,Nanotechnology,9,True,True,,4,2,True,4,12.81,28.09,293,9.606,1683,734,0.001217
+openai/gpt-5.6-luna,Images formed by plane mirrors,7,True,True,,4,2,True,4,9.78,53.33,223,7.5,1604,619,0.001064
+openai/gpt-5.6-luna,Generating Electricity,6,False,False,"JSONDecodeError: Expecting ',' delimiter: line 1 column 1792 (char 1791)",0,0,False,4,0.0,0.0,0,9.122,1736,724,0.001216
+openai/gpt-5.6-luna,Structure and function of the human eye,9,False,False,"JSONDecodeError: Expecting ',' delimiter: line 1 column 2098 (char 2097)",0,0,False,4,0.0,0.0,0,7.681,1956,705,0.001237
+openai/gpt-5.6-luna,Photosynthesis,8,False,False,"JSONDecodeError: Expecting ',' delimiter: line 1 column 1638 (char 1637)",0,0,False,4,0.0,0.0,0,6.632,1577,621,0.001061
+openai/gpt-5.6-luna,Morphological features of flowering plants,7,True,True,,4,2,True,4,9.32,56.88,257,8.994,1924,886,0.001448
+deepseek/deepseek-v4-flash-0731,Nanotechnology,9,False,False,"JSONDecodeError: Expecting ',' delimiter: line 9 column 12 (char 2046)",0,0,False,4,0.0,0.0,0,29.987,1665,1367,0.000271
+deepseek/deepseek-v4-flash-0731,Images formed by plane mirrors,7,True,True,,4,2,True,4,5.27,76.23,298,62.122,1608,2232,0.000374
+deepseek/deepseek-v4-flash-0731,Generating Electricity,6,True,True,,4,2,True,4,8.67,57.7,334,30.394,1821,2657,0.00044
+deepseek/deepseek-v4-flash-0731,Structure and function of the human eye,9,False,False,"JSONDecodeError: Expecting ',' delimiter: line 23 column 6 (char 3264)",0,0,False,4,0.0,0.0,0,28.279,2030,2999,0.000495
+deepseek/deepseek-v4-flash-0731,Photosynthesis,8,True,True,,4,2,True,4,7.52,67.48,266,75.693,1573,1936,0.000335
+deepseek/deepseek-v4-flash-0731,Morphological features of flowering plants,7,True,True,,4,2,True,4,5.23,73.42,285,129.468,1926,1070,0.00025
+google/gemini-3.7-flash,Nanotechnology,9,True,True,,3,2,True,4,15.47,15.75,284,17.122,1671,2223,0.004795
+google/gemini-3.7-flash,Images formed by plane mirrors,7,True,True,,3,2,True,4,10.14,50.96,257,14.412,1641,2019,0.004401
+google/gemini-3.7-flash,Generating Electricity,6,True,True,,3,2,True,4,11.78,32.81,249,12.279,1725,1663,0.003765
+google/gemini-3.7-flash,Structure and function of the human eye,9,True,True,,4,2,True,4,9.91,54.9,364,12.183,1941,1574,0.003679
+google/gemini-3.7-flash,Photosynthesis,8,True,True,,4,2,True,4,10.17,47.52,299,14.101,1557,1855,0.004062
+google/gemini-3.7-flash,Morphological features of flowering plants,7,True,True,,3,2,True,4,11.94,41.02,301,15.402,1921,2115,0.004686
+qwen/qwen3.8-27b,Nanotechnology,9,False,False,JSONDecodeError: Unterminated string starting at: line 6 column 5 (char 651),0,0,False,4,0.0,0.0,0,45.524,1810,3000,0.008419
+qwen/qwen3.8-27b,Images formed by plane mirrors,7,False,False,JSONDecodeError: Expecting value: line 1 column 1 (char 0),0,0,False,4,0.0,0.0,0,181.698,1706,3000,0.008375
+qwen/qwen3.8-27b,Generating Electricity,6,False,False,JSONDecodeError: Expecting value: line 17 column 53 (char 2250),0,0,False,4,0.0,0.0,0,74.878,1822,3000,0.008424
+qwen/qwen3.8-27b,Structure and function of the human eye,9,False,False,JSONDecodeError: Unterminated string starting at: line 10 column 14 (char 2195),0,0,False,4,0.0,0.0,0,74.65,2033,3000,0.008514
+qwen/qwen3.8-27b,Photosynthesis,8,True,True,,3,2,True,4,6.46,72.53,227,91.205,1686,1988,0.005786
+qwen/qwen3.8-27b,Morphological features of flowering plants,7,False,False,"JSONDecodeError: Expecting ',' delimiter: line 23 column 6 (char 2279)",0,0,False,4,0.0,0.0,0,46.454,2029,3000,0.008512
