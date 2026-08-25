@@ -1,0 +1,41 @@
+grade,topic,gt_pages,total_relevant,distinct_pages,page_span,best_distance,cohesion_sd,cohesion_range,sections_hit,covered_alloc,chapters,richness
+6,Characteristics of Organisms,7.0,17,15,156,0.8163,0.146,0.3506,3,20.0,6,rich
+6,Differences between Plants and Animals,8.0,11,11,154,0.6998,0.156,0.427,2,15.0,4,rich
+6,States of Matter,5.0,9,9,119,1.0144,0.136,0.4459,6,26.0,3,rich
+6,Specific Properties of Solid Matter,6.0,6,6,9,0.7295,0.212,0.5753,2,11.0,2,moderate
+6,Types of Water based on Salinity,2.0,9,8,15,0.8305,0.18,0.5429,4,15.0,3,rich
+6,Sources of Light,1.0,19,16,59,0.8271,0.132,0.3988,6,26.0,6,rich
+6,Applications of Light,9.0,28,25,114,0.8577,0.108,0.2994,12,52.0,6,rich
+6,Magnetic Poles,1.0,9,9,11,0.7822,0.186,0.5591,4,9.0,3,rich
+6,Generating Electricity,6.0,18,18,84,0.7091,0.111,0.3555,7,41.0,6,rich
+6,Weather,2.0,13,12,43,1.0549,0.088,0.2656,4,16.5,5,rich
+7,Morphological features of flowering plants,2.0,13,12,83,0.7174,0.09,0.2632,5,25.0,5,rich
+7,Vertebrates and invertebrates,6.0,5,5,14,0.6271,0.239,0.669,2,10.0,2,moderate
+7,Systems of the human body,9.0,12,12,36,0.7993,0.14,0.4631,4,25.0,4,rich
+7,Identification of acids and bases,1.0,7,6,9,0.7096,0.167,0.5909,2,9.0,3,rich
+7,Water as a solvent,4.0,5,5,8,0.6621,0.219,0.6673,2,7.0,2,moderate
+7,Capacitors,4.0,4,4,5,0.9862,0.222,0.5975,2,6.0,2,moderate
+7,Kinetic energy,2.0,24,22,57,0.9254,0.121,0.358,9,28.0,6,rich
+7,Images formed by plane mirrors,8.0,6,6,17,0.4913,0.116,0.3539,2,17.0,2,moderate
+7,Layers of atmosphere,5.0,8,7,11,0.645,0.17,0.4698,2,12.0,3,rich
+7,Rock weathering,3.0,7,6,11,0.6885,0.235,0.6137,3,10.5,3,rich
+8,Microorganisms,2.0,13,10,17,0.7904,0.115,0.3479,5,18.0,5,rich
+8,Main vertebrate groups,7.0,10,10,14,0.8204,0.173,0.4766,4,24.0,4,rich
+8,Photosynthesis,5.0,11,10,22,0.6766,0.116,0.3922,5,22.0,4,rich
+8,Combustion,4.0,24,15,140,0.9332,0.083,0.2706,8,48.0,6,rich
+8,Neutralisation,6.0,0,0,0,1.1649,0.127,0.41,0,0,0,refused
+8,Current controlling components,6.0,15,14,36,1.0672,0.095,0.2907,8,34.0,5,rich
+8,Resistance of a conductor,4.0,4,4,11,0.6646,0.224,0.741,3,13.0,2,moderate
+8,Geomagnetism,1.0,16,12,18,0.8432,0.148,0.464,6,19.0,6,rich
+8,The Solar system,6.0,19,15,30,0.8574,0.162,0.4233,5,27.0,6,rich
+8,Floods,1.0,13,8,15,0.8306,0.137,0.4076,3,9.0,5,rich
+9,Structure and function of the human eye,6.0,11,11,21,0.6684,0.13,0.3892,4,20.0,4,rich
+9,Structure of the human heart,1.0,11,9,67,0.9333,0.204,0.514,6,23.0,4,rich
+9,Evolution,5.0,17,12,16,0.9651,0.092,0.3022,6,17.0,6,rich
+9,Electroplating,5.0,11,8,9,0.694,0.155,0.4004,3,9.0,4,rich
+9,Compounds,2.0,14,12,52,0.7904,0.134,0.4515,6,24.0,5,rich
+9,Magnitude of force,1.0,35,27,31,0.8843,0.113,0.2917,11,31.0,6,rich
+9,Hydrometers,6.0,8,7,9,0.7391,0.164,0.5102,3,9.0,3,rich
+9,Inclined plane,2.0,12,9,45,0.8173,0.158,0.4941,5,30.0,4,rich
+9,Earthquakes,7.0,6,6,18,0.604,0.165,0.5525,2,13.0,2,moderate
+9,Nanotechnology,7.0,14,12,16,0.6769,0.055,0.1648,5,21.0,5,rich

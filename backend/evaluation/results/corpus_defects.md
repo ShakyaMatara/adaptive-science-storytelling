@@ -484,3 +484,97 @@ Any Chapter 7 result can therefore be recomputed with recovered content excluded
 the chapter is to report what proportion of its results rest on recovered text. Where
 a result does depend on it, the conditional reading in `g9p1_coverage_gap.md` applies:
 excluding recovered chunks restores the six originally fully-missing sections.
+
+---
+
+## FINDING-9 - the planner measured lexical cohesion, not curricular coverage (REPAIRED 2026-08-25)
+
+An evaluation-driven design change, not a tuning adjustment. Recorded here so the
+chain from measurement to redesign is auditable.
+
+**Detection.** T3 compared the planner's output against the pages the published
+contents pages devote to each topic. Spearman's rho was **-0.143** for chapter count
+and **-0.111** for passage count: no relationship, very slightly negative.
+
+**The defect, and why it is a defect rather than a poor threshold.** The keep-window
+was RELATIVE - keep every passage within +65% of the best hit's distance - so the
+window's WIDTH was a function of how well the query happened to match:
+
+| best hit | window | effect |
+|---|---|---|
+| 0.60 (good match) | 0.99 | narrow net, few passages counted |
+| 1.00 (poor match) | 1.65, capped at 1.45 | wide net, many passages counted |
+
+**Topics matching the corpus worse were credited with more content.** Measured over
+the 40 T1 positives, passage count correlated **+0.545** with the best hit's distance.
+A measure of how much content exists should have no relationship with how well the
+query matched; a positive one is a design error on its face, independent of any
+correlation with coverage. Passage count also correlated **-0.771** with the spread of
+retrieval distances, so it was tracking lexical cohesion roughly seven times more
+strongly than curricular coverage.
+
+**Control - excluding the rival explanation.** The repair reduces mean passages from
+12.4 to 7.4, so the improvement could in principle come from keeping fewer passages
+rather than from removing the best-distance dependence. Applying the ORIGINAL relative
+rule truncated to the top N passages, with N chosen so the mean matches the repair:
+
+| rule | mean passages | rho(coverage, count) |
+|---|---|---|
+| as designed | 12.43 | **-0.134** |
+| magnitude-matched control (top 8) | 7.33 | **-0.133** |
+| repair (absolute radius 1.15) | 7.22 | **+0.364** |
+
+The control reproduces the repair's magnitude and **none** of its improvement. Across
+truncation from N=3 to N=15 the correlation never rises above 0.000. Truncation
+explains nothing; removing the best-distance dependence explains all of it.
+
+**The repair.** `gather_topic_content` keeps every passage inside a fixed
+`RELEVANCE_RADIUS` instead of a window scaled to the best hit.
+`RELEVANCE_MAX_DISTANCE` is retained as a hard ceiling and `RELEVANCE_REL_MARGIN` is
+retained, unused, to document what was superseded. `GATE_MAX_DISTANCE`,
+`PASSAGES_PER_CHAPTER`, `RICHNESS_RANGES` and everything in `adaptation.py` are
+untouched.
+
+**Why 1.15 and not the best-scoring value.** `RELEVANCE_RADIUS = GATE_MAX_DISTANCE`:
+the system already uses 1.15 to decide whether a topic is in the book at all, so using
+the same radius to decide how much of the book covers it is one relevance criterion
+used consistently. 1.15 is **not** the value that maximises the correlation - 0.95
+scores +0.419 and 1.20 scores +0.466 on section allocation. A value that follows from
+the existing design was preferred over a value selected from a sweep, because the
+latter would be a fit rather than a repair. The correlation is positive and stable
+across the whole range 0.85 to 1.30, which is what identifies this as a mechanism
+defect rather than a parameter choice.
+
+**Measurement, before and after. Both figures are permanent; the repaired figure does
+not replace the original anywhere.**
+
+| | As designed | After repair |
+|---|---|---|
+| rho(coverage, passage count) | **-0.111** | **+0.411** |
+| rho(coverage, chapter count) | **-0.143** | **+0.270** |
+| rho(coverage, distinct pages retrieved) | +0.017 | **+0.475** |
+| rho(best distance, passage count) | **+0.545** | **-0.634** |
+| rho(cohesion spread, passage count) | -0.771 | -0.333 |
+| mean passages per topic | 12.43 | 7.41 |
+| richness bands populated | thin 0, moderate 7, rich 32 | thin 4, moderate 14, rich 21 |
+
+**The repair is PARTIAL, and this must be reported.** The dependence on match quality
+was not eliminated. It changed sign and grew slightly: rho(best distance, passage
+count) moved from +0.545 to **-0.634**. The perverse direction is fixed - topics that
+match worse are no longer credited with more content - but count remains substantially
+determined by match quality. This is intrinsic to measuring density within a fixed
+radius: if the nearest chunk is far, every chunk is far, so fewer fall inside. The
+cohesion dependence roughly halved (-0.771 to -0.333) but did not vanish either.
+`total_relevant` is therefore a better proxy for curricular coverage than it was, and
+still not a clean one.
+
+**Standing.** The repaired relationship is **weak to moderate** (+0.27 for chapter
+count). It does not vindicate content-derived instructional scaling as a strong claim.
+Chapter 7 reports both the as-designed and post-repair figures, and states that the
+original claim of derivation from coverage remains stronger than the evidence
+supports.
+
+**Side effects checked.** T1 is unchanged in every figure, because the gate decision
+depends only on the best hit's distance and not on the keep rule. T2 is unchanged, as
+expected, since it does not use retrieval. `python manage.py test core` passes 27
+tests.
