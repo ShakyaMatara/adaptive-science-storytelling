@@ -16,6 +16,7 @@ Usage:
     python manage.py build_index path\\to\\folder
 """
 
+import json
 import re
 from collections import Counter
 from pathlib import Path
@@ -31,6 +32,10 @@ DEFAULT_TEXTBOOKS_DIR = settings.BASE_DIR / "textbooks"
 # Chunking sizes, in words.
 CHUNK_WORDS = 250
 CHUNK_OVERLAP = 40
+
+# Positional slack, in points, when treating two identical glyphs at the same spot
+# as a single overprinted impression rather than two characters. See extract_pages.
+DEDUPE_TOLERANCE = 1.0
 
 # Heading patterns seen in the books:
 #   chapter -> "01 Plant Diversity"            (two digits, space, Capitalised title; NO dot)
@@ -92,6 +97,24 @@ TOC_PATH = settings.BASE_DIR / "evaluation" / "probes" / "textbook_toc.md"
 TOC_BOOK_RE = re.compile(r"^##\s+(\S+\.pdf)\s*$")
 TOC_CHAPTER_RE = re.compile(r"^(\d+)\.\s+(.*?)\s+[—-]\s+(\d+)\s*$")
 
+# Symbol-font glyphs land in the Unicode Private Use Area, where they carry no
+# meaning and render as nothing. The tick and cross marks of comparison tables are
+# the damaging case: "Having a mass [tick] / Have not [cross]" reaches the index as
+# "Having a mass - Have not -", deleting the distinction the table teaches while the
+# surrounding sentence still reads as well-formed English. Each mapping below was
+# identified from at least two contexts in the books.
+SYMBOL_MAP = {
+    0xF0FC: "✓",  # Wingdings check mark - "Having a mass [check]"
+    0xF0FB: "✗",  # Wingdings ballot X    - "Have not [X]"
+    0xF050: "✓",  # "Mark true ([check]) or false ([X])"
+    0xF04F: "✗",
+    0xF03D: "•",  # bullet marker in activity lists
+    0xF001: "",        # decorative glyph beside a signature in the foreword
+}
+
+# Recovered text for pages the PDFs supply only as images. Keyed by PDF page number.
+RECOVERED_PATH = settings.BASE_DIR / "evaluation" / "probes" / "g9p1_recovered_pages.json"
+
 # Map the "fancy" quote characters found in the books to plain ASCII quotes.
 QUOTE_MAP = {
     0x2018: "'", 0x2019: "'", 0x201A: "'", 0x201B: "'",   # ' ' ‚ ‛
@@ -125,8 +148,9 @@ def clean_page_text(raw):
     # 2) Rejoin words split by a hyphen at a line break: "non-\nflowering" -> "nonflowering".
     text = re.sub(r"(\w)-\n(\w)", r"\1\2", text)
 
-    # 3) Normalise fancy quote characters to plain quotes.
-    text = text.translate(QUOTE_MAP)
+    # 3) Normalise fancy quote characters, and restore symbol-font glyphs that
+    #    would otherwise be invisible Private Use Area codepoints.
+    text = text.translate(QUOTE_MAP).translate(SYMBOL_MAP)
 
     # 4) Collapse runs of spaces/tabs.
     text = re.sub(r"[ \t]+", " ", text)
@@ -239,7 +263,8 @@ def _chapter_heading_pages(cleaned_pages):
     return {page_no for page_no, count in per_page.items() if count == 1}
 
 
-def build_chunks_for_file(pages, grade, source_file):
+def build_chunks_for_file(pages, grade, source_file, recovered_pages=frozenset(),
+                          agreement=None):
     """Turn (pdf_page_number, raw_text) pairs into tagged chunk dicts.
 
     We ingest all body text (so no book is ever silently dropped, regardless of how
@@ -255,6 +280,7 @@ def build_chunks_for_file(pages, grade, source_file):
     most recent heading instead would collapse whole books onto a handful of page
     numbers and make the learner-facing citations wrong.
     """
+    agreement = agreement or {}
     chunks = []
     chunk_index = 0
     current_section = ""
@@ -286,6 +312,7 @@ def build_chunks_for_file(pages, grade, source_file):
             end = min(start + length - 1, len(word_pages) - 1)
             printed_start = printed_page(source_file, word_pages[start])
             printed_end = printed_page(source_file, word_pages[end])
+            touched_recovered = recovered_pages.intersection(word_pages[start:end + 1])
             chunks.append({
                 "text": piece,
                 "grade": grade,
@@ -297,6 +324,17 @@ def build_chunks_for_file(pages, grade, source_file):
                 "page": word_pages[start],
                 "page_label_start": "" if printed_start is None else str(printed_start),
                 "page_label_end": "" if printed_end is None else str(printed_end),
+                # Provenance: "text_layer" for text the PDF supplied, "ocr_vision"
+                # for text recovered from an image-only page. A chunk routinely spans
+                # several pages, so it counts as recovered when ANY of its words came
+                # from a recovered page. Tagging by the starting page alone would leave
+                # chunks that DO contain recovered text looking like pure text layer,
+                # and they could not then be excluded from an analysis.
+                "source_type": ("ocr_vision" if touched_recovered else "text_layer"),
+                # Lowest A/B extraction agreement among the recovered pages this chunk
+                # draws on; empty for text-layer chunks.
+                "ocr_agreement": ("" if not touched_recovered else
+                                  str(min(agreement.get(pg, 0.0) for pg in touched_recovered))),
                 "chunk_index": chunk_index,
             })
             chunk_index += 1
@@ -327,13 +365,50 @@ def build_chunks_for_file(pages, grade, source_file):
     return chunks
 
 
+def load_recovered(source_file):
+    """Recovered text and its verification score for pages supplied only as images.
+
+    Returns ({page_no: text}, {page_no: A/B extraction agreement}).
+
+    G9P1.pdf is distributed with 19 content pages that carry no text layer at all, so
+    neither pdfminer nor pdfium can read them and roughly a sixth of that book would
+    otherwise be missing from the index. Those pages were rendered at 300 DPI and
+    transcribed verbatim. Chunks built from them are flagged source_type="ocr_vision"
+    so any analysis can exclude them.
+    """
+    if not RECOVERED_PATH.exists():
+        return {}, {}
+    with open(RECOVERED_PATH, "r", encoding="utf-8") as fh:
+        payload = json.load(fh)
+    if payload.get("_source_file") != source_file:
+        return {}, {}
+    pages = {int(k): v for k, v in payload.get("pages", {}).items()}
+    agreement = {int(k): float(v) for k, v in payload.get("agreement", {}).items()}
+    return pages, agreement
+
+
 def extract_pages(pdf_path):
-    """Return [(pdf_page_number, raw_text), ...] for a PDF (page numbers 1-based)."""
+    """Return ([(page_no, raw_text), ...], {recovered pages}, {page: A/B agreement}).
+
+    `dedupe_chars` removes overprinted duplicate glyphs. The books render bold type by
+    drawing the same glyph twice, which pdfminer faithfully reports twice, so an
+    affected run extracts as "TThhrreeee ppeenn ttuubbeess". Deduplication is done on
+    the CHARACTER stream using glyph position, not on the flattened string: a regex
+    over doubled letters would destroy "letter", "book" and "cell". The tolerance is
+    the positional slack allowed when treating two identical glyphs as one
+    impression; the recovered text is identical for any value from 0.5 to 3.0, so the
+    choice is not delicate, and 1.0 is pdfplumber's own default.
+    """
+    recovered, agreement = load_recovered(Path(pdf_path).name)
     pages = []
     with pdfplumber.open(pdf_path) as pdf:
         for i, page in enumerate(pdf.pages):
-            pages.append((i + 1, page.extract_text() or ""))
-    return pages
+            page_no = i + 1
+            if page_no in recovered:
+                pages.append((page_no, recovered[page_no]))
+                continue
+            pages.append((page_no, page.dedupe_chars(tolerance=DEDUPE_TOLERANCE).extract_text() or ""))
+    return pages, set(recovered), agreement
 
 
 class Command(BaseCommand):
@@ -368,8 +443,9 @@ class Command(BaseCommand):
                 continue
 
             self.stdout.write(f"Reading {pdf_path.name} (grade {grade}) ...")
-            pages = extract_pages(pdf_path)
-            chunks = build_chunks_for_file(pages, grade, pdf_path.name)
+            pages, recovered_pages, agreement = extract_pages(pdf_path)
+            chunks = build_chunks_for_file(pages, grade, pdf_path.name, recovered_pages,
+                                           agreement)
 
             if not chunks:
                 self.stdout.write(self.style.WARNING(
@@ -409,6 +485,8 @@ class Command(BaseCommand):
                     "page": c["page"],
                     "page_label_start": c["page_label_start"],
                     "page_label_end": c["page_label_end"],
+                    "source_type": c["source_type"],
+                    "ocr_agreement": c["ocr_agreement"],
                     "chunk_index": c["chunk_index"],
                 } for c in part],
             )

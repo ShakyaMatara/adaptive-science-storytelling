@@ -12,17 +12,23 @@ documented as a limitation, and the before/after measurement.
 |---|---|---|---|
 | 1 | Page metadata recorded the last heading's page, not the text's own page | Index metadata audit | **Repaired** |
 | 2 | Chapter labels absent or wrong in three of four grades | Chapter-label distribution audit | **Repaired** |
-| 3 | Doubled characters from overprinted bold text | Page-attribution verification | Documented |
+| 3 | Doubled characters from overprinted bold text | Page-attribution verification | **Repaired** |
 | 4 | Mojibake from legacy Sinhala/Tamil font encodings | Manual spot-check | Documented |
 | 5 | Facing-page text captured into a page's extraction | Supervisor spot-check challenge | Documented, impact measured |
 | 6 | Citations named the PDF page index rather than the printed page | Span audit, then supervisor verification | **Repaired** |
-| 7 | Symbol-font ticks lost to Private Use Area codepoints | Review of worked examples | Documented |
-| 8 | Grade 9 Part 1 distributed with image-only pages | Table-of-contents validation | Documented, sections enumerated |
+| 7 | Symbol-font ticks lost to Private Use Area codepoints | Review of worked examples | **Repaired** |
+| 8 | Grade 9 Part 1 distributed with image-only pages | Table-of-contents validation | **Repaired** by dual-extraction recovery |
 
-Three defects were repaired with quantified before/after measurement; five are
-documented as measured limitations. Two of the repairs (FINDING-2 and FINDING-6) were
-only possible once the published tables of contents were transcribed and used as an
-authoritative reference independent of the PDFs' text layer.
+Six defects were repaired with quantified before/after measurement; two are documented
+as measured limitations. Two of the repairs (FINDING-2 and FINDING-6) were only
+possible once the published tables of contents were transcribed and used as an
+authoritative reference independent of the PDFs' text layer, and one (FINDING-8)
+required recovering text from page images under a two-source verification procedure.
+
+All eight were found by systematic inspection before any experiment was run. Three
+were found only because an earlier conclusion was challenged and re-derived: FINDING-5
+and FINDING-6 came out of a failed supervisor spot-check of the citations, and
+FINDING-8 out of validating the page mapping against the tables of contents.
 
 ---
 
@@ -368,3 +374,106 @@ image-only pages are a genuine obstacle to retrieval-grounded tutoring in this
 setting. No amount of threshold tuning recovers content that was never text, and a
 system evaluated without checking for it would attribute a distribution defect to its
 own retrieval layer.
+
+---
+
+## Repairs applied after the defect survey
+
+FINDING-3, FINDING-7 and FINDING-8 were initially documented as limitations and were
+subsequently repaired. Their entries above record the original measurement; the
+outcome of each repair is below.
+
+### FINDING-3 - doubled characters (REPAIRED)
+
+**Repair.** Deduplication is applied to the CHARACTER stream, not to the flattened
+string: `page.dedupe_chars(tolerance=1.0)` removes a glyph when an identical glyph in
+the same font and size sits at the same position, which is what overprinted bold
+produces. A regex over doubled letters was rejected outright because it would destroy
+`letter`, `book` and `cell`.
+
+**Tolerance.** Chosen empirically. The recovered text is identical for any value from
+0.5 to 3.0, so the choice is not delicate, and 1.0 is pdfplumber's own default. Larger
+values were tested and rejected: at 8.0 the residual barely improves while legitimate
+English is destroyed - across the two worst-affected books `letter` falls 5 to 0,
+`book` 7 to 0, `cell` 30 to 0, `little` 4 to 0 and `different` 57 to 6.
+
+**Measurement.**
+
+| | Before | After |
+|---|---|---|
+| Chunks containing doubled words | 97/1101 (8.8%) | **7/1122 (0.6%)** |
+| Grade 7 (worst affected) | 85/275 (30.9%) | 7/275 (2.5%) |
+| Grade 8 | 12/332 (3.6%) | 0 |
+
+**Safety check - passed.** Every required word survives, and several rise because
+previously-doubled instances now read correctly: `letter` 23 to 27, `book` 55 to 62,
+`coffee` 3 to 4, `needed` 44 to 51, `cell` 140 to 181, `little` 27 to 29, `different`
+345 to 409, `immediately` 8 to 9, `assessment` 2. (`success` does not occur in these
+books, before or after.)
+
+**Chunk boundaries are unaffected.** Deduplication removes characters but not
+whitespace tokens, and chunking is by word count, so every book outside G9P1 produces
+exactly the same number of chunks as before.
+
+**Residual limitation.** Seven chunks (0.6%), all in Grade 7, still contain doubled
+runs where the overprint offset exceeds the tolerance - for example
+`CCoonnvveexx MMiirrrroorrss` on G7P1 p.145. Raising the tolerance to clear them
+damages legitimate English, as measured above, so they are left as they are.
+
+### FINDING-7 - symbol-font glyphs (REPAIRED)
+
+**Repair.** Private Use Area codepoints are mapped to their Unicode equivalents during
+page cleaning. Each mapping was identified from at least two contexts in the books
+rather than assumed from a font table:
+
+| Codepoint | Mapped to | Evidence |
+|---|---|---|
+| U+F0FC | ✓ | `Having a mass - [F0FC]` / `1' pen [F0FC] [F0FC]` |
+| U+F0FB | ✗ | `Have not - [F0FB]` / `3' sunlight [F0FB] [F0FB]` |
+| U+F050 | ✓ | `Mark true ([F050]) or false ([F04F])` |
+| U+F04F | ✗ | same line, and `put a ([F050]) and if wrong put a ([F04F])` |
+| U+F03D | • | bullet marker in Activity 1.3 lists |
+| U+F001 | (removed) | decorative glyph beside a signature in the foreword |
+
+**Measurement.** Chunks containing meaningless PUA codepoints: **9/1101 (0.8%) to
+0/1122 (0.0%)**. Sixteen tick and cross marks are now present in the index. The G6
+p.35 comparison table, which previously indexed as `1' pen` and `3' sunlight` with the
+entire answer key deleted, now reads `1' pen ✓ ✓` and `3' sunlight ✗ ✗`.
+
+### FINDING-8 - Grade 9 Part 1 coverage gap (REPAIRED)
+
+Full detail in `g9p1_coverage_gap.md`; per-page figures in `ocr_dual_extraction.csv`.
+
+**Repair.** All 19 image-only pages were rendered at 300 DPI and extracted twice by
+independent means - Tesseract v5.5.3 for verification, vision transcription for
+content - because text recovered from an image becomes citable as a textbook page, and
+one extraction is an assertion rather than evidence.
+
+**Measurement.** All 19 pages pass a three-part gate: at least 100 characters
+(695-1,970), dictionary-word ratio at least 0.60 (0.738-0.956), and A/B token
+agreement at least 0.70 (**0.782-0.990, mean 0.924**). Every substantive divergence is
+Tesseract missing or garbling text, never the transcription introducing content.
+Independently, 8 of 8 pages that open a contents-listed section reproduce that heading
+verbatim on exactly the predicted printed page.
+
+**Outcome.** 25,006 characters recovered; `G9P1.pdf` 123 to 144 chunks, Grade 9 338 to
+359, corpus 1,101 to 1,122. No section remains fully missing, so the Phase 2 exclusion
+list is empty.
+
+## Provenance of recovered text
+
+Every chunk drawing on recovered text carries `source_type="ocr_vision"` and
+`ocr_agreement`, the lowest A/B agreement among the recovered pages it uses;
+text-layer chunks carry `source_type="text_layer"` and no agreement value. **36 chunks
+(3.2% of the index) are flagged.**
+
+An earlier implementation tagged a chunk by its starting page and flagged only 21. A
+chunk routinely spans several pages, so that left 15 chunks which *contained*
+recovered text looking like pure text layer - quietly defeating the exclusion the flag
+exists to permit. A chunk is now flagged when any of its words came from a recovered
+page.
+
+Any Chapter 7 result can therefore be recomputed with recovered content excluded, and
+the chapter is to report what proportion of its results rest on recovered text. Where
+a result does depend on it, the conditional reading in `g9p1_coverage_gap.md` applies:
+excluding recovered chunks restores the six originally fully-missing sections.
