@@ -27,11 +27,18 @@ Thumbs.db
 # --- Evaluation harness ---
 # Generated results are reproducible by re-running the eval_* commands, so they are
 # not version-controlled...
-backend/evaluation/results/
+backend/evaluation/results/*
 # ...with one exception: the pre-repair index measurement cannot be reproduced once
 # the index is rebuilt, so the defect-and-repair evidence is kept under version control.
 !backend/evaluation/results/index_quality_before.csv
 !backend/evaluation/results/index_quality_after.csv
+# ...along with the curated evidence the thesis cites directly.
+!backend/evaluation/results/corpus_defects.md
+!backend/evaluation/results/text_quality_impact.md
+!backend/evaluation/results/g9p1_coverage_gap.md
+!backend/evaluation/results/toc_page_validation.csv
+!backend/evaluation/results/chunk_page_spans.csv
+!backend/evaluation/results/duplicate_impact.csv
 !backend/evaluation/results/corpus_defects.md
 !backend/evaluation/results/text_quality_impact.md
 !backend/evaluation/results/duplicate_impact.csv

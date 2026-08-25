@@ -55,17 +55,42 @@ CHAPTER_RE = re.compile(
 )
 SECTION_RE = re.compile(r"^(\d{1,2}\.\d{1,2})\s+([A-Z][A-Za-z][A-Za-z &',()\-]{1,68})$")
 
-# Printed page numbers ("folios") live in the running footer, which clean_page_text
-# discards. They must therefore be read from the RAW page text. Two layouts occur:
-#   spread -> "<left folio> Science | Title Science | Title <right folio>"
-#             one PDF page carries a two-page spread, i.e. TWO printed pages
-#   single -> "Science | Title <folio>"  or  "<folio> Science | Title"
-# "PB" stands in for the folio of the unnumbered page facing printed page 1.
-# A PDF page index is meaningless to a learner holding the book; the folio is the
-# number actually printed on the page, so citations are built from these.
-FOOTER_SPREAD_RE = re.compile(r"^(\d+|PB)\s+Science\s*\|.*Science\s*\|.*?(\d+)\s*$")
-FOOTER_RIGHT_RE = re.compile(r"^Science\s*\|.*?(\d+)\s*$")
-FOOTER_LEFT_RE = re.compile(r"^(\d+)\s+Science\s*\|")
+# --- Printed page numbers -------------------------------------------------------
+# Each PDF page holds exactly ONE printed page. The offset is the front matter that
+# precedes printed page 1, so printed = pdf_page - offset, and pages outside the
+# valid range (front and back matter) carry no printed number at all.
+#
+# An earlier implementation parsed the folio out of the running footer instead. That
+# was wrong: a page's extracted text frequently captures the FACING page's running
+# footer as well, so a footer can read "14 Science | ... Science | ... 15" for a page
+# that is printed page 14 or printed page 15 with equal likelihood. Measured across
+# the corpus, the correct folio was the left one on 193 such pages and the right one
+# on 192 - indistinguishable from a coin toss.
+#
+# The offset table below is verified two independent ways:
+#   * page arithmetic - (PDF pages) - (front matter) - (trailing blanks) equals the
+#     last printed page, exactly, in all seven books;
+#   * table of contents - all 272 locatable TOC titles appear as a heading on exactly
+#     the PDF page this table predicts, in all seven books, with no exceptions.
+PAGE_OFFSETS = {
+    # source_file: (offset, first valid PDF page, last valid PDF page)
+    "G6.pdf":   (14, 15, 189),
+    "G7P1.pdf": (12, 13, 160),
+    "G7P2.pdf": (12, 13, 139),
+    "G8P1.pdf": (10, 11, 137),
+    "G8P2.pdf": (10, 11, 152),
+    "G9P1.pdf": (12, 13, 121),
+    "G9P2.pdf": (12, 13, 180),
+}
+
+# The published tables of contents, transcribed from the printed books. This is the
+# authoritative source for chapter attribution: being transcribed rather than
+# extracted, it inherits none of the PDFs' text-layer defects. Several books render
+# their chapter openers as display type split across lines, or as images with no text
+# layer at all, so no pattern applied to the extracted text can recover them.
+TOC_PATH = settings.BASE_DIR / "evaluation" / "probes" / "textbook_toc.md"
+TOC_BOOK_RE = re.compile(r"^##\s+(\S+\.pdf)\s*$")
+TOC_CHAPTER_RE = re.compile(r"^(\d+)\.\s+(.*?)\s+[—-]\s+(\d+)\s*$")
 
 # Map the "fancy" quote characters found in the books to plain ASCII quotes.
 QUOTE_MAP = {
@@ -108,33 +133,68 @@ def clean_page_text(raw):
     return text
 
 
-def printed_folios(raw_page_text):
-    """Return (first_folio, last_folio) printed on one PDF page, as strings.
+def printed_page(source_file, pdf_page):
+    """The number printed on the page, or None for front/back matter.
 
-    Returns (None, None) when the footer is absent or unparseable - about 11% of
-    pages, mostly chapter openers and front/back matter - and callers then fall
-    back to the numeric PDF page rather than emitting a folio that might be wrong.
-
-    On a spread page the two halves cannot be told apart once the layout is
-    flattened to text, so the pair spans the whole spread. A citation derived from
-    it is therefore conservative: it may name one folio more than the text truly
-    occupies, which is preferable to naming a single wrong page.
+    This is the number a learner holding the book can turn to; the PDF page index is
+    not, and appears nowhere in the printed book.
     """
-    for line in raw_page_text.split("\n"):
-        stripped = line.strip()
-        if "Science" not in stripped or "|" not in stripped:
-            continue
-        match = FOOTER_SPREAD_RE.match(stripped)
-        if match:
-            left = None if match.group(1) == "PB" else match.group(1)
-            return (left or match.group(2), match.group(2))
-        match = FOOTER_RIGHT_RE.match(stripped)
-        if match:
-            return (match.group(1), match.group(1))
-        match = FOOTER_LEFT_RE.match(stripped)
-        if match:
-            return (match.group(1), match.group(1))
-    return (None, None)
+    entry = PAGE_OFFSETS.get(source_file)
+    if entry is None:
+        return None
+    offset, first_valid, last_valid = entry
+    if not first_valid <= pdf_page <= last_valid:
+        return None
+    return pdf_page - offset
+
+
+_TOC_CACHE = {}
+
+
+def load_toc(path=TOC_PATH):
+    """Parse the tables of contents into {source_file: [(start_page, title), ...]}.
+
+    Only chapter-level entries are read; sub-section labels still come from the
+    headings in the text, which are reliable. The list is sorted by start page so a
+    chunk can be attributed by a simple scan.
+    """
+    if path in _TOC_CACHE:
+        return _TOC_CACHE[path]
+    chapters = {}
+    book = None
+    with open(path, "r", encoding="utf-8") as fh:
+        for line in fh:
+            match = TOC_BOOK_RE.match(line.strip())
+            if match:
+                book = match.group(1)
+                chapters.setdefault(book, [])
+                continue
+            if not book or line.startswith((" ", "\t")):
+                continue  # indented lines are sub-sections
+            match = TOC_CHAPTER_RE.match(line.strip())
+            if match:
+                chapters[book].append((int(match.group(3)), match.group(2).strip()))
+    for book in chapters:
+        chapters[book].sort()
+    _TOC_CACHE[path] = chapters
+    return chapters
+
+
+def chapter_for(source_file, printed):
+    """The chapter containing a printed page: the last one starting at or before it.
+
+    Returns "" when the page precedes the first chapter (front matter) or the book
+    has no table of contents entry.
+    """
+    if printed is None:
+        return ""
+    label = ""
+    for start, title in load_toc().get(source_file, ()):
+        if start <= printed:
+            label = title
+        else:
+            break
+    return label
 
 
 def split_into_word_chunks(text, size=CHUNK_WORDS, overlap=CHUNK_OVERLAP):
@@ -197,7 +257,6 @@ def build_chunks_for_file(pages, grade, source_file):
     """
     chunks = []
     chunk_index = 0
-    current_chapter = "(document)"   # until the first real chapter heading is seen
     current_section = ""
     buf = []                         # [(page_no, line), ...] awaiting the next flush
 
@@ -220,29 +279,32 @@ def build_chunks_for_file(pages, grade, source_file):
             length = len(piece.split())
             if length < 8:      # drop tiny leftovers
                 continue
-            # A chunk routinely runs past the page it starts on, so record the folio
-            # it starts on and the folio it ends on; the citation collapses them when
-            # they match. Missing folios stay empty and the caller falls back.
+            # A chunk routinely runs past the page it starts on, so record the
+            # printed page it starts on and the one it ends on; the citation collapses
+            # them when they match. Front and back matter have no printed number, so
+            # those stay empty and the caller falls back to the PDF page.
             end = min(start + length - 1, len(word_pages) - 1)
-            label_start = folios.get(word_pages[start], (None, None))[0]
-            label_end = folios.get(word_pages[end], (None, None))[1]
+            printed_start = printed_page(source_file, word_pages[start])
+            printed_end = printed_page(source_file, word_pages[end])
             chunks.append({
                 "text": piece,
                 "grade": grade,
                 "source_file": source_file,
-                "chapter": current_chapter or "",
+                # Chapter comes from the published contents page, by printed page
+                # number - never from a pattern applied to the extracted text.
+                "chapter": chapter_for(source_file, printed_start) or "(document)",
                 "section": current_section or "",
                 "page": word_pages[start],
-                "page_label_start": label_start or "",
-                "page_label_end": label_end or "",
+                "page_label_start": "" if printed_start is None else str(printed_start),
+                "page_label_end": "" if printed_end is None else str(printed_end),
                 "chunk_index": chunk_index,
             })
             chunk_index += 1
 
     # Clean every page once, then pre-scan for the pages that carry a lone chapter
-    # heading; candidates on any other page are numbered table rows and stay body text.
-    # Folios come from the RAW text: clean_page_text strips the footer they live in.
-    folios = {page_no: printed_folios(raw) for page_no, raw in pages}
+    # heading. Chapter headings no longer supply the chapter LABEL - that comes from
+    # the table of contents - but they are still a genuine paragraph boundary, so
+    # they continue to flush the buffer exactly as before.
     cleaned = [(page_no, clean_page_text(raw)) for page_no, raw in pages]
     solo_heading_pages = _chapter_heading_pages(cleaned)
 
@@ -255,7 +317,6 @@ def build_chunks_for_file(pages, grade, source_file):
             section_match = SECTION_RE.match(line)
             if chapter_match and page_no in solo_heading_pages:
                 flush()
-                current_chapter = chapter_match.group(2).strip()
                 current_section = ""
             elif section_match:
                 flush()

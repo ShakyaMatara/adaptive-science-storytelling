@@ -11,12 +11,18 @@ documented as a limitation, and the before/after measurement.
 | # | Defect | Detected by | Disposition |
 |---|---|---|---|
 | 1 | Page metadata recorded the last heading's page, not the text's own page | Index metadata audit | **Repaired** |
-| 2 | Numbered table rows accepted as chapter headings | Chapter-label distribution audit | **Repaired** |
+| 2 | Chapter labels absent or wrong in three of four grades | Chapter-label distribution audit | **Repaired** |
 | 3 | Doubled characters from overprinted bold text | Page-attribution verification | Documented |
 | 4 | Mojibake from legacy Sinhala/Tamil font encodings | Manual spot-check | Documented |
-| 5 | Duplicated two-page spreads indexed twice | Supervisor spot-check challenge | Documented, impact measured |
-| 6 | Single-page citation for chunks spanning up to five pages | Span audit | **Repaired** |
+| 5 | Facing-page text captured into a page's extraction | Supervisor spot-check challenge | Documented, impact measured |
+| 6 | Citations named the PDF page index rather than the printed page | Span audit, then supervisor verification | **Repaired** |
 | 7 | Symbol-font ticks lost to Private Use Area codepoints | Review of worked examples | Documented |
+| 8 | Grade 9 Part 1 distributed with image-only pages | Table-of-contents validation | Documented, sections enumerated |
+
+Three defects were repaired with quantified before/after measurement; five are
+documented as measured limitations. Two of the repairs (FINDING-2 and FINDING-6) were
+only possible once the published tables of contents were transcribed and used as an
+authoritative reference independent of the PDFs' text layer.
 
 ---
 
@@ -84,13 +90,41 @@ labels then propagated over the remainder of the book: a materials-properties ta
 | G9P2.pdf | 10 | **0** |
 | G7P1 + G7P2 (genuine) | 18 | **18 - regression check passes** |
 
-**Unresolved.** Grade 8 still detects no chapters. Its books do not use the
-`NN Title` form in the body at all: the chapter number sits alone on a line, where
-`clean_page_text` discards it as a page number, and the title wraps across two
-lines. The only `NN Title` lines are table-of-contents rows, correctly excluded
-because they end in a page number. Detecting these requires multi-line heading
-assembly, which is a different strategy rather than a tighter pattern, and was
-judged out of scope. Grade 8 section labels are unaffected (59 distinct).
+**Second repair - the regex was abandoned entirely.** Tightening the pattern removed
+the false headings but could not create missing ones. Grade 8 still detected no
+chapters at all, because its books never use the `NN Title` form in the body: the
+chapter number sits alone on a line, where `clean_page_text` discards it as a page
+number, and the title wraps across two lines. Grade 9 Part 1 is worse still, since
+several of its chapter openers are image-only pages with no text layer whatsoever
+(FINDING-8). No pattern applied to extracted text can recover a heading that was
+never extracted.
+
+Chapter attribution is therefore no longer derived from the text at all. The
+published tables of contents were transcribed from the printed books into
+`evaluation/probes/textbook_toc.md`, and a chunk is now assigned the chapter whose
+start page is the greatest not exceeding the chunk's printed page. Heading detection
+survives only as a paragraph-boundary signal, so chunk boundaries are unchanged.
+
+**Measurement.** Distinct genuine chapter labels per grade, and the share of chunks
+carrying one:
+
+| Grade | Distinct chapters before | After | Chunks labelled after |
+|---|---|---|---|
+| 6 | 0 (124/160 chunks carried a table row as their label) | **11** | 145/156 (92.9%) |
+| 7 | 18 | **19** | 258/275 (93.8%) |
+| 8 | 0 | **15** | 318/332 (95.8%) |
+| 9 | 0 | **19** | 319/338 (94.4%) |
+
+The per-grade totals match the tables of contents exactly (11, 19, 15 and 19
+chapters). The 61 chunks (5.5%) still labelled `(document)` are front and back
+matter, which precede printed page 1 and belong to no chapter.
+
+**Disagreements between the two methods.** Across all 1101 chunks there is exactly
+one, affecting 19 chunks: for `G7P1.pdf` the regex reported `Static Electricity`
+where the table of contents gives `Generation of Electricity`. This is chapter 03,
+whose heading the regex never detected, so those chunks silently inherited chapter
+02's label. The table of contents is correct. Grade 7's count rising from 18 to 19 is
+this chapter appearing for the first time.
 
 ## FINDING-3 - doubled characters (DOCUMENTED)
 
@@ -177,19 +211,28 @@ information is missing. Incidence is 27 glyph occurrences across 9/1101 chunks
 worked examples for FINDING-4, recorded for completeness, and not investigated
 further.
 
-## FINDING-5 - duplicated two-page spreads (DOCUMENTED, impact measured)
+## FINDING-5 - facing-page text captured into a page's extraction (DOCUMENTED, impact measured)
 
 **Detection.** A supervisor spot-check reported a phrase two pages later than the
-metadata claimed. Re-derivation showed the metadata was correct and that the PDF's
-page structure was the actual cause.
+metadata claimed. Re-derivation showed the metadata was correct and that the PDFs'
+text extraction was the actual cause.
 
-**Cause.** Most PDF pages in these books carry a two-page *spread*, evidenced by
-footers of the form
-`12 Science | Animal Classification Science | Animal Classification 13`. Some
-spreads additionally appear on two consecutive PDF pages, so their text is indexed
-twice.
+**Cause.** A page's extracted text frequently includes material belonging to the
+facing page - most visibly the facing page's running footer, so a footer can read
+`12 Science | Animal Classification Science | Animal Classification 13` on a page
+that is printed page 12 or printed page 13. Body text is captured across the fold in
+the same way, which is why a heading that genuinely begins on printed page 13 also
+appears in the extraction of printed page 12.
 
-| Book | PDF pages with a spread footer |
+**Correction to an earlier reading of this defect.** It was first recorded here as
+evidence that each PDF page carried a two-page *spread*. That was wrong, and the
+error propagated into the citation repair before being caught. Page arithmetic
+disproves it: for every book, (PDF pages) minus front matter minus trailing blanks
+equals the last printed page exactly, so the mapping is strictly one PDF page to one
+printed page. Two-folio footers are an extraction artefact, not a layout fact. See
+FINDING-6.
+
+| Book | PDF pages whose footer carries two folios |
 |---|---|
 | G6.pdf | 0/190 (0%) |
 | G7P1.pdf | 42/160 (26%) |
@@ -198,6 +241,9 @@ twice.
 | G8P2.pdf | 78/152 (51%) |
 | G9P1.pdf | 13/122 (11%) |
 | G9P2.pdf | 158/180 (88%) |
+
+The duplicate-content measurement below is a separate matter and stands unchanged: it
+was computed from chunk text, not from the spread hypothesis.
 
 **Measured impact on curricular coverage.** Because `total_relevant` is the measure
 T3 uses for how much of the syllabus a topic occupies, duplication would inflate the
@@ -235,23 +281,90 @@ Compounding this, a PDF page index is not a number a learner can act on: it appe
 nowhere in the printed book, and on a spread page it corresponds to two printed
 pages.
 
-**Repair.** `build_index.py` parses the printed folio(s) from the running footer -
-which `clean_page_text` discards, so it is read from the raw page text - and stores
-`page_label_start` and `page_label_end` alongside the existing numeric page, which is
-retained because the harness and the verification probe depend on it. Citations are
-rendered from the printed folios, collapsing to a single page when the start and end
-folios agree.
+**First repair attempt, and why it failed.** The printed folio was initially parsed
+out of the running footer. Its folio sequence was perfectly monotonic in all seven
+books and 88.7% of pages parsed, which looked like strong evidence. It was not.
+Monotonicity survives a systematic left/right bias, and that is exactly what the
+implementation had: on a two-folio footer it always took the left value. Supervisor
+verification against the physical books failed all three sample citations, with
+ranges systematically over-wide and one wrong start page.
+
+**Root cause.** There are no spreads (FINDING-5). Because a page's extraction picks up
+the facing page's footer, choosing between the two folios is a coin toss. Measured
+across the corpus, the left folio was correct on 193 such pages and the right on 192.
+
+**Repair.** Footer parsing was removed. `build_index.py` now maps PDF page to printed
+page with a per-book constant: `printed = pdf_page - offset`, with pages outside each
+book's content range carrying no printed number. The numeric PDF page is retained
+because the harness and the verification probe depend on it.
+
+| Book | Offset | Valid PDF pages |
+|---|---|---|
+| G6.pdf | 14 | 15-189 |
+| G7P1.pdf | 12 | 13-160 |
+| G7P2.pdf | 12 | 13-139 |
+| G8P1.pdf | 10 | 11-137 |
+| G8P2.pdf | 10 | 11-152 |
+| G9P1.pdf | 12 | 13-121 |
+| G9P2.pdf | 12 | 13-180 |
+
+**Validation.** Three independent checks, none of which reuses the others' assumptions:
+
+1. **Page arithmetic.** For all seven books, (PDF pages) minus front matter minus
+   trailing blanks equals the last printed page **exactly**.
+2. **Tables of contents.** Every TOC title was located in the extracted text and its
+   PDF page converted through the offset. **272 of 272 locatable entries (100.0%)
+   appear as a heading on exactly the predicted page, in all seven books, with no
+   exceptions.** The remaining 20 of 292 entries could not be located as a heading at
+   all - image-only pages (FINDING-8), display titles interleaved with body text, or
+   wording variance - and are unverifiable rather than failures.
+3. **Footer cross-check.** On the 574 pages carrying a single folio, the offset agrees
+   with it **574 times and disagrees zero times**. On the 385 pages carrying two, the
+   offset always matches one of them - never neither - split 193 left to 192 right,
+   which is the signature of the 1:1 model and of nothing else.
 
 **Measurement.**
 
-- Footer parsed on 959/1081 PDF pages (**88.7%**). The folio sequence is perfectly
-  monotonic in all seven books - zero decreases - which is strong evidence the parse
-  is correct.
-- 1011/1101 chunks (**91.8%**) carry both folios; the remaining 8.2% fall back to the
-  numeric PDF page rather than risk emitting a wrong folio.
-- Resulting citations: 934 ranges (`pp. 1-3`) and 167 single pages (`p. 1`).
+- 1040/1101 chunks (**94.5%**) carry printed folios; the remaining 61 (5.5%) are front
+  and back matter and fall back to the PDF page.
+- Citations: 857 ranges (77.8%) and 244 single pages (22.2%). Ranges are now derived
+  from the chunk's actual first and last page and are therefore exact rather than
+  conservative. Printed-page spans: 183 chunks span one page, 658 two, 186 three, 12
+  four and 1 five.
 
-**Residual limitation.** On a spread page the two halves cannot be distinguished once
-the layout is flattened, so a range may name one folio more than the text truly
-occupies. This is deliberately conservative: over-wide by one page is preferable to
-precisely wrong.
+## FINDING-8 - Grade 9 Part 1 distributed with image-only pages (DOCUMENTED)
+
+**Detection.** During the table-of-contents validation, twelve of the twenty
+unlocatable entries were all from `G9P1.pdf`. The pages they should occupy extract
+zero characters.
+
+**Extent.** 19 of 109 content pages (**17.4%**) of `G9P1.pdf` carry no text layer.
+Every other book in the corpus is at 0.0%; corpus-wide the figure is 19/996 content
+pages (1.9%), entirely confined to this one book. It also explains why `G9P1.pdf`
+contributes only 123 chunks from 109 content pages while `G9P2.pdf` contributes 215
+from 168.
+
+This is materially more serious than the other text-quality defects because it is
+*missing* content rather than corrupted content. Nothing downstream can detect it: a
+topic taught only on those pages is simply absent from the corpus, however well the
+retrieval gate performs, and would otherwise be scored as a gate failure.
+
+**Affected sections.** Enumerated in `g9p1_coverage_gap.md`: 19 chapters and
+sub-sections overlap the blank pages - **6 fully missing, 8 partially missing, 5
+marginal**. The six fully missing are `4.2 Magnitude of force`,
+`6 The Human Circulatory System`, `6.1 Structure of the human heart`,
+`8 Support and Movements of Organisms`, `8.1 Support and movements of animals` and
+`8.2 Bones, muscles and joints`.
+
+**Consequence for the evaluation.** Fully missing sections are excluded from the
+Phase 2 in-syllabus probe set, with this document as the stated evidence: the
+curation rule admits a topic only where it demonstrably appears in that grade's
+textbook, and a section with no text layer demonstrably does not appear in the index.
+Partially missing and marginal sections are retained. Not repaired - closing the gap
+would require OCR over the affected pages, which was out of scope.
+
+**As a result in its own right.** National curriculum PDFs distributed with
+image-only pages are a genuine obstacle to retrieval-grounded tutoring in this
+setting. No amount of threshold tuning recovers content that was never text, and a
+system evaluated without checking for it would attribute a distribution defect to its
+own retrieval layer.
