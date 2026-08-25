@@ -391,7 +391,14 @@ def parse_json(text):
 # costs are indicative and were computed from the rates in force on the run date.
 
 PRICES_PER_MTOK = {
-    # "model-id": (prompt_usd_per_million, completion_usd_per_million),
+    # "model-id": (prompt_usd_per_million, completion_usd_per_million)
+    # Read from openrouter.ai/api/v1/models on 2026-08-25. Prices change; state in the
+    # thesis that costs are indicative and were computed from the rates in force on the
+    # run date, and re-read them before quoting a figure.
+    "openai/gpt-5.6-luna":             (0.20,   1.20),
+    "deepseek/deepseek-v4-flash-0731": (0.0616, 0.1232),
+    "google/gemini-3.7-flash":         (0.375,  1.875),
+    "qwen/qwen3.8-27b":                (0.425,  2.55),
 }
 
 
