@@ -44,6 +44,14 @@ JUDGE_SYSTEM = (
     "You always reply with a single valid JSON object and nothing else."
 )
 
+# The judge returns a short JSON verdict, but several current models spend a large,
+# invisible reasoning budget before emitting it. At max_tokens=1400 deepseek-v4-flash
+# returned an EMPTY visible response on 17 of 24 judgements - the parse error was
+# "Expecting value: line 1 column 1", i.e. nothing to parse rather than bad JSON. The
+# cap must therefore cover hidden reasoning as well as the verdict. Unused headroom
+# costs nothing, since billing is per token actually generated.
+JUDGE_MAX_TOKENS = 3000
+
 JUDGE_TEMPLATE = """Below are textbook excerpts and a story chapter written for a school student.
 
 Extract every distinct scientific claim made in the chapter (ignore narrative details such as
@@ -75,6 +83,12 @@ class Command(BaseCommand):
         parser.add_argument("--judge-model", type=str, default="",
                             help="Model id for judging. Defaults to the configured MODEL.")
         parser.add_argument("--max-usd", type=float, default=0.0, help="Abort above this estimated spend.")
+        parser.add_argument(
+            "--second-judge-model", type=str, default="",
+            help="Judge the first N chapters with a SECOND model as well and report "
+                 "inter-judge agreement. A single unvalidated judge is an assertion.")
+        parser.add_argument("--second-judge-limit", type=int, default=6,
+                            help="How many chapters the second judge also scores.")
         parser.add_argument("--dry-run", action="store_true")
 
     def handle(self, *args, **options):
@@ -96,7 +110,12 @@ class Command(BaseCommand):
         judge_model = options["judge_model"] or llm_config.get_model()
         self.stdout.write(f"Judge model: {judge_model}")
 
-        rows = self._run(topics, options["difficulty"], judge_model, options["max_usd"])
+        second_judge = options["second_judge_model"]
+        if second_judge:
+            self.stdout.write(f"Second judge: {second_judge} "
+                              f"(first {options['second_judge_limit']} chapters)")
+        rows = self._run(topics, options["difficulty"], judge_model, options["max_usd"],
+                         second_judge, options["second_judge_limit"])
         if not rows:
             self.stdout.write(self.style.ERROR("No results collected."))
             return
@@ -109,7 +128,8 @@ class Command(BaseCommand):
             "t4_faithfulness", rows,
             ["topic", "grade", "condition", "total_claims", "supported", "unsupported",
              "contradicted", "faithfulness", "sources_attached", "citations_valid",
-             "ocr_passages", "ocr_share", "ocr_agreement", "words", "fkgl", "judge_error"])
+             "ocr_passages", "ocr_share", "ocr_agreement", "faithfulness2",
+             "total_claims2", "supported2", "judge2_model", "words", "fkgl", "judge_error"])
         self.stdout.write(self.style.SUCCESS(f"\nPer-chapter detail: {path}"))
 
     def _pick_topics(self, n):
@@ -125,7 +145,8 @@ class Command(BaseCommand):
         rich = [(t, g) for _, t, g in scored[-(n - len(thin)):]] if n > len(thin) else []
         return (thin + rich)[:n] or [("The water cycle", 7)]
 
-    def _run(self, topics, difficulty, judge_model, max_usd):
+    def _run(self, topics, difficulty, judge_model, max_usd,
+             second_judge="", second_judge_limit=0):
         budget = harness.Budget("t4_faithfulness")
         gen_model = llm_config.get_model()
         rows = []
@@ -146,6 +167,8 @@ class Command(BaseCommand):
                        "total_claims": 0, "supported": 0, "unsupported": 0, "contradicted": 0,
                        "faithfulness": 0.0, "sources_attached": 0, "citations_valid": "",
                        "ocr_passages": ocr_n, "ocr_share": round(ocr_share, 4),
+                       "faithfulness2": "", "total_claims2": "", "supported2": "",
+                       "judge2_model": "",
                        "ocr_agreement": harness.min_agreement(passages),
                        "words": 0, "fkgl": 0.0, "judge_error": ""}
                 try:
@@ -174,6 +197,20 @@ class Command(BaseCommand):
                         row["unsupported"] = int(verdict.get("unsupported") or 0)
                         row["contradicted"] = int(verdict.get("contradicted") or 0)
                         row["faithfulness"] = round(supported / total_claims, 4) if total_claims else 0.0
+
+                        # A second, independent judge on the same chapter text. Both
+                        # see identical evidence and identical prose, so any
+                        # disagreement is the judges' and not the generator's.
+                        if second_judge and len([r for r in rows if r.get("faithfulness2") != ""]) < second_judge_limit:
+                            v2, u2, e2 = self._judge(evidence, body, second_judge)
+                            budget.record(second_judge, u2, failed=bool(e2))
+                            if not e2:
+                                tc2 = int(v2.get("total_claims") or 0)
+                                sup2 = int(v2.get("supported") or 0)
+                                row["total_claims2"] = tc2
+                                row["supported2"] = sup2
+                                row["faithfulness2"] = round(sup2 / tc2, 4) if tc2 else 0.0
+                                row["judge2_model"] = second_judge
                 except Exception as exc:
                     row["judge_error"] = f"{type(exc).__name__}: {exc}"[:120]
                     budget.record(gen_model, {"prompt_tokens": 0, "completion_tokens": 0}, failed=True)
@@ -230,7 +267,7 @@ class Command(BaseCommand):
         try:
             with harness.use_model(judge_model):
                 text, usage, _ = harness.raw_call(
-                    messages, max_tokens=1400, temperature=0.0, model=judge_model)
+                    messages, max_tokens=JUDGE_MAX_TOKENS, temperature=0.0, model=judge_model)
         except Exception as exc:
             return {}, {"prompt_tokens": 0, "completion_tokens": 0}, f"{type(exc).__name__}: {exc}"
         parsed, error = harness.parse_json(text)
