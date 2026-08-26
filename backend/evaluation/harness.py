@@ -70,6 +70,35 @@ def write_csv(name, rows, fieldnames=None):
     return stamped
 
 
+def write_json(name, payload):
+    """Write a nested record to a timestamped JSON plus a stable `<name>_latest.json`.
+
+    The CSV writer above is the right container for a table of metrics, and the
+    wrong one for the material those metrics were computed from: a judge's verdict
+    is a LIST of per-claim decisions, and flattening it into a cell destroys exactly
+    the structure an audit needs. Commands that produce evidence as well as numbers
+    write the numbers with write_csv and the evidence with this.
+    """
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    stamped = RESULTS_DIR / f"{name}_{stamp}.json"
+    latest = RESULTS_DIR / f"{name}_latest.json"
+    for path in (stamped, latest):
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump(payload, fh, ensure_ascii=False, indent=2, default=str)
+    return stamped
+
+
+def write_text(name, text, suffix=".md"):
+    """Write a human-readable artefact alongside the machine-readable ones."""
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    stamped = RESULTS_DIR / f"{name}_{stamp}{suffix}"
+    latest = RESULTS_DIR / f"{name}_latest{suffix}"
+    for path in (stamped, latest):
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(text)
+    return stamped
+
+
 # --- Corpus text quality -------------------------------------------------------
 # FINDING-4: the trilingual glossaries use legacy non-Unicode fonts and are recovered
 # as unrelated Latin characters, then indexed as though they were English. The defect

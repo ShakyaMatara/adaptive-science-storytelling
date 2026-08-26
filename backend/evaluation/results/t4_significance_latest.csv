@@ -1,2 +1,2 @@
-judge,rag_on_n,rag_on_mean,rag_on_sd,rag_off_n,rag_off_mean,rag_off_sd,difference,cohens_d,mann_whitney_u,z,p_two_tailed,approximation_note
-google/gemini-3.7-flash,12,0.953,0.096,12,0.552,0.25,0.401,2.1176,10.0,3.6897,0.00022,normal approximation
+judge,run,rag_on_n,rag_on_mean,rag_on_sd,rag_off_n,rag_off_mean,rag_off_sd,difference,cohens_d,mann_whitney_u,z,p_two_tailed,approximation_note
+google/gemini-3.7-flash,run3_evidence_persisted,12,0.853,0.33,12,0.566,0.241,0.287,0.9933,22.5,2.9072,0.00365,normal approximation

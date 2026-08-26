@@ -84,3 +84,20 @@ backend/evaluation/results/*
 !backend/evaluation/results/t3_diagnostics.csv
 !backend/evaluation/results/midpoint_corrections.md
 !backend/evaluation/results/chunk_page_spans.csv
+
+# T4 run 3 — evidence persistence (FINDING-10) and the retained run-2 copies.
+# The chapter prose and evidence blocks ARE the audit trail for section 7.7;
+# without them the faithfulness figures cannot be checked by anyone.
+!backend/evaluation/results/t4_chapters_latest.json
+!backend/evaluation/results/t4_judge_validation_BLIND_latest.csv
+!backend/evaluation/results/t4_chapter_dossier_BLIND_latest.md
+!backend/evaluation/results/t4_faithfulness_by_evidence_base_latest.csv
+!backend/evaluation/results/t4_faithfulness_by_richness_latest.csv
+!backend/evaluation/results/t4_fallback_sensitivity_latest.csv
+!backend/evaluation/results/t4_generation_variance_latest.csv
+!backend/evaluation/results/t4_faithfulness_gemini_run1_latest.csv
+!backend/evaluation/results/t4_faithfulness_summary_gemini_run1_latest.csv
+!backend/evaluation/results/t4_faithfulness_by_provenance_gemini_run1_latest.csv
+!backend/evaluation/results/t4_judge_validation_TEMPLATE_gemini_run1_latest.csv
+!backend/evaluation/results/t4_significance_gemini_run1_latest.csv
+!backend/evaluation/results/t4_interjudge_agreement_gemini_run1_latest.csv

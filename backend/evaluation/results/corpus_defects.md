@@ -578,3 +578,148 @@ supports.
 depends only on the best hit's distance and not on the keep rule. T2 is unchanged, as
 expected, since it does not use retrieval. `python manage.py test core` passes 27
 tests.
+
+---
+
+## FINDING-10 - the faithfulness command persisted its metrics and discarded its evidence (REPAIRED 2026-08-26)
+
+A defect in the measuring instrument, not in the corpus and not in the application.
+Recorded here with FINDING-9 because both were found by using the harness rather than
+by inspecting it, and both changed what the programme is able to claim.
+
+**Detection.** The command writes a `t4_judge_validation_TEMPLATE` file and instructs
+the reader, in its own docstring, to hand-score a subset of chapters and report the
+agreement between those scores and the judge's. On attempting to do exactly that - open
+row 1, `Capacitors` Grade 7 `rag_on`, judge faithfulness 1.000, and read the chapter -
+the chapter could not be found. It was not in the per-chapter CSV, which holds only
+`total_claims`, `supported`, `faithfulness`, `words` and `fkgl`. It was not in the run
+log, which holds one summary line per chapter. It existed nowhere on disk.
+
+**Why it could not be recovered.** `llm.generate_chapter` runs at the provider default
+temperature of 0.7. Re-running the command produces a different chapter for the same
+topic. That chapter could be scored, but it would not be the chapter the judge scored,
+and presenting it as such would be fabricated evidence. The three artefacts the audit
+needed - the generated prose, the evidence block as the judge received it, and the
+judge's per-claim verdicts - were all constructed in memory, used once, and dropped.
+
+**How it differs from the three artefacts in section 9.1.** Those three each produced a
+WRONG NUMBER: a model scored 0/6 on its own truncation, an ablation reported a negative
+effect built from empty judge responses, a coverage measure tracked match quality. This
+one produced no wrong number at all. Every T4 figure computed before the repair remains
+exactly as valid as it was. What it withheld was the material needed to CHECK those
+figures. It is the quieter failure of the two kinds, and the harder to notice, because
+nothing about the output looks wrong - the command completes, the table prints, the
+template is written, and the template cannot be filled in.
+
+**Consequence for the programme.** T4's headline figure stayed an automated estimate for
+the whole of the first programme. The command asked for human validation in its
+docstring, emitted a template for it, printed an instruction to perform it, and made it
+impossible. Roughly US$0.08 of judged generation had to be repeated to obtain evidence
+that had already been produced twice and thrown away both times.
+
+**The repair.** Every run now writes, alongside the metrics:
+
+| artefact | contents |
+|---|---|
+| `t4_chapters_<stamp>.json` | full audit record: chapter prose, title, summary, questions, the evidence block verbatim, per-passage provenance, and both judges' per-claim verdict lists |
+| `t4_judge_validation_BLIND_*.csv` | the scoring surface - chapter text and evidence inline, **no judge output of any kind** |
+| `t4_chapter_dossier_BLIND_*.md` | the same twelve chapters laid out to be read and scored by a person |
+| `t4_judge_validation_TEMPLATE_*.csv` | the merge target: human columns first, judge columns and per-claim verdicts after |
+
+Two details are deliberate. The blind copy exists because scoring next to the judge's
+number is not an independent measurement; the human and judge columns are ordered
+human-first in the merge file for the same reason. The per-claim verdict list is stored
+rather than the totals alone because a disagreement between a human and the judge is
+only diagnosable if it can be localised to a claim - totals show THAT they disagreed,
+the claim list shows WHERE.
+
+**Verification.** An offline test with synthetic rows asserts that the prose, the
+evidence block and the verdict list round-trip out of the JSON; that the blind CSV
+contains no column whose name contains "judge"; that `human_faithfulness` precedes
+`judge_faithfulness` in the template; and that the heavy text columns do not leak into
+the metrics CSV. `python manage.py test core` passes 27 tests.
+
+**What was NOT done.** Generation temperature was left at the application default. Fixing
+the audit problem by making generation deterministic would have measured a system that
+is not the one being evaluated - learners receive stories written at 0.7. Persisting the
+output is the correct repair; pinning the sampler is not.
+
+**Standing.** The T4 figures reported from the first two runs are unaffected and are not
+withdrawn. What changes is that the third run's figures can be checked, and the human
+validation the method depends on can finally be performed.
+
+---
+
+## FINDING-11 - the canned fallback chapter was scored as a grounded generation (DOCUMENTED, detector added 2026-08-26)
+
+Found on the first run after FINDING-10 was repaired, by reading a chapter that had
+previously been discarded. It could not have been found before that repair.
+
+**Detection.** In the third T4 run, `Images formed by plane mirrors` at Grade 7 scored
+**0.000** in the `rag_on` condition on only 3 claims, having scored 1.000 on the same
+topic in the previous run. With the prose now persisted the chapter could be read. It
+was this:
+
+> *Thinking Like a Scientist* - "Science is all about asking questions and looking
+> carefully at the world around us... They make a testable guess, called a hypothesis,
+> and check it with an experiment..."
+
+It is not about mirrors. It is the canned chapter in `core/mock_content.py`, returned
+by `core/llm.py:414` when both parse attempts on the model's output fail. The judge
+scored a generic essay on scientific method against four passages about plane and
+curved mirrors and correctly found nothing supported.
+
+**What the application did, and why it is not a bug.** `generate_chapter` asks the model
+for JSON, retries once on unparseable output, and then returns the canned chapter rather
+than raising. A learner gets a readable page instead of an error. That is deliberate
+graceful degradation and it is defensible as application behaviour.
+
+**Why it is nevertheless a measurement defect.** A fallback chapter is not a grounded
+generation. Averaging it into the `rag_on` mean measures the fallback path while
+reporting it as the grounding path, and it does so in the direction that understates the
+system: a guaranteed 0.000. One such row in twelve moved the reported effect from +0.364
+to +0.287 and Cohen's d from 1.644 to 0.993.
+
+**The detector.** No judgement is needed. In `rag_on` the application always attaches
+source references for the passages it was given, so `sources_attached == 0` in a rag_on
+row means the fallback fired. That column was already being written, so the check runs
+retrospectively over every T4 run ever performed:
+
+| run | primary judge | rag_on generations | fell back |
+|---|---|---|---|
+| 1 | `deepseek-v4-flash` | 12 | 0 |
+| 2 | `gemini-3.7-flash` | 12 | 0 |
+| 3 | `gemini-3.7-flash` | 12 | **1** |
+| **pooled** | | **36** | **1 (2.8%)** |
+
+Runs 1 and 2 are therefore uncontaminated and their published figures stand unchanged.
+
+**Both figures are reported for run 3, and neither replaces the other.**
+
+| basis | rag_on n | mean | sd | difference | Cohen's d | U | p |
+|---|---|---|---|---|---|---|---|
+| as measured | 12 | 0.853 | 0.330 | +0.287 | 0.993 | 22.5 | 0.00365 |
+| excluding the fallback row | 11 | **0.930** | 0.200 | **+0.364** | 1.644 | 11.0 | 0.00054 |
+
+The first is what the pipeline produced end to end and is the honest figure for "what a
+learner receives". The second is what the grounding mechanism produced when it ran at
+all, and is the honest figure for "does retrieval constrain generation". They answer
+different questions and Chapter 7 states which is which.
+
+**The deployment property this exposes, which matters more than the T4 number.** At a
+pooled rate of 2.8% of live grounded generations, a learner who asks about plane mirrors
+receives a generic chapter about the scientific method, presented with the requested
+topic's title, with no textbook sources attached and no indication that anything went
+wrong. The syllabus gate passed, the retrieval succeeded, four relevant passages were
+found - and none of them reached the learner. The failure is silent by construction.
+
+**Not repaired, and why.** Changing the fallback would be a change to application logic
+outside the evaluation harness. The measured incidence, the detector and the
+recommendation are recorded instead. The recommendation is that the fallback path should
+be distinguishable from a successful generation at the point of delivery - either by
+declining to present a fallback as the requested topic, or by marking it - because a
+chapter with zero attached sources is already detectable by the same one-line test used
+here.
+
+**Detector added to the harness.** `eval_faithfulness` now reports the fallback count and
+prints both means on every run, so no future run can average a fallback in silently.
