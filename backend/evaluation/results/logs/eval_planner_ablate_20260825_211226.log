@@ -1,0 +1,53 @@
+
+T3 — Content-Derived Instructional Scaling
+Loaded 290 manual ground-truth entries.
+Planned 39 covered topics.
+
+Convergent validity — Spearman's rho
+coverage measure         plan measure              n   spearman_rho  strength   
+-----------------------  ------------------------  --  ------------  -----------
+manual page count        chapter count             39  0.27          weak       
+manual page count        question budget           39  0.27          weak       
+manual page count        distinct pages retrieved  39  0.4753        moderate   
+distinct textbook pages  chapter count             39  0.9273        very strong
+distinct textbook pages  question budget           39  0.9273        very strong
+distinct textbook pages  paragraph budget          39  0.9273        very strong
+textbook page span       chapter count             39  0.7277        strong     
+
+Interpretation for Chapter 7: a strong positive rho between an INDEPENDENT measure of textbook
+coverage and the planner's output is evidence that instructional volume is derived from curricular
+emphasis. Note honestly that distinct-pages is only quasi-independent (it comes from the same
+retrieval call, though not from any quantity the planner consumes), which is exactly why the
+manual page count is worth collecting.
+
+Discrimination by richness band
+richness  topics  mean_passages  mean_chapters  sd_chapters  mean_questions  sd_questions
+--------  ------  -------------  -------------  -----------  --------------  ------------
+thin      4       1.5            1.0            0.0          1.0             0.0         
+moderate  14      4.857          2.0            0.0          4.0             0.0         
+rich      21      10.238         3.81           0.981        11.429          2.942       
+
+Worked contrast for the thesis:
+  thinnest: G6 'States of Matter' -> 1 chapter(s), 1 question(s) from 1 passages
+  richest : G9 'Nanotechnology' -> 6 chapter(s), 18 question(s) from 16 passages
+
+Provenance of total_relevant
+  Topics drawing on recovered text: 3/39
+  Recovered passages as a share of all counted passages: 8/289 (2.8%)
+     grade 9 Magnitude of force                           4/5 (80%)
+     grade 9 Structure of the human heart                 2/4 (50%)
+     grade 9 Structure and function of the human eye      2/13 (15%)
+  Any correlation below can be recomputed with these topics excluded.
+
+Fixed-length ablation on the 8 thinnest topics (paid calls)
+  cdis     mean passages/chapter=1.75  mean words per grounding passage=157.0
+  fixed3   mean passages/chapter=0.915  mean words per grounding passage=268.125
+
+A higher words-per-grounding-passage figure under the fixed-length condition means the model was
+asked to produce more prose from the same evidence — the padding pressure that CDIS removes.
+Run eval_faithfulness on these same topics to show that this pressure lowers groundedness.
+
+[t3_ablation] calls=16 failures=0 prompt_tokens=0 completion_tokens=0 total_tokens=0 estimated_cost_usd=n/a (populate PRICES_PER_MTOK)
+Ablation data: C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t3_ablation_20260825_211421.csv
+
+Per-topic detail: C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t3_planner_20260825_211421.csv

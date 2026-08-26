@@ -11,6 +11,8 @@ backend/db.sqlite3
 # --- RAG: source textbooks and the built vector index (never commit these) ---
 backend/textbooks/
 backend/chroma_store/
+# Pre-repair snapshot of the index, kept for the duration of the evaluation programme.
+backend/chroma_store_backup_prefix/
 
 # --- Node / Vite (frontend) ---
 frontend/node_modules/
@@ -21,3 +23,18 @@ frontend/dist/
 .idea/
 .DS_Store
 Thumbs.db
+
+# The submission archive is a build artefact, rebuilt by
+# scripts/make_submission_zip.ps1. Never commit it.
+*.zip
+
+# --- Evaluation evidence ------------------------------------------------------
+# backend/evaluation/results/ is tracked IN FULL and deliberately so. It is 3.5 MB
+# of CSVs, figures, run logs and markdown records, it is the evidence Chapter 7
+# cites, and it is NOT regenerable: the T4 chapters were sampled at temperature
+# 0.7, so re-running produces different text and different numbers.
+#
+# This was previously an exclusion plus ~80 `!` re-inclusions. That arrangement
+# fails silently - a file nobody remembers to add is simply missing from a clone
+# and nothing warns you - and it had already lost seven files that back reported
+# tables. Track the directory; do not reintroduce an allowlist.

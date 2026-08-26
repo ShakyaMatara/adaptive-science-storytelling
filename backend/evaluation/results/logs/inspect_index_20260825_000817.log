@@ -1,0 +1,23 @@
+CHROMA_DIR      : C:\Users\user\Desktop\adaptive-science-storytelling\backend\chroma_store
+COLLECTION_NAME : textbooks
+collection opened OK
+total chunks    : 1105
+metadatas fetched: 1105
+
+--- chunks per grade ---
+  Grade 6: 160 chunks, 20 distinct pages, 6 distinct chapter labels, 18 distinct section labels
+  Grade 7: 275 chunks, 53 distinct pages, 19 distinct chapter labels, 54 distinct section labels
+  Grade 8: 332 chunks, 64 distinct pages, 1 distinct chapter labels, 59 distinct section labels
+  Grade 9: 338 chunks, 57 distinct pages, 2 distinct chapter labels, 58 distinct section labels
+
+--- chunks per source file ---
+  grade 6  G6.pdf: 160
+  grade 7  G7P1.pdf: 144
+  grade 7  G7P2.pdf: 131
+  grade 8  G8P1.pdf: 161
+  grade 8  G8P2.pdf: 171
+  grade 9  G9P1.pdf: 123
+  grade 9  G9P2.pdf: 215
+
+--- metadata keys on first chunk ---
+  ['chapter', 'chunk_index', 'grade', 'page', 'section', 'source_file']

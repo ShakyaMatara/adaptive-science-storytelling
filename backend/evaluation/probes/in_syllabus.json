@@ -1,0 +1,55 @@
+{
+  "_comment": "Positive probes for the syllabus gate (T1). Every topic below is a chapter or sub-section heading taken verbatim from the published table of contents of the prescribed textbook for that grade (evaluation/probes/textbook_toc.md).",
+
+  "_methodology": "Positives were selected from the published tables of contents, transcribed from the printed textbooks, INDEPENDENTLY of how the system behaves. Gate behaviour was not consulted at any point during selection, and no topic was added, removed or reworded because of whether the gate accepts it. A topic is admitted if and only if it demonstrably appears in that grade's contents pages; removal would require stated evidence that it does not appear, and no candidate required removal. The refusal rate this set produces is therefore a measurement of T1 recall, not a property of the set. Selecting positives by whether the system accepts them would guarantee near-perfect recall by construction and would make the T1 result circular.",
+
+  "_selection": "Ten per grade, forty in total, spread across biology, chemistry, physics and earth science. Fourteen are deliberately narrow single-concept sub-sections occupying two printed pages or fewer, so that T3 has low-coverage cases to scale against; the remainder range up to nine pages. Two Grade 9 entries (Structure of the human heart, Magnitude of force) sit on pages recovered from images, and are retained deliberately so that provenance reporting is exercised.",
+
+  "_verification_status": "VERIFIED 2026-08-25 against evaluation/probes/textbook_toc.md",
+
+  "probes": [
+    {"topic": "Characteristics of Organisms", "grade": 6, "subject": "biology", "gt_pages": 7.0},
+    {"topic": "Differences between Plants and Animals", "grade": 6, "subject": "biology", "gt_pages": 8.0},
+    {"topic": "States of Matter", "grade": 6, "subject": "chemistry", "gt_pages": 5.0},
+    {"topic": "Specific Properties of Solid Matter", "grade": 6, "subject": "chemistry", "gt_pages": 6.0},
+    {"topic": "Types of Water based on Salinity", "grade": 6, "subject": "earth science", "gt_pages": 2.0},
+    {"topic": "Sources of Light", "grade": 6, "subject": "physics", "gt_pages": 1.0},
+    {"topic": "Applications of Light", "grade": 6, "subject": "physics", "gt_pages": 9.0},
+    {"topic": "Magnetic Poles", "grade": 6, "subject": "physics", "gt_pages": 1.0},
+    {"topic": "Generating Electricity", "grade": 6, "subject": "physics", "gt_pages": 6.0},
+    {"topic": "Weather", "grade": 6, "subject": "earth science", "gt_pages": 2.0},
+
+    {"topic": "Morphological features of flowering plants", "grade": 7, "subject": "biology", "gt_pages": 2.0},
+    {"topic": "Vertebrates and invertebrates", "grade": 7, "subject": "biology", "gt_pages": 6.0},
+    {"topic": "Systems of the human body", "grade": 7, "subject": "biology", "gt_pages": 9.0},
+    {"topic": "Identification of acids and bases", "grade": 7, "subject": "chemistry", "gt_pages": 1.0},
+    {"topic": "Water as a solvent", "grade": 7, "subject": "chemistry", "gt_pages": 4.0},
+    {"topic": "Capacitors", "grade": 7, "subject": "physics", "gt_pages": 4.0},
+    {"topic": "Kinetic energy", "grade": 7, "subject": "physics", "gt_pages": 2.0},
+    {"topic": "Images formed by plane mirrors", "grade": 7, "subject": "physics", "gt_pages": 8.0},
+    {"topic": "Layers of atmosphere", "grade": 7, "subject": "earth science", "gt_pages": 5.0},
+    {"topic": "Rock weathering", "grade": 7, "subject": "earth science", "gt_pages": 3.0},
+
+    {"topic": "Microorganisms", "grade": 8, "subject": "biology", "gt_pages": 2.0},
+    {"topic": "Main vertebrate groups", "grade": 8, "subject": "biology", "gt_pages": 7.0},
+    {"topic": "Photosynthesis", "grade": 8, "subject": "biology", "gt_pages": 5.0},
+    {"topic": "Combustion", "grade": 8, "subject": "chemistry", "gt_pages": 4.0},
+    {"topic": "Neutralisation", "grade": 8, "subject": "chemistry", "gt_pages": 6.0},
+    {"topic": "Current controlling components", "grade": 8, "subject": "physics", "gt_pages": 6.0},
+    {"topic": "Resistance of a conductor", "grade": 8, "subject": "physics", "gt_pages": 4.0},
+    {"topic": "Geomagnetism", "grade": 8, "subject": "physics", "gt_pages": 1.0},
+    {"topic": "The Solar system", "grade": 8, "subject": "earth science", "gt_pages": 6.0},
+    {"topic": "Floods", "grade": 8, "subject": "earth science", "gt_pages": 1.0},
+
+    {"topic": "Structure and function of the human eye", "grade": 9, "subject": "biology", "gt_pages": 6.0},
+    {"topic": "Structure of the human heart", "grade": 9, "subject": "biology", "gt_pages": 1.0},
+    {"topic": "Evolution", "grade": 9, "subject": "biology", "gt_pages": 5.0},
+    {"topic": "Electroplating", "grade": 9, "subject": "chemistry", "gt_pages": 5.0},
+    {"topic": "Compounds", "grade": 9, "subject": "chemistry", "gt_pages": 2.0},
+    {"topic": "Magnitude of force", "grade": 9, "subject": "physics", "gt_pages": 1.0},
+    {"topic": "Hydrometers", "grade": 9, "subject": "physics", "gt_pages": 6.0},
+    {"topic": "Inclined plane", "grade": 9, "subject": "physics", "gt_pages": 2.0},
+    {"topic": "Earthquakes", "grade": 9, "subject": "earth science", "gt_pages": 7.0},
+    {"topic": "Nanotechnology", "grade": 9, "subject": "physics", "gt_pages": 7.0}
+  ]
+}

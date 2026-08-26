@@ -1,0 +1,52 @@
+========================================================================================
+TASK 1.3 - where the footer parser produced folios, does the offset match
+           the LEFT folio, the RIGHT folio, or neither?
+========================================================================================
+
+book            match   MISMATCH  RIGHT is   LEFT is c    NEITHER  no folio 
+G6.pdf            163          0          0          0          0         12
+G7P1.pdf          106          0         21         21          0          0
+G7P2.pdf          127          0          0          0          0          0
+G8P1.pdf           27          0         47         47          0          6
+G8P2.pdf           64          0         39         39          0          0
+G9P1.pdf           77          0          6          7          0         19
+G9P2.pdf           10          0         79         79          0          0
+ALL               574          0        192        193          0         37
+
+legend: columns are single-folio page: match | single-folio page: MISMATCH | two-folio page: RIGHT is correct | two-folio page: LEFT is correct | two-folio page: NEITHER | no folio parsed
+
+========================================================================================
+TASK 1.4/1.5 - chunks outside a book's valid page range, and the projected
+               citation distribution under the offset mapping
+========================================================================================
+
+total chunks: 1101
+chunks starting outside the valid range (no printed folio): 61 (5.5%)
+   per grade: {6: 11, 7: 17, 8: 14, 9: 19}
+
+========================================================================================
+Why are 20 TOC entries unlocatable? Sample of the pages they should be on
+========================================================================================
+
+--- 6 The Human Circulatory System: TOC p.72 -> PDF p84 (0 chars extracted) ---
+      <NO TEXT EXTRACTED - the page is an image>
+
+--- 4 Basic Concepts Associated with Force: TOC p.52 -> PDF p64 (2929 chars extracted) ---
+      4 4.2 Magnitude of force
+      Basic Concepts
+      A ball can be moved slowly by hitting slightly. If you hit it harder it moves fast.
+      When hitting slowly, it applies a small force. Hitting fast, applies a large force.
+      Associated with Force
+      Thus, it is clear that the force has a magnitude.
+      There are several equipment that can be used to measure the magnitude of a force.
+      Spring balance is a simple equipment used for this purpose. What is inside of a
+
+--- 2 Animal Classification: TOC p.12 -> PDF p22 (1507 chars extracted) ---
+      Animal
+      Among those animals, yellow fin tuna, dog, cock, python and lion have a backbone.
+      Snail, crab, butterfly and spider do not have a backbone.
+      Classification
+      The animals without a backbone / vertebral column are known as invertebrates
+      while the animals with a backbone / vertebral column are known as vertebrates
+      Therefore, animals can be classified into two groups;
+      There is a vast diversity among animals that live in our environment.

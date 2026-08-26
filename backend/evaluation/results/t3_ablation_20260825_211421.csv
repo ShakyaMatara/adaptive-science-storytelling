@@ -1,0 +1,17 @@
+topic,grade,condition,planned_chapters,total_passages,passages_per_chapter,words,words_per_grounding_passage,questions,sources_cited
+States of Matter,6,cdis,1,1,1.0,299,299.0,1,1
+States of Matter,6,fixed3,3,1,0.33,314,314.0,1,1
+Current controlling components,8,cdis,1,1,1.0,188,188.0,2,1
+Current controlling components,8,fixed3,3,1,0.33,241,241.0,1,1
+Weather,6,cdis,1,2,2.0,238,119.0,2,2
+Weather,6,fixed3,3,2,0.67,279,279.0,2,1
+Capacitors,7,cdis,1,2,2.0,267,133.5,2,2
+Capacitors,7,fixed3,3,2,0.67,244,244.0,2,1
+Types of Water based on Salinity,6,cdis,2,4,2.0,233,116.5,2,2
+Types of Water based on Salinity,6,fixed3,3,4,1.33,296,296.0,2,1
+Kinetic energy,7,cdis,2,4,2.0,248,124.0,2,2
+Kinetic energy,7,fixed3,3,4,1.33,189,189.0,1,1
+Resistance of a conductor,8,cdis,2,4,2.0,237,118.5,2,2
+Resistance of a conductor,8,fixed3,3,4,1.33,269,269.0,1,1
+Geomagnetism,8,cdis,2,4,2.0,315,157.5,2,2
+Geomagnetism,8,fixed3,3,4,1.33,313,313.0,2,1

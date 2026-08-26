@@ -1,0 +1,13 @@
+row_id,topic,grade,condition,total_relevant,richness,human_total_claims,human_supported,human_faithfulness,human_faithfulness_exact,judge_total_claims,judge_supported,judge_faithfulness,abs_difference,signed_difference,flagged
+1,Capacitors,7,rag_on,2,thin,13,13,1.0,1.0,10,10,1.0,0.0,0.0,
+2,Capacitors,7,rag_off,2,thin,12,3,0.25,0.25,7,3,0.4286,0.1786,-0.1786,
+3,Weather,6,rag_on,2,thin,10,3,0.3,0.3,9,3,0.3333,0.0333,-0.0333,evidence is a trilingual glossary plus an unanswered exercise page
+4,Weather,6,rag_off,2,thin,4,0,0.0,0.0,4,0,0.0,0.0,0.0,same evidence as row 3
+5,Geomagnetism,8,rag_on,4,moderate,12,12,1.0,1.0,7,7,1.0,0.0,0.0,
+6,Geomagnetism,8,rag_off,4,moderate,11,9,0.82,0.8182,5,4,0.8,0.02,0.02,
+7,Kinetic energy,7,rag_on,4,moderate,10,10,1.0,1.0,7,7,1.0,0.0,0.0,
+8,Kinetic energy,7,rag_off,4,moderate,7,3,0.43,0.4286,5,2,0.4,0.03,0.03,quiz stem and four options leaked into the chapter body
+9,Resistance of a conductor,8,rag_on,4,moderate,10,10,1.0,1.0,10,10,1.0,0.0,0.0,
+10,Resistance of a conductor,8,rag_off,4,moderate,8,6,0.75,0.75,6,5,0.8333,0.0833,-0.0833,
+11,Structure of the human heart,9,rag_on,4,moderate,12,11,0.92,0.9167,10,9,0.9,0.02,0.02,
+12,Structure of the human heart,9,rag_off,4,moderate,11,5,0.45,0.4545,9,5,0.5556,0.1056,-0.1056,

@@ -1,0 +1,40 @@
+topic,grade,total_relevant,distinct_pages,page_span,gt_pages,ocr_relevant,ocr_share,richness,chapters,min_questions,max_questions,paragraph_budget
+Characteristics of Organisms,6,8,7,17,7.0,0,0.0,rich,3,6,9,18
+Differences between Plants and Animals,6,11,11,154,8.0,0,0.0,rich,4,8,12,24
+States of Matter,6,1,1,1,5.0,0,0.0,thin,1,1,1,3
+Specific Properties of Solid Matter,6,6,6,9,6.0,0,0.0,moderate,2,2,4,8
+Types of Water based on Salinity,6,4,4,12,2.0,0,0.0,moderate,2,2,4,8
+Sources of Light,6,7,6,17,1.0,0,0.0,rich,3,6,9,18
+Applications of Light,6,9,8,16,9.0,0,0.0,rich,3,6,9,18
+Magnetic Poles,6,5,5,8,1.0,0,0.0,moderate,2,2,4,8
+Generating Electricity,6,14,14,76,6.0,0,0.0,rich,5,10,15,30
+Weather,6,2,2,2,2.0,0,0.0,thin,1,1,1,3
+Morphological features of flowering plants,7,13,12,83,2.0,0,0.0,rich,5,10,15,30
+Vertebrates and invertebrates,7,6,5,14,6.0,0,0.0,moderate,2,2,4,8
+Systems of the human body,7,6,6,11,9.0,0,0.0,moderate,2,2,4,8
+Identification of acids and bases,7,7,6,9,1.0,0,0.0,rich,3,6,9,18
+Water as a solvent,7,5,5,8,4.0,0,0.0,moderate,2,2,4,8
+Capacitors,7,2,2,2,4.0,0,0.0,thin,1,1,1,3
+Kinetic energy,7,4,4,4,2.0,0,0.0,moderate,2,2,4,8
+Images formed by plane mirrors,7,15,15,17,8.0,0,0.0,rich,5,10,15,30
+Layers of atmosphere,7,11,10,13,5.0,0,0.0,rich,4,8,12,24
+Rock weathering,7,7,6,11,3.0,0,0.0,rich,3,6,9,18
+Microorganisms,8,11,8,11,2.0,0,0.0,rich,4,8,12,24
+Main vertebrate groups,8,8,8,12,7.0,0,0.0,rich,3,6,9,18
+Photosynthesis,8,13,12,23,5.0,0,0.0,rich,5,10,15,30
+Combustion,8,9,7,14,4.0,0,0.0,rich,3,6,9,18
+Current controlling components,8,1,1,1,6.0,0,0.0,thin,1,1,1,3
+Resistance of a conductor,8,4,4,11,4.0,0,0.0,moderate,2,2,4,8
+Geomagnetism,8,4,4,10,1.0,0,0.0,moderate,2,2,4,8
+The Solar system,8,5,4,29,6.0,0,0.0,moderate,2,2,4,8
+Floods,8,7,4,15,1.0,0,0.0,rich,3,6,9,18
+Structure and function of the human eye,9,13,13,21,6.0,2,0.1538,rich,5,10,15,30
+Structure of the human heart,9,4,3,9,1.0,2,0.5,moderate,2,2,4,8
+Evolution,9,5,4,10,5.0,0,0.0,moderate,2,2,4,8
+Electroplating,9,11,8,9,5.0,0,0.0,rich,4,8,12,24
+Compounds,9,8,6,15,2.0,0,0.0,rich,3,6,9,18
+Magnitude of force,9,5,5,6,1.0,4,0.8,moderate,2,2,4,8
+Hydrometers,9,8,7,9,6.0,0,0.0,rich,3,6,9,18
+Inclined plane,9,5,4,11,2.0,0,0.0,moderate,2,2,4,8
+Earthquakes,9,9,9,24,7.0,0,0.0,rich,3,6,9,18
+Nanotechnology,9,16,14,17,7.0,0,0.0,rich,6,12,18,36

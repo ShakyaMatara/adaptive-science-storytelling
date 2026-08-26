@@ -1,0 +1,25 @@
+
+Verifying probe sets against GATE_MAX_DISTANCE = 1.15
+Positive set: in_syllabus_paraphrased
+
+Checked 220 probe/grade combinations.
+
+15 probes need attention:
+  [positive would be refused] G6 'what is the weather like' (best=1.1571)
+  [negative would be accepted] G6 'Sinhala grammar and sentence construction' (best=1.1155)
+  [negative would be accepted] G7 'Sinhala grammar and sentence construction' (best=1.1252)
+  [negative would be accepted] G8 'Sinhala grammar and sentence construction' (best=1.1233)
+  [negative would be accepted] G9 'Sinhala grammar and sentence construction' (best=1.1119)
+  [negative would be accepted] G8 'Rules and scoring in cricket' (best=1.1333)
+  [negative would be accepted] G8 'Astrology and planetary influence on personality' (best=1.0056)
+  [negative would be accepted] G7 'Perpetual motion machines that create free energy' (best=1.0148)
+  [negative would be accepted] G8 'Food delivery supply chains' (best=1.0662)
+  [negative would be accepted] G9 'Food delivery supply chains' (best=1.0004)
+  [negative would be accepted] G7 'Solar panel installation business models' (best=1.0103)
+  [grade-boundary leak] 'Electric circuits' accepted at G6 (correct grade 8, best=0.7061)
+  [grade-boundary leak] 'Respiration in living organisms' accepted at G6 (correct grade 8, best=0.8899)
+  [grade-boundary leak] 'Work power and energy' accepted at G6 (correct grade 9, best=0.7393)
+  [grade-boundary leak] 'Reflection of light and mirrors' accepted at G6 (correct grade 8, best=1.0427)
+
+Positives that would be refused are usually wording mismatches — replace them with the textbook's own heading (use --suggest). Negatives that would be accepted are genuine gate false positives and SHOULD be kept: they are the interesting failures for Chapter 7.
+Detail written to C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\probe_verification_20260825_132837.csv

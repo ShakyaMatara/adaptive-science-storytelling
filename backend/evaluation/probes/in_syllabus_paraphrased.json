@@ -1,0 +1,55 @@
+{
+  "_comment": "Paraphrased positive probes for the syllabus gate (T1, PARAPHRASED condition). The same forty topics as in_syllabus.json, each rephrased as a Grade 6-9 learner would plausibly type it. `toc_wording` records the verbatim contents-page heading so the pairing with the VERBATIM condition is explicit.",
+
+  "_methodology": "All forty paraphrases were authored blind to gate behaviour: none was retrieved, scored or verified while it was being written, and no phrasing was adjusted afterwards on the basis of whether it passed. --verify was run once, after the whole set was complete. The register is varied deliberately - some are questions, some bare noun phrases, some use everyday synonyms the textbooks do not use - because a learner does not type contents-page headings.",
+
+  "_purpose": "The VERBATIM set measures the gate's ceiling: its queries are drawn from the same document the index was built from, so the wording matches the corpus by construction. This set measures the gate under realistic phrasing. The gap between the two is the robustness finding; the paraphrased figure is the operationally meaningful one.",
+
+  "_verification_status": "AUTHORED BLIND 2026-08-25; paired 1:1 with in_syllabus.json",
+
+  "probes": [
+    {"topic": "what makes something a living thing", "grade": 6, "subject": "biology", "gt_pages": 7.0, "toc_wording": "Characteristics of Organisms"},
+    {"topic": "how are plants and animals different", "grade": 6, "subject": "biology", "gt_pages": 8.0, "toc_wording": "Differences between Plants and Animals"},
+    {"topic": "solids liquids and gases", "grade": 6, "subject": "chemistry", "gt_pages": 5.0, "toc_wording": "States of Matter"},
+    {"topic": "why are some solids hard and others bendy", "grade": 6, "subject": "chemistry", "gt_pages": 6.0, "toc_wording": "Specific Properties of Solid Matter"},
+    {"topic": "fresh water and salty water", "grade": 6, "subject": "earth science", "gt_pages": 2.0, "toc_wording": "Types of Water based on Salinity"},
+    {"topic": "where does light come from", "grade": 6, "subject": "physics", "gt_pages": 1.0, "toc_wording": "Sources of Light"},
+    {"topic": "how we use light every day", "grade": 6, "subject": "physics", "gt_pages": 9.0, "toc_wording": "Applications of Light"},
+    {"topic": "north and south ends of a magnet", "grade": 6, "subject": "physics", "gt_pages": 1.0, "toc_wording": "Magnetic Poles"},
+    {"topic": "how is electricity made", "grade": 6, "subject": "physics", "gt_pages": 6.0, "toc_wording": "Generating Electricity"},
+    {"topic": "what is the weather like", "grade": 6, "subject": "earth science", "gt_pages": 2.0, "toc_wording": "Weather"},
+
+    {"topic": "parts of a flowering plant and what they look like", "grade": 7, "subject": "biology", "gt_pages": 2.0, "toc_wording": "Morphological features of flowering plants"},
+    {"topic": "animals with backbones and animals without", "grade": 7, "subject": "biology", "gt_pages": 6.0, "toc_wording": "Vertebrates and invertebrates"},
+    {"topic": "the systems inside our body", "grade": 7, "subject": "biology", "gt_pages": 9.0, "toc_wording": "Systems of the human body"},
+    {"topic": "how can you tell if something is an acid or a base", "grade": 7, "subject": "chemistry", "gt_pages": 1.0, "toc_wording": "Identification of acids and bases"},
+    {"topic": "why does sugar dissolve in water", "grade": 7, "subject": "chemistry", "gt_pages": 4.0, "toc_wording": "Water as a solvent"},
+    {"topic": "what does a capacitor do", "grade": 7, "subject": "physics", "gt_pages": 4.0, "toc_wording": "Capacitors"},
+    {"topic": "energy of moving things", "grade": 7, "subject": "physics", "gt_pages": 2.0, "toc_wording": "Kinetic energy"},
+    {"topic": "why does a mirror flip your reflection", "grade": 7, "subject": "physics", "gt_pages": 8.0, "toc_wording": "Images formed by plane mirrors"},
+    {"topic": "the layers of air above the earth", "grade": 7, "subject": "earth science", "gt_pages": 5.0, "toc_wording": "Layers of atmosphere"},
+    {"topic": "how rocks break down over time", "grade": 7, "subject": "earth science", "gt_pages": 3.0, "toc_wording": "Rock weathering"},
+
+    {"topic": "tiny living things you cannot see", "grade": 8, "subject": "biology", "gt_pages": 2.0, "toc_wording": "Microorganisms"},
+    {"topic": "groups of animals that have backbones", "grade": 8, "subject": "biology", "gt_pages": 7.0, "toc_wording": "Main vertebrate groups"},
+    {"topic": "how plants make their own food", "grade": 8, "subject": "biology", "gt_pages": 5.0, "toc_wording": "Photosynthesis"},
+    {"topic": "what happens when things burn", "grade": 8, "subject": "chemistry", "gt_pages": 4.0, "toc_wording": "Combustion"},
+    {"topic": "what happens when an acid meets a base", "grade": 8, "subject": "chemistry", "gt_pages": 6.0, "toc_wording": "Neutralisation"},
+    {"topic": "how do you control the current in a circuit", "grade": 8, "subject": "physics", "gt_pages": 6.0, "toc_wording": "Current controlling components"},
+    {"topic": "why do some wires resist electricity", "grade": 8, "subject": "physics", "gt_pages": 4.0, "toc_wording": "Resistance of a conductor"},
+    {"topic": "why does the earth act like a magnet", "grade": 8, "subject": "physics", "gt_pages": 1.0, "toc_wording": "Geomagnetism"},
+    {"topic": "the sun and the planets around it", "grade": 8, "subject": "earth science", "gt_pages": 6.0, "toc_wording": "The Solar system"},
+    {"topic": "why do floods happen", "grade": 8, "subject": "earth science", "gt_pages": 1.0, "toc_wording": "Floods"},
+
+    {"topic": "how does the eye work", "grade": 9, "subject": "biology", "gt_pages": 6.0, "toc_wording": "Structure and function of the human eye"},
+    {"topic": "how does the heart work", "grade": 9, "subject": "biology", "gt_pages": 1.0, "toc_wording": "Structure of the human heart"},
+    {"topic": "how living things changed over millions of years", "grade": 9, "subject": "biology", "gt_pages": 5.0, "toc_wording": "Evolution"},
+    {"topic": "coating metal using electricity", "grade": 9, "subject": "chemistry", "gt_pages": 5.0, "toc_wording": "Electroplating"},
+    {"topic": "what is a compound made of", "grade": 9, "subject": "chemistry", "gt_pages": 2.0, "toc_wording": "Compounds"},
+    {"topic": "how do you measure how strong a push is", "grade": 9, "subject": "physics", "gt_pages": 1.0, "toc_wording": "Magnitude of force"},
+    {"topic": "the instrument that measures how dense a liquid is", "grade": 9, "subject": "physics", "gt_pages": 6.0, "toc_wording": "Hydrometers"},
+    {"topic": "how does a ramp make lifting easier", "grade": 9, "subject": "physics", "gt_pages": 2.0, "toc_wording": "Inclined plane"},
+    {"topic": "why do earthquakes happen", "grade": 9, "subject": "earth science", "gt_pages": 7.0, "toc_wording": "Earthquakes"},
+    {"topic": "science of very very small things", "grade": 9, "subject": "physics", "gt_pages": 7.0, "toc_wording": "Nanotechnology"}
+  ]
+}

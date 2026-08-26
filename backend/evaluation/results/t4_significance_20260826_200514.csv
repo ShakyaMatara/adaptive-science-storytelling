@@ -1,0 +1,2 @@
+judge,run,rag_on_n,rag_on_mean,rag_on_sd,rag_off_n,rag_off_mean,rag_off_sd,difference,cohens_d,mann_whitney_u,z,p_two_tailed,approximation_note
+google/gemini-3.7-flash,run3_evidence_persisted,12,0.853,0.33,12,0.566,0.241,0.287,0.9933,22.5,2.9072,0.00365,normal approximation

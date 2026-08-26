@@ -1,0 +1,26 @@
+chunks in index: 1122
+candidate pairs examined: 3658  (0.1s)
+near-duplicate pairs (>=80% shingle containment): 47
+chunks involved in a duplicate group: 55/1122 (4.9%)
+duplicate groups: 22   redundant copies: 33 (2.9% of the index)
+redundant copies per grade: {7: 11, 8: 15, 9: 7}
+
+running retrieval for in-syllabus probes ...
+
+probes: 40 total, 26 accepted by the gate, 14 refused
+
+topic                                      gr  total  dedup   infl%
+  Classification of plants and animals      6     10     10     0.0
+  Properties of matter                      6     19     19     0.0
+  Air and the atmosphere                    6     14     14     0.0
+  Cells and their structure                 7      8      8     0.0
+  Photosynthesis                            7     22     22     0.0
+  Heat and temperature                      7     32     31    3.23
+  Elements compounds and mixtures           8      8      8     0.0
+  Acids bases and indicators                8     24     23    4.35
+  The human digestive system                8     11     11     0.0
+  Atomic structure                          9     10     10     0.0
+
+MEAN INFLATION over the 10-topic sample : 0.76%
+MEAN INFLATION over all 26 accepted probes: 0.99%
+wrote C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\duplicate_impact.csv

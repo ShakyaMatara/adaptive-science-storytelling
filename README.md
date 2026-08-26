@@ -163,7 +163,15 @@ To enable it:
 3. Run in live mode (section 3). When a story is grounded, the API response includes
    a `sources` list and the UI shows a line like *"Based on: Grade 7 textbook (p.16)"*.
 
-> The PDFs and the built index are **git-ignored** — never committed. The extra
+> **The textbook PDFs are not distributed with this code.** They are copyright
+> material published by the Sri Lankan Educational Publications Department, and they
+> are excluded from the repository and from every submission archive. `build_index`
+> expects them at `backend/textbooks/`, named as in step 1; obtain them from the
+> Department's own site and place them there before building the index. Everything
+> else — the code, the probe sets, the evaluation results and the figures — is
+> present.
+>
+> The built index (`backend/chroma_store/`) is also git-ignored. The extra
 > dependencies (`pdfplumber`, `chromadb`) are already in `requirements.txt`.
 
 ---
@@ -239,3 +247,23 @@ adaptive-science-storytelling/
   cap bounds the worst case.
 
 See **ARCHITECTURE.md** for the full mapping of code to conceptual layers.
+
+---
+
+## Building the submission archive
+
+`scripts/make_submission_zip.ps1` produces `CB011725_ASCALS_code.zip`: all source, the
+configuration templates, and the complete `backend/evaluation/` directory including
+probes, results, figures and run logs.
+
+```powershell
+pwsh ./scripts/make_submission_zip.ps1 -Force
+```
+
+The evaluation output is thesis evidence and is **not regenerable** — the chapters
+scored in T4 were sampled at temperature 0.7, so re-running produces different text and
+different numbers. It ships in full.
+
+Excluded: `venv/`, `node_modules/`, `__pycache__/`, `chroma_store/`,
+`chroma_store_backup_prefix/`, `textbooks/`, `db.sqlite3`, `frontend/dist/`, `.git/` and
+`.env`. The script refuses to build if a `.env` or any PDF reaches the staging area.

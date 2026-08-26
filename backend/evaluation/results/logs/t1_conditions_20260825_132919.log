@@ -1,0 +1,31 @@
+GATE_MAX_DISTANCE = 1.15
+
+VERBATIM    recall: 39/40 = 97.5%
+PARAPHRASED recall: 39/40 = 97.5%
+gap: +0.0 percentage points
+
+Best-distance shift under paraphrase (positive = worse):
+  min -0.4084   median +0.0519   mean +0.0476   max +0.4296
+  paraphrase moved the topic FURTHER from the corpus in 25/40 cases
+  paraphrase moved it CLOSER in 15/40 cases
+  topics within 0.05 of the gate under paraphrase: 3
+
+Disagreements between the two conditions:
+   grade 6  'Weather' -> 'what is the weather like'
+      verbatim 1.0549 (accept), paraphrased 1.1571 (REFUSE)
+   grade 8  'Neutralisation' -> 'what happens when an acid meets a base'
+      verbatim 1.1649 (REFUSE), paraphrased 0.9581 (accept)
+
+Ten largest degradations under paraphrase:
+   +0.4296  grade 7  Images formed by plane mirrors         0.4913 -> 0.9210
+   +0.3532  grade 8  Microorganisms                         0.7904 -> 1.1436
+   +0.2930  grade 7  Water as a solvent                     0.6621 -> 0.9551
+   +0.2886  grade 6  Characteristics of Organisms           0.8163 -> 1.1049
+   +0.2409  grade 9  Nanotechnology                         0.6769 -> 0.9178
+   +0.2143  grade 6  Generating Electricity                 0.7091 -> 0.9235
+   +0.1868  grade 9  Magnitude of force                     0.8843 -> 1.0711
+   +0.1731  grade 9  Inclined plane                         0.8173 -> 0.9905
+   +0.1672  grade 6  Specific Properties of Solid Matter    0.7295 -> 0.8967
+   +0.1397  grade 9  Compounds                              0.7904 -> 0.9301
+
+wrote C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t1_verbatim_vs_paraphrased.csv

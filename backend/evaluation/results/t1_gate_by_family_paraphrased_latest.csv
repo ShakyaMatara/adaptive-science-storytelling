@@ -1,0 +1,8 @@
+family,n,correct,rate,mean_best_distance,sd
+advanced-science,40,40,1.0,1.526,0.132
+adversarial,40,37,0.925,1.416,0.177
+grade-boundary,20,16,0.8,1.282,0.245
+nonsense,20,20,1.0,1.567,0.147
+other-subject,40,35,0.875,1.468,0.153
+positive,40,39,0.975,0.847,0.156
+pseudo-scientific,20,18,0.9,1.335,0.163

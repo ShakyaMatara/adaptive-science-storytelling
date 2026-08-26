@@ -1,0 +1,13 @@
+topic,grade,condition,judge_faithfulness,human_faithfulness,human_notes
+Capacitors,7,rag_on,1.0,,
+Capacitors,7,rag_off,0.4,,
+Weather,6,rag_on,0.7,,
+Weather,6,rag_off,0.0,,
+Geomagnetism,8,rag_on,1.0,,
+Geomagnetism,8,rag_off,0.5,,
+Kinetic energy,7,rag_on,1.0,,
+Kinetic energy,7,rag_off,0.5,,
+Resistance of a conductor,8,rag_on,1.0,,
+Resistance of a conductor,8,rag_off,0.7143,,
+Structure of the human heart,9,rag_on,0.8333,,
+Structure of the human heart,9,rag_off,0.3333,,

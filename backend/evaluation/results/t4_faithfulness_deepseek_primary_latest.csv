@@ -1,0 +1,25 @@
+topic,grade,condition,total_claims,supported,unsupported,contradicted,faithfulness,sources_attached,citations_valid,ocr_passages,ocr_share,ocr_agreement,faithfulness2,total_claims2,supported2,judge2_model,words,fkgl,judge_error
+Capacitors,7,rag_on,10,10,0,0,1.0,2,2/2,0,0.0,,1.0,9,9,google/gemini-3.7-flash,262,8.66,
+Capacitors,7,rag_off,9,3,6,0,0.3333,0,no_sources,0,0.0,,0.3636,11,4,google/gemini-3.7-flash,294,7.8,
+Weather,6,rag_on,10,10,0,0,1.0,2,2/2,0,0.0,,0.2857,7,2,google/gemini-3.7-flash,255,7.92,
+Weather,6,rag_off,8,0,8,0,0.0,0,no_sources,0,0.0,,0.1667,6,1,google/gemini-3.7-flash,271,7.39,
+Geomagnetism,8,rag_on,9,9,0,0,1.0,4,4/4,0,0.0,,1.0,8,8,google/gemini-3.7-flash,350,8.03,
+Geomagnetism,8,rag_off,0,0,0,0,0.0,0,no_sources,0,0.0,,,,,,296,8.44,"judge JSON invalid: JSONDecodeError: Expecting ',' delimiter: line 6 column 6 (char 114)"
+Kinetic energy,7,rag_on,8,8,0,0,1.0,4,4/4,0,0.0,,1.0,6,6,google/gemini-3.7-flash,295,8.33,
+Kinetic energy,7,rag_off,6,4,2,0,0.6667,0,no_sources,0,0.0,,,,,,222,6.73,
+Resistance of a conductor,8,rag_on,0,0,0,0,0.0,4,4/4,0,0.0,,,,,,278,9.04,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Resistance of a conductor,8,rag_off,0,0,0,0,0.0,0,no_sources,0,0.0,,,,,,308,9.19,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Structure of the human heart,9,rag_on,10,9,1,0,0.9,4,4/4,2,0.5,0.9342,,,,,274,6.89,
+Structure of the human heart,9,rag_off,6,2,4,0,0.3333,0,no_sources,2,0.5,0.9342,,,,,297,6.15,
+Morphological features of flowering plants,7,rag_on,12,12,0,0,1.0,4,4/4,0,0.0,,,,,,243,9.89,
+Morphological features of flowering plants,7,rag_off,0,0,0,0,0.0,0,no_sources,0,0.0,,,,,,332,7.81,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Photosynthesis,8,rag_on,11,11,0,0,1.0,4,4/4,0,0.0,,,,,,319,7.56,
+Photosynthesis,8,rag_off,9,5,4,0,0.5556,0,no_sources,0,0.0,,,,,,245,7.25,
+Structure and function of the human eye,9,rag_on,0,0,0,0,0.0,4,4/4,2,0.5,0.9181,,,,,333,7.88,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Structure and function of the human eye,9,rag_off,0,0,0,0,0.0,0,no_sources,2,0.5,0.9181,,,,,319,4.74,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Generating Electricity,6,rag_on,18,18,0,0,1.0,4,4/4,0,0.0,,,,,,321,9.04,
+Generating Electricity,6,rag_off,7,5,2,0,0.7143,0,no_sources,0,0.0,,,,,,248,7.45,
+Images formed by plane mirrors,7,rag_on,8,8,0,0,1.0,4,4/4,0,0.0,,,,,,273,6.33,
+Images formed by plane mirrors,7,rag_off,7,4,3,0,0.5714,0,no_sources,0,0.0,,,,,,362,6.72,
+Nanotechnology,9,rag_on,11,11,0,0,1.0,4,4/4,0,0.0,,,,,,268,10.09,
+Nanotechnology,9,rag_off,0,0,0,0,0.0,0,no_sources,0,0.0,,,,,,283,6.99,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)

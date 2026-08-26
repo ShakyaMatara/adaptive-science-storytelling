@@ -1,0 +1,13 @@
+  failed _t1_distances: Axes.boxplot() got an unexpected keyword argument 'labels'
+
+8 figures written to C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\figures
+  fig_t1_sweep.png
+  fig_t2_sweep.png
+  fig_t2_by_class.png
+  fig_t3_scatter.png
+  fig_t3_richness.png
+  fig_t5_difficulty.png
+  fig_t6_models.png
+  fig_t4_ablation.png
+
+Every figure needs a caption in the thesis stating what it illustrates — the APIIT guidance is explicit about this and it is a cheap mark to lose.

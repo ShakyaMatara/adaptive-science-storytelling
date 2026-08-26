@@ -1,0 +1,4 @@
+FINDING-3: 97/1101 (8.8%)   per grade {7: 85, 8: 12}
+FINDING-4: 199/1101 (18.1%)   per grade {6: 24, 7: 40, 8: 60, 9: 75}
+retrieval: 36/40 probes hit corrupted text; mean 25.6% of top-8
+wrote C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\text_quality_impact.md

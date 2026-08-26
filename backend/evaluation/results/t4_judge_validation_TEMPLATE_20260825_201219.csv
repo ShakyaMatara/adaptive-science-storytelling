@@ -1,0 +1,8 @@
+topic,grade,condition,judge_faithfulness,human_faithfulness,human_notes
+Capacitors,7,rag_on,1.0,,
+Geomagnetism,8,rag_on,1.0,,
+Kinetic energy,7,rag_on,1.0,,
+Photosynthesis,8,rag_on,1.0,,
+Photosynthesis,8,rag_off,1.0,,
+Generating Electricity,6,rag_on,1.0,,
+Nanotechnology,9,rag_on,0.875,,

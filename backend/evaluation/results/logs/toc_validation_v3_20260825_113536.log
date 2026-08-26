@@ -1,0 +1,60 @@
+============================================================================================
+DISTRIBUTION of (found PDF page - expected PDF page), heading matches only
+============================================================================================
+   delta -3:    2  (  0.5%)  
+   delta -2:    4  (  1.1%)  
+   delta -1:   30  (  8.0%)  <- title also appears one page EARLIER
+   delta +0:  272  ( 72.3%)  <- title is on the page the TOC predicts
+   delta +1:   24  (  6.4%)  
+   delta +2:   19  (  5.1%)  
+   delta +3:   25  (  6.6%)  
+   total heading hits in +/-3 window: 376
+
+per book:
+book           -3     -2     -1     +0     +1     +2     +3
+G6.pdf          0      0      0     51      3      0      0
+G7P1.pdf        0      0      1     43      4      2      3
+G7P2.pdf        0      1      2     33      5      6      4
+G8P1.pdf        2      1      9     33      3      2      1
+G8P2.pdf        0      0      9     39      1      0      4
+G9P1.pdf        0      0      4     28      1      2      3
+G9P2.pdf        0      2      5     45      7      7     10
+
+============================================================================================
+AGREEMENT under two candidate rules
+============================================================================================
+located entries: 272 of 292
+   FIRST heading hit == TOC page : 231/272 = 84.9%
+   LAST  heading hit == TOC page : 188/272 = 69.1%
+   ANY   heading hit == TOC page : 272/272 = 100.0%
+
+book        located    first     last      any
+G6.pdf           51   100.0%    86.3%   100.0%
+G7P1.pdf         43    95.3%    74.4%   100.0%
+G7P2.pdf         33    87.9%    60.6%   100.0%
+G8P1.pdf         33    69.7%    66.7%   100.0%
+G8P2.pdf         39    74.4%    71.8%   100.0%
+G9P1.pdf         28    85.7%    60.7%   100.0%
+G9P2.pdf         45    75.6%    55.6%   100.0%
+
+NOT LOCATED as a heading: 20
+   G6.pdf     7.2    Different Type of Magnets                            TOC p.100
+   G7P1.pdf   4.3    Water as a medium of life                            TOC p.60
+   G7P1.pdf   5.2    Acids and bases available in school laboratory and h TOC p.64
+   G8P1.pdf   2      Animal Classification                                TOC p.12
+   G8P1.pdf   3      Diversity and Functions of Plant Parts               TOC p.24
+   G8P2.pdf   13.2   Food preservation Methods                            TOC p.82
+   G8P2.pdf   14     Phenomena and exploration associated with the solar  TOC p.97
+   G9P1.pdf   2      Eye and Ear                                          TOC p.16
+   G9P1.pdf   2.1    Structure and function of the human eye              TOC p.16
+   G9P1.pdf   2.5    Defects of ear                                       TOC p.33
+   G9P1.pdf   4      Basic Concepts Associated with Force                 TOC p.52
+   G9P1.pdf   4.2    Magnitude of force                                   TOC p.53
+   G9P1.pdf   4.3    Direction of force and point of application          TOC p.54
+   G9P1.pdf   4.4    Graphical representation of force                    TOC p.56
+   G9P1.pdf   6      The Human Circulatory System                         TOC p.72
+   G9P1.pdf   6.1    Structure of the human heart                         TOC p.72
+   G9P1.pdf   8      Support and Movements of Organisms                   TOC p.89
+   G9P1.pdf   8.1    Support and movements of animals                     TOC p.89
+   G9P1.pdf   8.2    Bones, muscles and joints                            TOC p.90
+   G9P1.pdf   9      The Evolutionary Process                             TOC p.98

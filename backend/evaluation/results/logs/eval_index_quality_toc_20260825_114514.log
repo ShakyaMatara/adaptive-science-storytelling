@@ -1,0 +1,9 @@
+grade  chunks  distinct_pages  distinct_sections  distinct_chapters  max_chunks_per_page
+-----  ------  --------------  -----------------  -----------------  -------------------
+6      156     148             18                 12                 2                  
+7      275     149             54                 20                 4                  
+8      332     147             59                 16                 6                  
+9      338     174             58                 20                 5                  
+
+Total chunks: 1101
+Wrote C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\index_quality_after.csv

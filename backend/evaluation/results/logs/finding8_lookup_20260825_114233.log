@@ -1,0 +1,29 @@
+blank PDF pages (19): [14, 25, 28, 29, 45, 54, 65, 66, 68, 71, 84, 86, 96, 101, 102, 103, 115, 117, 118]
+blank printed pages: [2, 13, 16, 17, 33, 42, 53, 54, 56, 59, 72, 74, 84, 89, 90, 91, 103, 105, 106]
+
+affected sections: 19
+   FULLY MISSING: 6
+   PARTIALLY MISSING: 8
+   MARGINAL: 5
+
+   MARGINAL           chapter  1     Applications of Micro-organisms            pp.1-2 (2p, blank [2])
+   MARGINAL           section  1.1   Micro-organisms                            pp.1-2 (2p, blank [2])
+   PARTIALLY MISSING  section  1.3   Effects of micro-organisms                 pp.4-15 (12p, blank [13])
+   PARTIALLY MISSING  chapter  2     Eye and Ear                                pp.16-21 (6p, blank [16, 17])
+   PARTIALLY MISSING  section  2.1   Structure and function of the human eye    pp.16-21 (6p, blank [16, 17])
+   MARGINAL           section  2.5   Defects of ear                             pp.33-37 (5p, blank [33])
+   PARTIALLY MISSING  section  3.1   Elements                                   pp.39-43 (5p, blank [42])
+   FULLY MISSING      section  4.2   Magnitude of force                         pp.53-53 (1p, blank [53])
+   MARGINAL           section  4.3   Direction of force and point of applicatio pp.54-55 (2p, blank [54])
+   PARTIALLY MISSING  section  4.4   Graphical representation of force          pp.56-59 (4p, blank [56, 59])
+   FULLY MISSING      chapter  6     The Human Circulatory System               pp.72-72 (1p, blank [72])
+   FULLY MISSING      section  6.1   Structure of the human heart               pp.72-72 (1p, blank [72])
+   MARGINAL           section  6.2   Arteries, veins and capillaries            pp.73-74 (2p, blank [74])
+   PARTIALLY MISSING  chapter  7     Plant Growth Substances                    pp.83-85 (3p, blank [84])
+   PARTIALLY MISSING  section  7.1   Introduction to plant growth substances    pp.83-85 (3p, blank [84])
+   FULLY MISSING      chapter  8     Support and Movements of Organisms         pp.89-89 (1p, blank [89])
+   FULLY MISSING      section  8.1   Support and movements of animals           pp.89-89 (1p, blank [89])
+   FULLY MISSING      section  8.2   Bones, muscles and joints                  pp.90-91 (2p, blank [90, 91])
+   PARTIALLY MISSING  section  9.3   Evolution                                  pp.102-106 (5p, blank [103, 105, 106])
+
+wrote C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\g9p1_coverage_gap.md

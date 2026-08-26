@@ -1,0 +1,3 @@
+condition,n,mean_faithfulness,sd,mean_claims,mean_unsupported,mean_contradicted
+rag_on,6,0.979,0.051,8.0,0.167,0.0
+rag_off,1,1.0,0.0,8.0,0.0,0.0

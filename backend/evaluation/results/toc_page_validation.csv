@@ -1,0 +1,293 @@
+book,kind,number,title,toc_printed_page,found_printed_page,status,page_hits
+G6.pdf,chapter,1,"Wonders of the Living World",1,1,agree,2
+G6.pdf,section,1.1,"Characteristics of Organisms",6,6,agree,1
+G6.pdf,section,1.2,"Differences between Plants and Animals",13,13,agree,2
+G6.pdf,chapter,2,"Things Around Us",21,21,agree,4
+G6.pdf,section,2.1,"Matter and Energy",23,23,agree,3
+G6.pdf,section,2.2,"States of Matter",24,24,agree,4
+G6.pdf,section,2.3,"Specific Properties of Solid Matter",29,29,agree,1
+G6.pdf,chapter,3,"Water as a Natural Resource",35,35,agree,1
+G6.pdf,section,3.1,"States of Water",36,35,MISMATCH,2
+G6.pdf,section,3.2,"Types of Water based on Availability",38,38,agree,1
+G6.pdf,section,3.3,"Types of Water based on Salinity",40,40,agree,2
+G6.pdf,section,3.4,"Importance of Water",42,42,agree,2
+G6.pdf,section,3.5,"Water, a Limited Resource",44,44,agree,1
+G6.pdf,chapter,4,"Energy in Day to Day Life",49,49,agree,1
+G6.pdf,section,4.1,"Energy Sources and Their Applications",53,53,agree,1
+G6.pdf,chapter,5,"Light and Vision",67,67,agree,1
+G6.pdf,section,5.1,"How can we see ?",67,67,agree,1
+G6.pdf,section,5.2,"Sources of Light",69,69,agree,2
+G6.pdf,section,5.3,"Transmission of Light through Objects",70,70,agree,1
+G6.pdf,section,5.4,"Light Rays and Light Beams",74,74,agree,1
+G6.pdf,section,5.5,"Applications of Light",78,78,agree,3
+G6.pdf,chapter,6,"Sound and Hearing",87,87,agree,1
+G6.pdf,section,6.1,"Producing Sounds",88,88,agree,1
+G6.pdf,section,6.2,"Hearing of Sounds",89,89,agree,1
+G6.pdf,section,6.3,"Diversity of Sounds",91,91,agree,1
+G6.pdf,section,6.4,"Music and Noise",92,92,agree,1
+G6.pdf,section,6.5,"Creating Equipment to Produce Sound",93,93,agree,1
+G6.pdf,chapter,7,"Magnets",99,99,agree,9
+G6.pdf,section,7.1,"Effects of Magnets",100,100,agree,1
+G6.pdf,section,7.2,"Different Type of Magnets",100,,not located,0
+G6.pdf,section,7.3,"Magnetic Poles",101,101,agree,4
+G6.pdf,section,7.4,"The Behaviour of a Magnet",102,102,agree,1
+G6.pdf,section,7.5,"Interactions between the Poles of Magnets",103,103,agree,1
+G6.pdf,section,7.6,"Magnetic Forces",105,105,agree,2
+G6.pdf,chapter,8,"Electricity for a Comfortable Life",110,110,agree,1
+G6.pdf,section,8.1,"Electricity for Day-to-day Life",110,110,agree,1
+G6.pdf,section,8.2,"Generating Electricity",111,111,agree,4
+G6.pdf,section,8.3,"Preparation of Circuits",117,117,agree,1
+G6.pdf,section,8.4,"Conductors and Insulators",121,121,agree,1
+G6.pdf,section,8.5,"Electronic Appliances",122,122,agree,4
+G6.pdf,section,8.6,"Conservation of Electricity and Prevention of Accidents",128,128,agree,1
+G6.pdf,chapter,9,"Heat and Its Effects",133,133,agree,15
+G6.pdf,section,9.1,"Heat Generation",135,135,agree,1
+G6.pdf,section,9.2,"Effects of Heat",137,137,agree,2
+G6.pdf,section,9.3,"The Effects of Heat to the Environment",144,144,agree,1
+G6.pdf,chapter,10,"Food Related Interactions",148,148,agree,1
+G6.pdf,chapter,11,"Weather and Climate",159,159,agree,2
+G6.pdf,section,11.1,"Weather",159,159,agree,14
+G6.pdf,section,11.2,"Climate",161,31,MISMATCH,6
+G6.pdf,section,11.3,"Studying Data Related to Weather",161,161,agree,1
+G6.pdf,section,11.4,"Designing Apparatus to Measure Weather",162,162,agree,1
+G6.pdf,section,11.5,"Natural Disasters Occured Due to Climatic Changes",170,170,agree,1
+G7P1.pdf,chapter,1,"Plant Diversity",1,1,agree,1
+G7P1.pdf,section,1.1,"Morphological features of flowering plants",1,1,agree,1
+G7P1.pdf,section,1.2,"Main parts of a flowering plant",3,3,agree,1
+G7P1.pdf,section,1.3,"Diversity of the parts of flowering plants",4,4,agree,1
+G7P1.pdf,section,1.4,"Monocotyledonous and dicotyledonous plants",17,17,agree,1
+G7P1.pdf,chapter,2,"Static Electricity",22,22,agree,6
+G7P1.pdf,section,2.1,"Charging an object",22,22,agree,1
+G7P1.pdf,section,2.2,"Types of static electric charges",23,23,agree,3
+G7P1.pdf,section,2.3,"Generation of static electric charges",26,26,agree,2
+G7P1.pdf,section,2.4,"Phenomena associated with static electricity",28,28,agree,1
+G7P1.pdf,section,2.5,"Capacitors",30,30,agree,2
+G7P1.pdf,chapter,3,"Generation of Electricity",34,34,agree,6
+G7P1.pdf,section,3.1,"Sources of electricity",35,35,agree,2
+G7P1.pdf,section,3.2,"Direct current and alternating current",49,49,agree,2
+G7P1.pdf,chapter,4,"Functions of Water",54,54,agree,2
+G7P1.pdf,section,4.1,"Water as a solvent",54,54,agree,3
+G7P1.pdf,section,4.2,"Water as a coolant",58,58,agree,1
+G7P1.pdf,section,4.3,"Water as a medium of life",60,61,MISMATCH,1
+G7P1.pdf,chapter,5,"Acids and Bases",63,63,agree,5
+G7P1.pdf,section,5.1,"Identification of acids and bases",63,63,agree,1
+G7P1.pdf,section,5.2,"Acids and bases available in school laboratory and home",64,,not located,0
+G7P1.pdf,chapter,6,"Animal Diversity",72,72,agree,1
+G7P1.pdf,section,6.1,"Vertebrates and invertebrates",72,72,agree,4
+G7P1.pdf,section,6.2,"Adaptations of organisms to environment",78,78,agree,1
+G7P1.pdf,section,6.3,"Use of dichotomous key for classification of organisms",83,83,agree,1
+G7P1.pdf,chapter,7,"Forms of Energy and Uses",87,87,agree,1
+G7P1.pdf,section,7.1,"Kinetic energy",90,90,agree,7
+G7P1.pdf,section,7.2,"Potential energy",92,90,MISMATCH,5
+G7P1.pdf,section,7.3,"Electrical energy",94,90,MISMATCH,9
+G7P1.pdf,section,7.4,"Sound energy",96,90,MISMATCH,5
+G7P1.pdf,section,7.5,"Light energy",97,90,MISMATCH,5
+G7P1.pdf,section,7.6,"Heat/thermal energy",99,99,agree,1
+G7P1.pdf,section,7.7,"Chemical energy",101,90,MISMATCH,5
+G7P1.pdf,chapter,8,"The Nature of the Earth",105,105,agree,1
+G7P1.pdf,section,8.1,"The structure of the earth",105,105,agree,2
+G7P1.pdf,section,8.2,"Tectonic plate and plate tectonics",109,109,agree,1
+G7P1.pdf,chapter,9,"Light",115,,title too short,0
+G7P1.pdf,section,9.1,"Formation of umbra and penumbra",115,115,agree,1
+G7P1.pdf,section,9.2,"Images formed by plane mirrors",121,120,MISMATCH,5
+G7P1.pdf,section,9.3,"Images formed by curved mirrors",129,129,agree,2
+G7P1.pdf,chapter,10,"The Correct Use of the Microscope",138,138,agree,1
+G7P1.pdf,section,10.1,"The simple microscope",139,139,agree,2
+G7P1.pdf,section,10.2,"Magnification of a microscope and resolving power",139,139,agree,1
+G7P1.pdf,section,10.3,"Compound light microscope",141,141,agree,5
+G7P1.pdf,section,10.4,"The electron microscope",147,147,agree,2
+G7P2.pdf,chapter,11,"Sound",1,,title too short,0
+G7P2.pdf,section,11.1,"Production of Sound",1,1,agree,1
+G7P2.pdf,section,11.2,"Propagation of sound",5,5,agree,3
+G7P2.pdf,chapter,12,"Biological Processes",11,11,agree,2
+G7P2.pdf,section,12.1,"Organisational levels of life",11,11,agree,2
+G7P2.pdf,section,12.2,"Systems of the human body",19,19,agree,1
+G7P2.pdf,chapter,13,"Atmosphere",28,28,agree,13
+G7P2.pdf,section,13.1,"Layers of atmosphere",28,28,agree,1
+G7P2.pdf,section,13.2,"Air and its components",33,33,agree,1
+G7P2.pdf,chapter,14,"Heat and Temperature",40,40,agree,1
+G7P2.pdf,section,14.1,"Measuring temperature",40,40,agree,5
+G7P2.pdf,section,14.2,"Thermometers",42,41,MISMATCH,5
+G7P2.pdf,section,14.3,"Heat transfer",49,40,MISMATCH,9
+G7P2.pdf,section,14.4,"Application of convectional currents",54,54,agree,1
+G7P2.pdf,chapter,15,"Soil",59,,title too short,0
+G7P2.pdf,section,15.1,"Different types of soil",59,59,agree,3
+G7P2.pdf,section,15.2,"Composition of soil",61,61,agree,2
+G7P2.pdf,section,15.3,"Soil erosion",68,68,agree,5
+G7P2.pdf,chapter,16,"Force and Motion",73,73,agree,1
+G7P2.pdf,section,16.1,"Distance and displacement",73,73,agree,4
+G7P2.pdf,section,16.2,"Force",77,,title too short,0
+G7P2.pdf,chapter,17,"Nutrients in Food",86,86,agree,2
+G7P2.pdf,section,17.1,"Food and nutrients",86,86,agree,1
+G7P2.pdf,section,17.2,"Tests to identify food",93,93,agree,1
+G7P2.pdf,chapter,18,"Minerals and Rocks",100,100,agree,3
+G7P2.pdf,section,18.1,"Features of minerals and rocks",101,101,agree,1
+G7P2.pdf,section,18.2,"Kinds of rocks and minerals",101,101,agree,1
+G7P2.pdf,section,18.3,"Rock weathering",104,102,MISMATCH,6
+G7P2.pdf,section,18.4,"Rock cycle",107,107,agree,4
+G7P2.pdf,chapter,19,"Sources of Energy",113,113,agree,1
+G7P2.pdf,section,19.1,"Renewable energy sources",115,113,MISMATCH,8
+G7P2.pdf,section,19.2,"Non-renewable energy sources",122,113,MISMATCH,7
+G7P2.pdf,section,19.3,"Sustainable usage of energy sources",125,125,agree,2
+G8P1.pdf,chapter,1,"Importance of Microorganisms",1,1,agree,2
+G8P1.pdf,section,1.1,"Microorganisms",1,1,agree,11
+G8P1.pdf,section,1.2,"Effects of microorganisms on food",3,2,MISMATCH,2
+G8P1.pdf,section,1.3,"Impact of microorganisms on humans and their activities",6,6,agree,1
+G8P1.pdf,chapter,2,"Animal Classification",12,12,agree,1
+G8P1.pdf,section,2.1,"Main invertebrate groups",13,12,MISMATCH,2
+G8P1.pdf,section,2.2,"Main vertebrate groups",17,16,MISMATCH,2
+G8P1.pdf,chapter,3,"Diversity and Functions of Plant Parts",24,,not located,0
+G8P1.pdf,section,3.1,"Diversity and functions of plant leaves",25,24,MISMATCH,2
+G8P1.pdf,section,3.2,"Diversity and functions of plant stems",30,30,agree,1
+G8P1.pdf,section,3.3,"Diversity and functions of plant roots",33,32,MISMATCH,2
+G8P1.pdf,chapter,4,"Properties of Matter",39,39,agree,8
+G8P1.pdf,section,4.1,"Discontinous nature of matter",39,39,agree,2
+G8P1.pdf,section,4.2,"Utilizing physical properties of matter",45,44,MISMATCH,2
+G8P1.pdf,chapter,5,"Sound",62,,title too short,0
+G8P1.pdf,section,5.1,"Musical instruments that produce sound by vibrating membranes",65,65,agree,1
+G8P1.pdf,section,5.2,"Musical instruments that produce sound by vibrating air columns",67,67,agree,1
+G8P1.pdf,section,5.3,"Musical instruments that produce sound by vibrating strings/rods",69,68,MISMATCH,2
+G8P1.pdf,chapter,6,"Magnets",78,78,agree,12
+G8P1.pdf,section,6.1,"Poles of a magnet",79,78,MISMATCH,3
+G8P1.pdf,section,6.2,"Magnetic field of a magnet",81,80,MISMATCH,3
+G8P1.pdf,section,6.3,"Compass",83,80,MISMATCH,9
+G8P1.pdf,section,6.4,"Geomagnetism",85,84,MISMATCH,4
+G8P1.pdf,section,6.5,"Temporary magnets and permanent magnets",86,86,agree,1
+G8P1.pdf,chapter,7,"Measurements Associated with Electricity",95,95,agree,2
+G8P1.pdf,section,7.1,"Electric current",95,89,MISMATCH,9
+G8P1.pdf,section,7.2,"Potential difference",99,98,MISMATCH,7
+G8P1.pdf,section,7.3,"Resistance of a conductor",103,102,MISMATCH,3
+G8P1.pdf,chapter,8,"Changes in Matter",107,107,agree,1
+G8P1.pdf,section,8.1,"Physical changes and chemical changes",107,107,agree,3
+G8P1.pdf,section,8.2,"Changes of state as physical changes",109,108,MISMATCH,2
+G8P1.pdf,section,8.3,"Chemical changes",110,107,MISMATCH,8
+G8P1.pdf,section,8.4,"Combustion",115,112,MISMATCH,10
+G8P1.pdf,section,8.5,"Tarnishing of metals",119,112,MISMATCH,4
+G8P1.pdf,section,8.6,"Neutralisation",122,122,agree,3
+G8P2.pdf,chapter,9,"Human organ systems",1,1,agree,1
+G8P2.pdf,section,9.1,"Human excretory system and excretory products",1,1,agree,1
+G8P2.pdf,section,9.2,"Nervous system",6,6,agree,9
+G8P2.pdf,section,9.3,"Human skin",11,10,MISMATCH,3
+G8P2.pdf,chapter,10,"Electricity",18,18,agree,10
+G8P2.pdf,section,10.1,"Various methods of connecting cells and bulbs",18,18,agree,1
+G8P2.pdf,section,10.2,"Simple electric circuits",23,23,agree,1
+G8P2.pdf,section,10.3,"Current controlling components",24,24,agree,2
+G8P2.pdf,section,10.4,"Household electrical appliances",30,30,agree,1
+G8P2.pdf,section,10.5,"Heating effect of electric current",32,32,agree,3
+G8P2.pdf,section,10.6,"Light effect of electric current",35,34,MISMATCH,2
+G8P2.pdf,section,10.7,"Magnetic effect of electric current",36,36,agree,1
+G8P2.pdf,section,10.8,"Chemical effect of electric current",39,38,MISMATCH,4
+G8P2.pdf,chapter,11,"Main biological processes in plants",46,46,agree,1
+G8P2.pdf,section,11.1,"Photosynthesis",46,46,agree,11
+G8P2.pdf,section,11.2,"Transportation",51,50,MISMATCH,8
+G8P2.pdf,section,11.3,"Transpiration",55,54,MISMATCH,10
+G8P2.pdf,section,11.4,"Guttation",57,56,MISMATCH,5
+G8P2.pdf,chapter,12,"Life cycles of living organisms",62,62,agree,1
+G8P2.pdf,section,12.1,"Life cycles of animals",64,64,agree,2
+G8P2.pdf,section,12.2,"Life cycles of plants",71,64,MISMATCH,3
+G8P2.pdf,section,12.3,"Importance of learning the life cycles",72,72,agree,1
+G8P2.pdf,chapter,13,"Food Preservation",80,80,agree,10
+G8P2.pdf,section,13.1,"Need of food preservation",80,80,agree,1
+G8P2.pdf,section,13.2,"Food preservation Methods",82,,not located,0
+G8P2.pdf,section,13.3,"Food preservatives",87,86,MISMATCH,2
+G8P2.pdf,section,13.4,"Advantages and disadvantages of food preservation",91,90,MISMATCH,2
+G8P2.pdf,section,13.5,"Information in a label of a food package",92,92,agree,1
+G8P2.pdf,chapter,14,"Phenomena and exploration associated with the solar system",97,97,agree,1
+G8P2.pdf,section,14.1,"The Solar system",97,97,agree,2
+G8P2.pdf,section,14.2,"Occurance of seasonal changes",103,103,agree,1
+G8P2.pdf,section,14.3,"Occurance of phases of moon",104,104,agree,1
+G8P2.pdf,section,14.4,"Important incidents associated with solar system",106,106,agree,1
+G8P2.pdf,section,14.5,"Exploring the universe",111,110,MISMATCH,2
+G8P2.pdf,section,14.6,"Artificial satellites",114,114,agree,2
+G8P2.pdf,section,14.7,"Constellations",118,118,agree,6
+G8P2.pdf,chapter,15,"Natural Disasters",128,128,agree,4
+G8P2.pdf,section,15.1,"Drought",129,128,MISMATCH,9
+G8P2.pdf,section,15.2,"Floods",134,128,MISMATCH,5
+G8P2.pdf,section,15.3,"Landslide / Earth slip",135,134,MISMATCH,2
+G8P2.pdf,section,15.4,"Lightning and thundering",137,128,MISMATCH,5
+G9P1.pdf,chapter,1,"Applications of Micro-organisms",1,1,agree,6
+G9P1.pdf,section,1.1,"Micro-organisms",1,1,agree,14
+G9P1.pdf,section,1.2,"Environments and substrates of micro-organisms",3,3,agree,1
+G9P1.pdf,section,1.3,"Effects of micro-organisms",4,4,agree,3
+G9P1.pdf,chapter,2,"Eye and Ear",16,34,MISMATCH,1
+G9P1.pdf,section,2.1,"Structure and function of the human eye",16,,not located,0
+G9P1.pdf,section,2.2,"Defects of vision",22,22,agree,2
+G9P1.pdf,section,2.3,"Eye diseases",29,28,MISMATCH,3
+G9P1.pdf,section,2.4,"Structure and function of the human ear",31,30,MISMATCH,2
+G9P1.pdf,section,2.5,"Defects of ear",33,32,MISMATCH,1
+G9P1.pdf,chapter,3,"Nature and Properties of Matter",38,38,agree,1
+G9P1.pdf,section,3.1,"Elements",39,38,MISMATCH,13
+G9P1.pdf,section,3.2,"Compounds",44,38,MISMATCH,6
+G9P1.pdf,section,3.3,"Mixtures",46,38,MISMATCH,7
+G9P1.pdf,chapter,4,"Basic Concepts Associated with Force",52,,not located,0
+G9P1.pdf,section,4.1,"Force",52,,title too short,0
+G9P1.pdf,section,4.2,"Magnitude of force",53,52,MISMATCH,2
+G9P1.pdf,section,4.3,"Direction of force and point of application",54,,not located,0
+G9P1.pdf,section,4.4,"Graphical representation of force",56,,not located,0
+G9P1.pdf,chapter,5,"Pressure Exerted by Solid",60,60,agree,1
+G9P1.pdf,section,5.1,"Pressure",60,30,MISMATCH,16
+G9P1.pdf,section,5.2,"Factors affecting the pressure",61,60,MISMATCH,2
+G9P1.pdf,section,5.3,"Units of pressure",66,66,agree,2
+G9P1.pdf,section,5.4,"Changing the factors affecting pressure as needed",67,66,MISMATCH,2
+G9P1.pdf,chapter,6,"The Human Circulatory System",72,,not located,0
+G9P1.pdf,section,6.1,"Structure of the human heart",72,,not located,0
+G9P1.pdf,section,6.2,"Arteries, veins and capillaries",73,73,agree,1
+G9P1.pdf,section,6.3,"Components of blood and their functions",75,75,agree,1
+G9P1.pdf,section,6.4,"Blood transfusion",76,11,MISMATCH,5
+G9P1.pdf,chapter,7,"Plant Growth Substances",83,83,agree,2
+G9P1.pdf,section,7.1,"Introduction to plant growth substances",83,83,agree,1
+G9P1.pdf,section,7.2,"Uses of artificial growth substances",86,86,agree,1
+G9P1.pdf,chapter,8,"Support and Movements of Organisms",89,,not located,0
+G9P1.pdf,section,8.1,"Support and movements of animals",89,,not located,0
+G9P1.pdf,section,8.2,"Bones, muscles and joints",90,,not located,0
+G9P1.pdf,section,8.3,"Support and movements of plants",92,92,agree,1
+G9P1.pdf,chapter,9,"The Evolutionary Process",98,109,MISMATCH,1
+G9P1.pdf,section,9.1,"Origin of the Earth",98,98,agree,3
+G9P1.pdf,section,9.2,"Origin of life on the Earth",99,98,MISMATCH,3
+G9P1.pdf,section,9.3,"Evolution",102,98,MISMATCH,7
+G9P1.pdf,section,9.4,"Importance of evolution in bio-diversity",107,107,agree,1
+G9P2.pdf,chapter,10,"Electrolysis",1,1,agree,6
+G9P2.pdf,section,10.1,"Electrolysis",1,1,agree,6
+G9P2.pdf,section,10.2,"Changes caused in a solution by an electric current",2,2,agree,1
+G9P2.pdf,section,10.3,"Electroplating",5,4,MISMATCH,6
+G9P2.pdf,chapter,11,"Density",10,8,MISMATCH,12
+G9P2.pdf,section,11.1,"Introduction to density",10,10,agree,1
+G9P2.pdf,section,11.2,"Units of density",11,11,agree,1
+G9P2.pdf,section,11.3,"Hydrometers",13,13,agree,4
+G9P2.pdf,chapter,12,"Bio-diversity",19,19,agree,15
+G9P2.pdf,section,12.1,"Introduction to bio-diversity",19,19,agree,1
+G9P2.pdf,section,12.2,"Importance of bio-diversity",22,22,agree,1
+G9P2.pdf,section,12.3,"Threats to bio-diversity",23,23,agree,1
+G9P2.pdf,section,12.4,"Important features of ecosystems",25,25,agree,1
+G9P2.pdf,section,12.5,"Natural ecosystems and built environment",29,29,agree,1
+G9P2.pdf,chapter,13,"Artificial Environment and Green Concept",42,42,agree,1
+G9P2.pdf,section,13.1,"Artificial environment and green concept",42,42,agree,1
+G9P2.pdf,section,13.2,"Agricultural process",44,44,agree,1
+G9P2.pdf,section,13.3,"Industrial process",50,50,agree,2
+G9P2.pdf,chapter,14,"Reflection and Refraction of Waves",58,58,agree,1
+G9P2.pdf,section,14.1,"Reflection of light",58,58,agree,6
+G9P2.pdf,section,14.2,"Sound",69,,title too short,0
+G9P2.pdf,section,14.3,"Refraction of light",75,75,agree,7
+G9P2.pdf,chapter,15,"Simple Machines",84,84,agree,4
+G9P2.pdf,section,15.1,"Lever",86,,title too short,0
+G9P2.pdf,section,15.2,"Inclined plane",93,84,MISMATCH,9
+G9P2.pdf,section,15.3,"Wheel and axle",95,85,MISMATCH,5
+G9P2.pdf,section,15.4,"Pulleys",97,97,agree,3
+G9P2.pdf,chapter,16,"Nanotechnology and its Applications",103,103,agree,1
+G9P2.pdf,section,16.1,"Nanometer",104,104,agree,5
+G9P2.pdf,section,16.2,"Nanotechnology",105,103,MISMATCH,11
+G9P2.pdf,section,16.3,"Applications of nanotechnology",112,112,agree,1
+G9P2.pdf,section,16.4,"Future condition that may arise because of nanotechnology",115,115,agree,1
+G9P2.pdf,chapter,17,"Lightning Accidents",119,119,agree,2
+G9P2.pdf,section,17.1,"How lightning occurs",120,120,agree,1
+G9P2.pdf,section,17.2,"Prevention of lightning accidents",125,125,agree,1
+G9P2.pdf,chapter,18,"Natural Disasters",129,129,agree,4
+G9P2.pdf,section,18.1,"Cyclones",129,129,agree,9
+G9P2.pdf,section,18.2,"Earthquakes",134,129,MISMATCH,12
+G9P2.pdf,section,18.3,"Tsunami",141,24,MISMATCH,11
+G9P2.pdf,section,18.4,"Wild fires",145,129,MISMATCH,3
+G9P2.pdf,section,18.5,"The relationship between increase in global warming and natural disasters",146,146,agree,1
+G9P2.pdf,chapter,19,"Sustainable Use of Natural Resources",152,152,agree,1
+G9P2.pdf,section,19.1,"Water",153,,title too short,0
+G9P2.pdf,section,19.2,"Minerals and rocks",155,153,MISMATCH,5
+G9P2.pdf,section,19.3,"Trees",161,,title too short,0

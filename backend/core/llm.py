@@ -274,12 +274,30 @@ def _call_llm(messages, max_tokens=1200):
     return response.choices[0].message.content or ""
 
 
+def _page_citation(passage):
+    """Human-readable page citation for one retrieved passage.
+
+    The PRINTED folio is what a learner holding the book can turn to; the PDF page
+    index is not, and in these books one PDF page frequently carries a two-page
+    spread. A chunk also usually runs past the page it starts on, so a range is
+    emitted whenever the start and end folios differ. Falls back to the numeric PDF
+    page when the footer could not be parsed (about 11% of pages).
+    """
+    start = (passage.get("page_label_start") or "").strip()
+    end = (passage.get("page_label_end") or "").strip()
+    if start and end:
+        return f"p. {start}" if start == end else f"pp. {start}-{end}"
+    page = passage.get("page")
+    return f"p. {page}" if page is not None else ""
+
+
 def _passage_refs(passages):
     """Compact page/chapter refs (no full text) to store on the Chapter and return
     to the frontend as the chapter's `sources`."""
     return [{
         "source_file": p.get("source_file"),
         "page": p.get("page"),
+        "page_citation": _page_citation(p),
         "chapter": p.get("chapter"),
         "section": p.get("section"),
     } for p in passages]

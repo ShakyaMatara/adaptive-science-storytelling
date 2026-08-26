@@ -1,0 +1,31 @@
+Reading G6.pdf (grade 6) ...
+  190 pages -> 156 chunks
+Reading G7P1.pdf (grade 7) ...
+  160 pages -> 144 chunks
+Reading G7P2.pdf (grade 7) ...
+  140 pages -> 131 chunks
+Reading G8P1.pdf (grade 8) ...
+  137 pages -> 161 chunks
+Reading G8P2.pdf (grade 8) ...
+  152 pages -> 171 chunks
+Reading G9P1.pdf (grade 9) ...
+  122 pages -> 123 chunks
+Reading G9P2.pdf (grade 9) ...
+  180 pages -> 215 chunks
+
+Writing 1101 chunks to Chroma at C:\Users\user\Desktop\adaptive-science-storytelling\backend\chroma_store ...
+
+Done. Index summary:
+  G6.pdf: grade 6, 190 pages, 156 chunks
+  G7P1.pdf: grade 7, 160 pages, 144 chunks
+  G7P2.pdf: grade 7, 140 pages, 131 chunks
+  G8P1.pdf: grade 8, 137 pages, 161 chunks
+  G8P2.pdf: grade 8, 152 pages, 171 chunks
+  G9P1.pdf: grade 9, 122 pages, 123 chunks
+  G9P2.pdf: grade 9, 180 pages, 215 chunks
+  ---
+  Grade 6: 156 chunks
+  Grade 7: 275 chunks
+  Grade 8: 332 chunks
+  Grade 9: 338 chunks
+  TOTAL: 1101 chunks in collection 'textbooks'

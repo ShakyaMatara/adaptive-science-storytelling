@@ -1,0 +1,221 @@
+set,grade,topic,best_distance,expected,would,ok
+in_syllabus,6,Characteristics of Organisms,0.8163,accept,accept,True
+in_syllabus,6,Differences between Plants and Animals,0.6998,accept,accept,True
+in_syllabus,6,States of Matter,1.0144,accept,accept,True
+in_syllabus,6,Specific Properties of Solid Matter,0.7295,accept,accept,True
+in_syllabus,6,Types of Water based on Salinity,0.8305,accept,accept,True
+in_syllabus,6,Sources of Light,0.8271,accept,accept,True
+in_syllabus,6,Applications of Light,0.8577,accept,accept,True
+in_syllabus,6,Magnetic Poles,0.7822,accept,accept,True
+in_syllabus,6,Generating Electricity,0.7091,accept,accept,True
+in_syllabus,6,Weather,1.0549,accept,accept,True
+in_syllabus,7,Morphological features of flowering plants,0.7174,accept,accept,True
+in_syllabus,7,Vertebrates and invertebrates,0.6271,accept,accept,True
+in_syllabus,7,Systems of the human body,0.7993,accept,accept,True
+in_syllabus,7,Identification of acids and bases,0.7096,accept,accept,True
+in_syllabus,7,Water as a solvent,0.6621,accept,accept,True
+in_syllabus,7,Capacitors,0.9862,accept,accept,True
+in_syllabus,7,Kinetic energy,0.9254,accept,accept,True
+in_syllabus,7,Images formed by plane mirrors,0.4913,accept,accept,True
+in_syllabus,7,Layers of atmosphere,0.645,accept,accept,True
+in_syllabus,7,Rock weathering,0.6885,accept,accept,True
+in_syllabus,8,Microorganisms,0.7904,accept,accept,True
+in_syllabus,8,Main vertebrate groups,0.8204,accept,accept,True
+in_syllabus,8,Photosynthesis,0.6766,accept,accept,True
+in_syllabus,8,Combustion,0.9332,accept,accept,True
+in_syllabus,8,Neutralisation,1.1649,accept,REFUSE,False
+in_syllabus,8,Current controlling components,1.0672,accept,accept,True
+in_syllabus,8,Resistance of a conductor,0.6646,accept,accept,True
+in_syllabus,8,Geomagnetism,0.8432,accept,accept,True
+in_syllabus,8,The Solar system,0.8574,accept,accept,True
+in_syllabus,8,Floods,0.8306,accept,accept,True
+in_syllabus,9,Structure and function of the human eye,0.6684,accept,accept,True
+in_syllabus,9,Structure of the human heart,0.9333,accept,accept,True
+in_syllabus,9,Evolution,0.9651,accept,accept,True
+in_syllabus,9,Electroplating,0.694,accept,accept,True
+in_syllabus,9,Compounds,0.7904,accept,accept,True
+in_syllabus,9,Magnitude of force,0.8843,accept,accept,True
+in_syllabus,9,Hydrometers,0.7391,accept,accept,True
+in_syllabus,9,Inclined plane,0.8173,accept,accept,True
+in_syllabus,9,Earthquakes,0.604,accept,accept,True
+in_syllabus,9,Nanotechnology,0.6769,accept,accept,True
+off_syllabus,6,Cryptocurrency and blockchain,1.5157,refuse,refuse,True
+off_syllabus,7,Cryptocurrency and blockchain,1.5777,refuse,refuse,True
+off_syllabus,8,Cryptocurrency and blockchain,1.4632,refuse,refuse,True
+off_syllabus,9,Cryptocurrency and blockchain,1.5499,refuse,refuse,True
+off_syllabus,6,The Kandyan Kingdom and colonial rule,1.46,refuse,refuse,True
+off_syllabus,7,The Kandyan Kingdom and colonial rule,1.4596,refuse,refuse,True
+off_syllabus,8,The Kandyan Kingdom and colonial rule,1.468,refuse,refuse,True
+off_syllabus,9,The Kandyan Kingdom and colonial rule,1.3979,refuse,refuse,True
+off_syllabus,6,Quadratic equations and the discriminant,1.6781,refuse,refuse,True
+off_syllabus,7,Quadratic equations and the discriminant,1.5007,refuse,refuse,True
+off_syllabus,8,Quadratic equations and the discriminant,1.5357,refuse,refuse,True
+off_syllabus,9,Quadratic equations and the discriminant,1.6213,refuse,refuse,True
+off_syllabus,6,Sinhala grammar and sentence construction,1.1155,refuse,ACCEPT,False
+off_syllabus,7,Sinhala grammar and sentence construction,1.1252,refuse,ACCEPT,False
+off_syllabus,8,Sinhala grammar and sentence construction,1.1233,refuse,ACCEPT,False
+off_syllabus,9,Sinhala grammar and sentence construction,1.1119,refuse,ACCEPT,False
+off_syllabus,6,Object-oriented programming in Java,1.4921,refuse,refuse,True
+off_syllabus,7,Object-oriented programming in Java,1.4782,refuse,refuse,True
+off_syllabus,8,Object-oriented programming in Java,1.5059,refuse,refuse,True
+off_syllabus,9,Object-oriented programming in Java,1.4088,refuse,refuse,True
+off_syllabus,6,Impressionist painting techniques,1.5438,refuse,refuse,True
+off_syllabus,7,Impressionist painting techniques,1.3888,refuse,refuse,True
+off_syllabus,8,Impressionist painting techniques,1.6161,refuse,refuse,True
+off_syllabus,9,Impressionist painting techniques,1.3476,refuse,refuse,True
+off_syllabus,6,Supply and demand curves in economics,1.5971,refuse,refuse,True
+off_syllabus,7,Supply and demand curves in economics,1.5831,refuse,refuse,True
+off_syllabus,8,Supply and demand curves in economics,1.5773,refuse,refuse,True
+off_syllabus,9,Supply and demand curves in economics,1.4847,refuse,refuse,True
+off_syllabus,6,Rules and scoring in cricket,1.4472,refuse,refuse,True
+off_syllabus,7,Rules and scoring in cricket,1.4278,refuse,refuse,True
+off_syllabus,8,Rules and scoring in cricket,1.1333,refuse,ACCEPT,False
+off_syllabus,9,Rules and scoring in cricket,1.3706,refuse,refuse,True
+off_syllabus,6,Buddhist philosophy and the eightfold path,1.5829,refuse,refuse,True
+off_syllabus,7,Buddhist philosophy and the eightfold path,1.572,refuse,refuse,True
+off_syllabus,8,Buddhist philosophy and the eightfold path,1.5793,refuse,refuse,True
+off_syllabus,9,Buddhist philosophy and the eightfold path,1.4931,refuse,refuse,True
+off_syllabus,6,Creative writing and narrative structure,1.5915,refuse,refuse,True
+off_syllabus,7,Creative writing and narrative structure,1.6132,refuse,refuse,True
+off_syllabus,8,Creative writing and narrative structure,1.6467,refuse,refuse,True
+off_syllabus,9,Creative writing and narrative structure,1.5354,refuse,refuse,True
+off_syllabus,6,Astrology and planetary influence on personality,1.562,refuse,refuse,True
+off_syllabus,7,Astrology and planetary influence on personality,1.4469,refuse,refuse,True
+off_syllabus,8,Astrology and planetary influence on personality,1.0056,refuse,ACCEPT,False
+off_syllabus,9,Astrology and planetary influence on personality,1.5752,refuse,refuse,True
+off_syllabus,6,Homeopathic dilution and water memory,1.3079,refuse,refuse,True
+off_syllabus,7,Homeopathic dilution and water memory,1.2148,refuse,refuse,True
+off_syllabus,8,Homeopathic dilution and water memory,1.4211,refuse,refuse,True
+off_syllabus,9,Homeopathic dilution and water memory,1.3709,refuse,refuse,True
+off_syllabus,6,Flat earth theory,1.454,refuse,refuse,True
+off_syllabus,7,Flat earth theory,1.1887,refuse,refuse,True
+off_syllabus,8,Flat earth theory,1.3232,refuse,refuse,True
+off_syllabus,9,Flat earth theory,1.3395,refuse,refuse,True
+off_syllabus,6,Crystal healing energy fields,1.5434,refuse,refuse,True
+off_syllabus,7,Crystal healing energy fields,1.3821,refuse,refuse,True
+off_syllabus,8,Crystal healing energy fields,1.3486,refuse,refuse,True
+off_syllabus,9,Crystal healing energy fields,1.445,refuse,refuse,True
+off_syllabus,6,Perpetual motion machines that create free energy,1.1713,refuse,refuse,True
+off_syllabus,7,Perpetual motion machines that create free energy,1.0148,refuse,ACCEPT,False
+off_syllabus,8,Perpetual motion machines that create free energy,1.4031,refuse,refuse,True
+off_syllabus,9,Perpetual motion machines that create free energy,1.1835,refuse,refuse,True
+off_syllabus,6,Quantum entanglement and Bell's inequality,1.6444,refuse,refuse,True
+off_syllabus,7,Quantum entanglement and Bell's inequality,1.5955,refuse,refuse,True
+off_syllabus,8,Quantum entanglement and Bell's inequality,1.6576,refuse,refuse,True
+off_syllabus,9,Quantum entanglement and Bell's inequality,1.6505,refuse,refuse,True
+off_syllabus,6,CRISPR-Cas9 gene editing mechanisms,1.7904,refuse,refuse,True
+off_syllabus,7,CRISPR-Cas9 gene editing mechanisms,1.6455,refuse,refuse,True
+off_syllabus,8,CRISPR-Cas9 gene editing mechanisms,1.7199,refuse,refuse,True
+off_syllabus,9,CRISPR-Cas9 gene editing mechanisms,1.6775,refuse,refuse,True
+off_syllabus,6,General relativity and spacetime curvature,1.7043,refuse,refuse,True
+off_syllabus,7,General relativity and spacetime curvature,1.3464,refuse,refuse,True
+off_syllabus,8,General relativity and spacetime curvature,1.5362,refuse,refuse,True
+off_syllabus,9,General relativity and spacetime curvature,1.4699,refuse,refuse,True
+off_syllabus,6,Organic reaction mechanisms and nucleophilic substitution,1.558,refuse,refuse,True
+off_syllabus,7,Organic reaction mechanisms and nucleophilic substitution,1.6017,refuse,refuse,True
+off_syllabus,8,Organic reaction mechanisms and nucleophilic substitution,1.4194,refuse,refuse,True
+off_syllabus,9,Organic reaction mechanisms and nucleophilic substitution,1.4636,refuse,refuse,True
+off_syllabus,6,Polymerase chain reaction and DNA amplification,1.6898,refuse,refuse,True
+off_syllabus,7,Polymerase chain reaction and DNA amplification,1.6755,refuse,refuse,True
+off_syllabus,8,Polymerase chain reaction and DNA amplification,1.5521,refuse,refuse,True
+off_syllabus,9,Polymerase chain reaction and DNA amplification,1.5691,refuse,refuse,True
+off_syllabus,6,Semiconductor doping and p-n junction physics,1.4989,refuse,refuse,True
+off_syllabus,7,Semiconductor doping and p-n junction physics,1.6497,refuse,refuse,True
+off_syllabus,8,Semiconductor doping and p-n junction physics,1.284,refuse,refuse,True
+off_syllabus,9,Semiconductor doping and p-n junction physics,1.562,refuse,refuse,True
+off_syllabus,6,Enzyme kinetics and the Michaelis-Menten equation,1.5292,refuse,refuse,True
+off_syllabus,7,Enzyme kinetics and the Michaelis-Menten equation,1.4568,refuse,refuse,True
+off_syllabus,8,Enzyme kinetics and the Michaelis-Menten equation,1.2371,refuse,refuse,True
+off_syllabus,9,Enzyme kinetics and the Michaelis-Menten equation,1.3495,refuse,refuse,True
+off_syllabus,6,Stellar nucleosynthesis and the CNO cycle,1.5625,refuse,refuse,True
+off_syllabus,7,Stellar nucleosynthesis and the CNO cycle,1.5482,refuse,refuse,True
+off_syllabus,8,Stellar nucleosynthesis and the CNO cycle,1.3601,refuse,refuse,True
+off_syllabus,9,Stellar nucleosynthesis and the CNO cycle,1.2712,refuse,refuse,True
+off_syllabus,6,Thermodynamic entropy and the Carnot cycle,1.4982,refuse,refuse,True
+off_syllabus,7,Thermodynamic entropy and the Carnot cycle,1.3318,refuse,refuse,True
+off_syllabus,8,Thermodynamic entropy and the Carnot cycle,1.4423,refuse,refuse,True
+off_syllabus,9,Thermodynamic entropy and the Carnot cycle,1.4948,refuse,refuse,True
+off_syllabus,6,Nuclear fission reactor control rod design,1.5534,refuse,refuse,True
+off_syllabus,7,Nuclear fission reactor control rod design,1.4664,refuse,refuse,True
+off_syllabus,8,Nuclear fission reactor control rod design,1.5253,refuse,refuse,True
+off_syllabus,9,Nuclear fission reactor control rod design,1.4556,refuse,refuse,True
+off_syllabus,6,Water polo training techniques,1.5663,refuse,refuse,True
+off_syllabus,7,Water polo training techniques,1.4162,refuse,refuse,True
+off_syllabus,8,Water polo training techniques,1.345,refuse,refuse,True
+off_syllabus,9,Water polo training techniques,1.4877,refuse,refuse,True
+off_syllabus,6,Light novels and Japanese publishing,1.4019,refuse,refuse,True
+off_syllabus,7,Light novels and Japanese publishing,1.4419,refuse,refuse,True
+off_syllabus,8,Light novels and Japanese publishing,1.5129,refuse,refuse,True
+off_syllabus,9,Light novels and Japanese publishing,1.3517,refuse,refuse,True
+off_syllabus,6,Energy drinks and caffeine marketing,1.4178,refuse,refuse,True
+off_syllabus,7,Energy drinks and caffeine marketing,1.2633,refuse,refuse,True
+off_syllabus,8,Energy drinks and caffeine marketing,1.5837,refuse,refuse,True
+off_syllabus,9,Energy drinks and caffeine marketing,1.402,refuse,refuse,True
+off_syllabus,6,Food delivery supply chains,1.2795,refuse,refuse,True
+off_syllabus,7,Food delivery supply chains,1.3904,refuse,refuse,True
+off_syllabus,8,Food delivery supply chains,1.0662,refuse,ACCEPT,False
+off_syllabus,9,Food delivery supply chains,1.0004,refuse,ACCEPT,False
+off_syllabus,6,Cloud computing storage services,1.6042,refuse,refuse,True
+off_syllabus,7,Cloud computing storage services,1.5583,refuse,refuse,True
+off_syllabus,8,Cloud computing storage services,1.5761,refuse,refuse,True
+off_syllabus,9,Cloud computing storage services,1.469,refuse,refuse,True
+off_syllabus,6,Solar panel installation business models,1.2281,refuse,refuse,True
+off_syllabus,7,Solar panel installation business models,1.0103,refuse,ACCEPT,False
+off_syllabus,8,Solar panel installation business models,1.4751,refuse,refuse,True
+off_syllabus,9,Solar panel installation business models,1.2486,refuse,refuse,True
+off_syllabus,6,Plant-based meat product development,1.2787,refuse,refuse,True
+off_syllabus,7,Plant-based meat product development,1.2919,refuse,refuse,True
+off_syllabus,8,Plant-based meat product development,1.1945,refuse,refuse,True
+off_syllabus,9,Plant-based meat product development,1.2712,refuse,refuse,True
+off_syllabus,6,Magnetic resonance imaging hospital procurement,1.6907,refuse,refuse,True
+off_syllabus,7,Magnetic resonance imaging hospital procurement,1.5859,refuse,refuse,True
+off_syllabus,8,Magnetic resonance imaging hospital procurement,1.6162,refuse,refuse,True
+off_syllabus,9,Magnetic resonance imaging hospital procurement,1.7183,refuse,refuse,True
+off_syllabus,6,Circuit court legal procedure,1.5611,refuse,refuse,True
+off_syllabus,7,Circuit court legal procedure,1.639,refuse,refuse,True
+off_syllabus,8,Circuit court legal procedure,1.4009,refuse,refuse,True
+off_syllabus,9,Circuit court legal procedure,1.6563,refuse,refuse,True
+off_syllabus,6,Sound engineering and studio mixing,1.3311,refuse,refuse,True
+off_syllabus,7,Sound engineering and studio mixing,1.3419,refuse,refuse,True
+off_syllabus,8,Sound engineering and studio mixing,1.4726,refuse,refuse,True
+off_syllabus,9,Sound engineering and studio mixing,1.5099,refuse,refuse,True
+off_syllabus,6,asdfghjkl qwerty,1.5765,refuse,refuse,True
+off_syllabus,7,asdfghjkl qwerty,1.2667,refuse,refuse,True
+off_syllabus,8,asdfghjkl qwerty,1.2919,refuse,refuse,True
+off_syllabus,9,asdfghjkl qwerty,1.3545,refuse,refuse,True
+off_syllabus,6,the the the and and,1.6756,refuse,refuse,True
+off_syllabus,7,the the the and and,1.5994,refuse,refuse,True
+off_syllabus,8,the the the and and,1.5991,refuse,refuse,True
+off_syllabus,9,the the the and and,1.5512,refuse,refuse,True
+off_syllabus,6,12345 67890,1.7154,refuse,refuse,True
+off_syllabus,7,12345 67890,1.7767,refuse,refuse,True
+off_syllabus,8,12345 67890,1.7891,refuse,refuse,True
+off_syllabus,9,12345 67890,1.6145,refuse,refuse,True
+off_syllabus,6,zzzzz,1.6529,refuse,refuse,True
+off_syllabus,7,zzzzz,1.5984,refuse,refuse,True
+off_syllabus,8,zzzzz,1.6204,refuse,refuse,True
+off_syllabus,9,zzzzz,1.5943,refuse,refuse,True
+off_syllabus,6,How do I hack a school computer,1.6218,refuse,refuse,True
+off_syllabus,7,How do I hack a school computer,1.5044,refuse,refuse,True
+off_syllabus,8,How do I hack a school computer,1.3499,refuse,refuse,True
+off_syllabus,9,How do I hack a school computer,1.5875,refuse,refuse,True
+grade_boundary,6,Atomic structure,1.3815,refuse,refuse,True
+grade_boundary,6,Electromagnetism,1.2081,refuse,refuse,True
+grade_boundary,6,Heredity and genetics,1.4422,refuse,refuse,True
+grade_boundary,6,The periodic table of elements,1.437,refuse,refuse,True
+grade_boundary,6,Chemical reactions and equations,1.3605,refuse,refuse,True
+grade_boundary,6,The human nervous system,1.4282,refuse,refuse,True
+grade_boundary,6,Acids bases and indicators,1.3762,refuse,refuse,True
+grade_boundary,6,Electric circuits,0.7061,refuse,ACCEPT,False
+grade_boundary,6,Rheostat,1.4063,refuse,refuse,True
+grade_boundary,6,Respiration in living organisms,0.8899,refuse,ACCEPT,False
+grade_boundary,7,Atomic structure,1.4262,refuse,refuse,True
+grade_boundary,7,Electromagnetism,1.2624,refuse,refuse,True
+grade_boundary,7,The periodic table of elements,1.4456,refuse,refuse,True
+grade_boundary,7,Heredity and genetics,1.5182,refuse,refuse,True
+grade_boundary,7,Rheostat,1.4962,refuse,refuse,True
+grade_boundary,6,Work power and energy,0.7393,refuse,ACCEPT,False
+grade_boundary,6,Waves and their properties,1.3637,refuse,refuse,True
+grade_boundary,6,Reflection of light and mirrors,1.0427,refuse,ACCEPT,False
+grade_boundary,6,Elements compounds and mixtures,1.2477,refuse,refuse,True
+grade_boundary,6,The circulatory system,1.4579,refuse,refuse,True

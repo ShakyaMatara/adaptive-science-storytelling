@@ -1,0 +1,41 @@
+grade,subject,gt_pages,toc_wording,paraphrase,verbatim_distance,paraphrased_distance,delta,verbatim_accept,paraphrased_accept
+6,biology,7.0,Characteristics of Organisms,what makes something a living thing,0.8163,1.1049,0.2886,accept,accept
+6,biology,8.0,Differences between Plants and Animals,how are plants and animals different,0.6998,0.7248,0.0249,accept,accept
+6,chemistry,5.0,States of Matter,solids liquids and gases,1.0144,0.6061,-0.4084,accept,accept
+6,chemistry,6.0,Specific Properties of Solid Matter,why are some solids hard and others bendy,0.7295,0.8967,0.1672,accept,accept
+6,earth science,2.0,Types of Water based on Salinity,fresh water and salty water,0.8305,0.653,-0.1775,accept,accept
+6,physics,1.0,Sources of Light,where does light come from,0.8271,0.8163,-0.0108,accept,accept
+6,physics,9.0,Applications of Light,how we use light every day,0.8577,0.9682,0.1105,accept,accept
+6,physics,1.0,Magnetic Poles,north and south ends of a magnet,0.7822,0.7578,-0.0244,accept,accept
+6,physics,6.0,Generating Electricity,how is electricity made,0.7091,0.9235,0.2143,accept,accept
+6,earth science,2.0,Weather,what is the weather like,1.0549,1.1571,0.1021,accept,REFUSE
+7,biology,2.0,Morphological features of flowering plants,parts of a flowering plant and what they look like,0.7174,0.6185,-0.0989,accept,accept
+7,biology,6.0,Vertebrates and invertebrates,animals with backbones and animals without,0.6271,0.6506,0.0234,accept,accept
+7,biology,9.0,Systems of the human body,the systems inside our body,0.7993,0.9314,0.1321,accept,accept
+7,chemistry,1.0,Identification of acids and bases,how can you tell if something is an acid or a base,0.7096,0.6462,-0.0635,accept,accept
+7,chemistry,4.0,Water as a solvent,why does sugar dissolve in water,0.6621,0.9551,0.293,accept,accept
+7,physics,4.0,Capacitors,what does a capacitor do,0.9862,0.9762,-0.0101,accept,accept
+7,physics,2.0,Kinetic energy,energy of moving things,0.9254,0.6922,-0.2333,accept,accept
+7,physics,8.0,Images formed by plane mirrors,why does a mirror flip your reflection,0.4913,0.921,0.4296,accept,accept
+7,earth science,5.0,Layers of atmosphere,the layers of air above the earth,0.645,0.7447,0.0996,accept,accept
+7,earth science,3.0,Rock weathering,how rocks break down over time,0.6885,0.7405,0.0519,accept,accept
+8,biology,2.0,Microorganisms,tiny living things you cannot see,0.7904,1.1436,0.3532,accept,accept
+8,biology,7.0,Main vertebrate groups,groups of animals that have backbones,0.8204,0.7167,-0.1037,accept,accept
+8,biology,5.0,Photosynthesis,how plants make their own food,0.6766,0.7512,0.0746,accept,accept
+8,chemistry,4.0,Combustion,what happens when things burn,0.9332,0.9771,0.0438,accept,accept
+8,chemistry,6.0,Neutralisation,what happens when an acid meets a base,1.1649,0.9581,-0.2067,REFUSE,accept
+8,physics,6.0,Current controlling components,how do you control the current in a circuit,1.0672,0.9061,-0.1611,accept,accept
+8,physics,4.0,Resistance of a conductor,why do some wires resist electricity,0.6646,0.785,0.1204,accept,accept
+8,physics,1.0,Geomagnetism,why does the earth act like a magnet,0.8432,0.8141,-0.0291,accept,accept
+8,earth science,6.0,The Solar system,the sun and the planets around it,0.8574,0.9609,0.1036,accept,accept
+8,earth science,1.0,Floods,why do floods happen,0.8306,0.8265,-0.0041,accept,accept
+9,biology,6.0,Structure and function of the human eye,how does the eye work,0.6684,0.7604,0.092,accept,accept
+9,biology,1.0,Structure of the human heart,how does the heart work,0.9333,1.0132,0.0799,accept,accept
+9,biology,5.0,Evolution,how living things changed over millions of years,0.9651,0.9595,-0.0056,accept,accept
+9,chemistry,5.0,Electroplating,coating metal using electricity,0.694,0.6996,0.0056,accept,accept
+9,chemistry,2.0,Compounds,what is a compound made of,0.7904,0.9301,0.1397,accept,accept
+9,physics,1.0,Magnitude of force,how do you measure how strong a push is,0.8843,1.0711,0.1868,accept,accept
+9,physics,6.0,Hydrometers,the instrument that measures how dense a liquid is,0.7391,0.5812,-0.1579,accept,accept
+9,physics,2.0,Inclined plane,how does a ramp make lifting easier,0.8173,0.9905,0.1731,accept,accept
+9,earth science,7.0,Earthquakes,why do earthquakes happen,0.604,0.6511,0.047,accept,accept
+9,physics,7.0,Nanotechnology,science of very very small things,0.6769,0.9178,0.2409,accept,accept

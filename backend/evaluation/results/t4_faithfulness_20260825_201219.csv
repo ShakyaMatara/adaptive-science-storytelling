@@ -1,0 +1,25 @@
+topic,grade,condition,total_claims,supported,unsupported,contradicted,faithfulness,sources_attached,citations_valid,ocr_passages,ocr_share,ocr_agreement,faithfulness2,total_claims2,supported2,judge2_model,words,fkgl,judge_error
+Capacitors,7,rag_on,10,10,0,0,1.0,2,2/2,0,0.0,,1.0,10,10,google/gemini-3.7-flash,255,8.67,
+Capacitors,7,rag_off,0,0,0,0,0.0,0,no_sources,0,0.0,,,,,,224,7.96,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Weather,6,rag_on,0,0,0,0,0.0,2,2/2,0,0.0,,,,,,267,8.91,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Weather,6,rag_off,0,0,0,0,0.0,0,no_sources,0,0.0,,,,,,302,6.56,"judge JSON invalid: JSONDecodeError: Expecting ',' delimiter: line 30 column 6 (char 815)"
+Geomagnetism,8,rag_on,7,7,0,0,1.0,4,4/4,0,0.0,,,,,,252,6.93,
+Geomagnetism,8,rag_off,0,0,0,0,0.0,0,no_sources,0,0.0,,,,,,306,7.5,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Kinetic energy,7,rag_on,5,5,0,0,1.0,4,4/4,0,0.0,,1.0,7,7,google/gemini-3.7-flash,231,8.43,
+Kinetic energy,7,rag_off,0,0,0,0,0.0,0,no_sources,0,0.0,,,,,,251,7.52,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Resistance of a conductor,8,rag_on,0,0,0,0,0.0,4,4/4,0,0.0,,,,,,266,6.39,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Resistance of a conductor,8,rag_off,0,0,0,0,0.0,0,no_sources,0,0.0,,,,,,302,5.56,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Structure of the human heart,9,rag_on,0,0,0,0,0.0,4,4/4,2,0.5,0.9342,,,,,284,8.48,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Structure of the human heart,9,rag_off,0,0,0,0,0.0,0,no_sources,2,0.5,0.9342,,,,,332,8.91,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Morphological features of flowering plants,7,rag_on,0,0,0,0,0.0,4,4/4,0,0.0,,,,,,333,10.19,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Morphological features of flowering plants,7,rag_off,0,0,0,0,0.0,0,no_sources,0,0.0,,,,,,292,6.96,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Photosynthesis,8,rag_on,11,11,0,0,1.0,4,4/4,0,0.0,,1.0,11,11,google/gemini-3.7-flash,253,6.69,
+Photosynthesis,8,rag_off,8,8,0,0,1.0,0,no_sources,0,0.0,,0.7778,9,7,google/gemini-3.7-flash,307,6.84,
+Structure and function of the human eye,9,rag_on,0,0,0,0,0.0,4,4/4,2,0.5,0.9181,,,,,355,10.02,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Structure and function of the human eye,9,rag_off,0,0,0,0,0.0,0,no_sources,2,0.5,0.9181,,,,,284,5.64,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Generating Electricity,6,rag_on,7,7,0,0,1.0,4,4/4,0,0.0,,,,,,296,9.0,
+Generating Electricity,6,rag_off,0,0,0,0,0.0,0,no_sources,0,0.0,,,,,,274,7.38,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Images formed by plane mirrors,7,rag_on,0,0,0,0,0.0,4,4/4,0,0.0,,,,,,268,7.21,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Images formed by plane mirrors,7,rag_off,0,0,0,0,0.0,0,no_sources,0,0.0,,,,,,316,5.84,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Nanotechnology,9,rag_on,8,7,1,0,0.875,4,4/4,0,0.0,,1.0,8,8,google/gemini-3.7-flash,290,11.06,
+Nanotechnology,9,rag_off,0,0,0,0,0.0,0,no_sources,0,0.0,,,,,,323,8.59,judge JSON invalid: JSONDecodeError: Expecting value: line 1 column 1 (char 0)

@@ -1,0 +1,12 @@
+FINDING-3: 7/1122 (0.6%)  per grade {7: 7}
+FINDING-4: 96/1122 (8.6%)  per grade {6: 15, 7: 20, 8: 26, 9: 35}
+FINDING-7: 0/1122 (0.0%)  0 glyphs  per grade {}
+
+severity bands (index / retrieved):
+   clean (0%)        1019 ( 90.8%)    287 ( 89.7%)
+   trace (<2%)         19 (  1.7%)      3 (  0.9%)
+   light (2-10%)       54 (  4.8%)     17 (  5.3%)
+   heavy (>=10%)       30 (  2.7%)     13 (  4.1%)
+
+upper bound: any corruption in 103/1122 chunks, 33/320 retrieved, 25/40 probes
+wrote C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\text_quality_impact.md

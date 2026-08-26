@@ -1,0 +1,25 @@
+topic,grade,condition,total_relevant,richness,passages_used,evidence_chars,claims,faithfulness
+Capacitors,7,rag_off,2,thin,2,2990,7,0.4286
+Capacitors,7,rag_on,2,thin,2,2990,10,1.0
+Weather,6,rag_off,2,thin,2,1890,4,0.0
+Weather,6,rag_on,2,thin,2,1890,9,0.3333
+Geomagnetism,8,rag_off,4,moderate,4,5751,5,0.8
+Geomagnetism,8,rag_on,4,moderate,4,5751,7,1.0
+Kinetic energy,7,rag_off,4,moderate,4,4336,5,0.4
+Kinetic energy,7,rag_on,4,moderate,4,4336,7,1.0
+Resistance of a conductor,8,rag_off,4,moderate,4,6030,6,0.8333
+Resistance of a conductor,8,rag_on,4,moderate,4,6030,10,1.0
+Structure of the human heart,9,rag_off,4,moderate,4,4445,9,0.5556
+Structure of the human heart,9,rag_on,4,moderate,4,4445,10,0.9
+Morphological features of fl,7,rag_off,13,rich,4,6006,14,0.5
+Morphological features of fl,7,rag_on,13,rich,4,6006,10,1.0
+Photosynthesis,8,rag_off,13,rich,4,5132,7,0.8571
+Photosynthesis,8,rag_on,13,rich,4,5132,10,1.0
+Structure and function of th,9,rag_off,13,rich,4,5329,10,0.7
+Structure and function of th,9,rag_on,13,rich,4,5329,18,1.0
+Generating Electricity,6,rag_off,14,rich,4,5787,7,0.4286
+Generating Electricity,6,rag_on,14,rich,4,5787,9,1.0
+Images formed by plane mirro,7,rag_off,15,rich,4,4734,7,0.5714
+Images formed by plane mirro,7,rag_on,15,rich,4,4734,3,0.0
+Nanotechnology,9,rag_off,16,rich,4,5944,7,0.7143
+Nanotechnology,9,rag_on,16,rich,4,5944,12,1.0

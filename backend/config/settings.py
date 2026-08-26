@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import os
 from pathlib import Path
 
+from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,13 +27,26 @@ load_dotenv(BASE_DIR / ".env")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-755u9^s=vj!#itax@&56uypx)$=n3ifw%ux_o5y@*#__k!$bfi'
+# SECURITY: the secret key is read from backend/.env and is never committed.
+# NFR-01 requires credentials to reside only in server-side environment
+# configuration. The value below is a PLACEHOLDER, not a key: it carries Django's
+# own "django-insecure-" marker so it cannot be mistaken for a deployable value,
+# and the guard beneath DEBUG refuses to let it reach a deployment.
+SECRET_KEY = os.getenv("SECRET_KEY") or "django-insecure-development-placeholder"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+# A deployment must never run on the placeholder above. DEBUG is True for local
+# development, so this guard is dormant today and fires the moment it is not.
+if not DEBUG and SECRET_KEY.startswith("django-insecure-"):
+    raise ImproperlyConfigured(
+        "SECRET_KEY is unset or still the development placeholder. Set SECRET_KEY "
+        "in backend/.env before running with DEBUG=False."
+    )
+
 
 
 # Application definition

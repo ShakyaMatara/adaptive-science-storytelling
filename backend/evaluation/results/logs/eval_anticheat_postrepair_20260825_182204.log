@@ -1,0 +1,59 @@
+
+T2 — Assessment-integrity gate (current SIMILARITY_THRESHOLD = 0.7)
+Measured 72 probes across 12 base questions.
+
+Overall (positive = gate blocked the question)
+  TP   42   FN   18      (attacks)
+  FP    0   TN   12      (legitimate questions)
+
+  accuracy=0.75  precision=1.0  recall=0.7  specificity=1.0  F1=0.8235
+
+By perturbation class (layer-1 catch rate)
+class       n   blocked  block_rate  desired  mean_ratio  sd   
+----------  --  -------  ----------  -------  ----------  -----
+verbatim    12  12       1.0         block    1.0         0.0  
+surface     12  12       1.0         block    0.999       0.002
+lexical     12  12       1.0         block    0.931       0.033
+reorder     12  6        0.5         block    0.641       0.184
+paraphrase  12  0        0.0         block    0.357       0.103
+legitimate  12  0        0.0         allow    0.354       0.115
+
+18 attacks passed layer 1 — these are handled by the layer-2 model instruction (llm.answer_question avoid_questions). Report them as the residual layer 1 is not designed to catch, and note that catching them deterministically would require lowering the threshold below the point at which legitimate questions start being blocked:
+    [paraphrase] ratio=0.2885  "Why do we get day and night on a planet?"
+    [paraphrase] ratio=0.3279  "How did humans gradually learn about the planets?"
+    [paraphrase] ratio=0.4522  "How does water get into the sky from the sea?"
+    [reorder] ratio=0.6393  "During photosynthesis, what gas do plants take in from the air?"
+    [paraphrase] ratio=0.512  "Plants need something from the air to make their food. What is i"
+    [paraphrase] ratio=0.4364  "What causes the phases of the Moon?"
+    [paraphrase] ratio=0.2344  "What do we call the living things at the start of a food chain?"
+    [reorder] ratio=0.3659  "Taking the shape of its container but with a fixed volume, which"
+    [paraphrase] ratio=0.2817  "If something keeps its amount but spreads to fit a jar, what is "
+    [reorder] ratio=0.3441  "Electric current is measured using what unit?"
+    [paraphrase] ratio=0.383  "How do we say how much electricity is flowing?"
+    [reorder] ratio=0.4909  "When a solid is heated, what happens to its particles?"
+
+No legitimate questions were blocked at the configured threshold — the gate is conservative in the correct direction.
+
+Threshold sweep — recomputed offline over the recorded ratios (no extra cost)
+threshold  tp  fn  fp  tn  attack_catch_rate  legit_false_block_rate  f1      is_current 
+---------  --  --  --  --  -----------------  ----------------------  ------  -----------
+0.3        56  4   8   4   0.9333             0.6667                  0.9032             
+0.35       53  7   7   5   0.8833             0.5833                  0.8833             
+0.4        51  9   6   6   0.85               0.5                     0.8718             
+0.45       49  11  3   9   0.8167             0.25                    0.875              
+0.5        46  14  1   11  0.7667             0.0833                  0.8598             
+0.55       44  16  0   12  0.7333             0.0                     0.8462             
+0.6        43  17  0   12  0.7167             0.0                     0.835              
+0.65       42  18  0   12  0.7                0.0                     0.8235             
+0.7        42  18  0   12  0.7                0.0                     0.8235  <-- current
+0.75       41  19  0   12  0.6833             0.0                     0.8119             
+0.8        38  22  0   12  0.6333             0.0                     0.7755             
+0.85       38  22  0   12  0.6333             0.0                     0.7755             
+0.9        33  27  0   12  0.55               0.0                     0.7097             
+0.95       27  33  0   12  0.45               0.0                     0.6207             
+
+Best F1 at threshold 0.3 (F1=0.9032); configured value is 0.7.
+The operating-point argument for Chapter 7: choose the threshold at the knee where attack catch rate is still high but the legitimate false-block rate has not yet risen, and justify the choice by the asymmetry of the two errors — a blocked legitimate question frustrates a learner, whereas a leaked answer invalidates the assessment.
+Sweep data: C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t2_anticheat_sweep_20260825_182206.csv
+
+Per-probe detail: C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t2_anticheat_20260825_182206.csv

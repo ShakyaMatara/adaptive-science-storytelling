@@ -1,0 +1,137 @@
+================================================================================================
+PER-TOPIC DIAGNOSTIC TABLE
+================================================================================================
+ gr topic                                       gtTOC totRel dPages  span   cohSD  cohRng secAlloc chap band
+------------------------------------------------------------------------------------------------------------
+  6 Applications of Light                         9.0     28     25   114  0.1080  0.2994     52.0    6 rich
+  6 Differences between Plants and Animals        8.0     11     11   154  0.1560  0.4270     15.0    4 rich
+  6 Characteristics of Organisms                  7.0     17     15   156  0.1460  0.3506     20.0    6 rich
+  6 Specific Properties of Solid Matter           6.0      6      6     9  0.2120  0.5753     11.0    2 moderate
+  6 Generating Electricity                        6.0     18     18    84  0.1110  0.3555     41.0    6 rich
+  6 States of Matter                              5.0      9      9   119  0.1360  0.4459     26.0    3 rich
+  6 Types of Water based on Salinity              2.0      9      8    15  0.1800  0.5429     15.0    3 rich
+  6 Weather                                       2.0     13     12    43  0.0880  0.2656     16.5    5 rich
+  6 Sources of Light                              1.0     19     16    59  0.1320  0.3988     26.0    6 rich
+  6 Magnetic Poles                                1.0      9      9    11  0.1860  0.5591      9.0    3 rich
+  7 Systems of the human body                     9.0     12     12    36  0.1400  0.4631     25.0    4 rich
+  7 Images formed by plane mirrors                8.0      6      6    17  0.1160  0.3539     17.0    2 moderate
+  7 Vertebrates and invertebrates                 6.0      5      5    14  0.2390  0.6690     10.0    2 moderate
+  7 Layers of atmosphere                          5.0      8      7    11  0.1700  0.4698     12.0    3 rich
+  7 Water as a solvent                            4.0      5      5     8  0.2190  0.6673      7.0    2 moderate
+  7 Capacitors                                    4.0      4      4     5  0.2220  0.5975      6.0    2 moderate
+  7 Rock weathering                               3.0      7      6    11  0.2350  0.6137     10.5    3 rich
+  7 Morphological features of flowering plants    2.0     13     12    83  0.0900  0.2632     25.0    5 rich
+  7 Kinetic energy                                2.0     24     22    57  0.1210  0.3580     28.0    6 rich
+  7 Identification of acids and bases             1.0      7      6     9  0.1670  0.5909      9.0    3 rich
+  8 Main vertebrate groups                        7.0     10     10    14  0.1730  0.4766     24.0    4 rich
+  8 Neutralisation                                6.0      0      0     0  0.1270  0.4100        0    0 refused
+  8 Current controlling components                6.0     15     14    36  0.0950  0.2907     34.0    5 rich
+  8 The Solar system                              6.0     19     15    30  0.1620  0.4233     27.0    6 rich
+  8 Photosynthesis                                5.0     11     10    22  0.1160  0.3922     22.0    4 rich
+  8 Combustion                                    4.0     24     15   140  0.0830  0.2706     48.0    6 rich
+  8 Resistance of a conductor                     4.0      4      4    11  0.2240  0.7410     13.0    2 moderate
+  8 Microorganisms                                2.0     13     10    17  0.1150  0.3479     18.0    5 rich
+  8 Geomagnetism                                  1.0     16     12    18  0.1480  0.4640     19.0    6 rich
+  8 Floods                                        1.0     13      8    15  0.1370  0.4076      9.0    5 rich
+  9 Earthquakes                                   7.0      6      6    18  0.1650  0.5525     13.0    2 moderate
+  9 Nanotechnology                                7.0     14     12    16  0.0550  0.1648     21.0    5 rich
+  9 Structure and function of the human eye       6.0     11     11    21  0.1300  0.3892     20.0    4 rich
+  9 Hydrometers                                   6.0      8      7     9  0.1640  0.5102      9.0    3 rich
+  9 Evolution                                     5.0     17     12    16  0.0920  0.3022     17.0    6 rich
+  9 Electroplating                                5.0     11      8     9  0.1550  0.4004      9.0    4 rich
+  9 Compounds                                     2.0     14     12    52  0.1340  0.4515     24.0    5 rich
+  9 Inclined plane                                2.0     12      9    45  0.1580  0.4941     30.0    4 rich
+  9 Structure of the human heart                  1.0     11      9    67  0.2040  0.5140     23.0    4 rich
+  9 Magnitude of force                            1.0     35     27    31  0.1130  0.2917     31.0    6 rich
+
+================================================================================================
+REQUESTED CORRELATIONS (n = 39 planned topics)
+================================================================================================
+  1. rho(TOC allocation, distinct printed pages retrieved) = +0.0166
+  2. rho(TOC allocation, printed page span of passages)    = +0.0943
+  4. rho(TOC allocation, summed allocation of sections hit)= +0.1118   <- ceiling
+     rho(TOC allocation, number of sections hit)           = -0.2335
+
+  reference: rho(TOC allocation, total_relevant)          = -0.1114
+             rho(TOC allocation, chapters)                 = -0.1430
+
+================================================================================================
+3. ABSOLUTE-THRESHOLD ONLY (RELEVANCE_REL_MARGIN not applied)
+================================================================================================
+    cutoff   rho(TOC, count)   mean count  topics with 0
+      0.85           +0.3431         1.87             11
+      0.90           +0.4256         2.59              8
+      0.95           +0.4629         3.33              5
+      1.00           +0.3503         4.26              3
+      1.05           +0.4081         5.23              2
+      1.10           +0.3837         6.18              0
+      1.15           +0.4109         7.41              0
+      1.20           +0.4293         8.64              0
+      1.25           +0.3708        10.36              0
+      1.30           +0.3381        12.38              0
+      1.35           +0.2356        14.64              0
+      1.40           +0.2248        17.79              0
+      1.45           +0.1375        21.28              0
+      1.50           +0.0783        25.13              0
+
+================================================================================================
+MECHANISM: does cohesion predict total_relevant better than coverage does?
+================================================================================================
+  rho(TOC allocation, total_relevant)  = -0.1114
+  rho(cohesion SD,    total_relevant)  = -0.7418
+  rho(cohesion range, total_relevant)  = -0.7708
+  rho(best distance,  total_relevant)  = +0.5451
+
+================================================================================================
+RICHNESS BANDS AND THE 14 NARROW SECTIONS
+================================================================================================
+  band thresholds: thin <= 2 passages, moderate <= 6, rich > 6
+  total_relevant distribution over 39 planned topics:
+    4:2  5:2  6:3  7:2  8:2  9:3  10:1  11:5  12:2  13:4  14:2  15:1  16:1  17:2  18:1  19:2  24:2  28:1  35:1
+    min 4, median 11, max 35
+  band counts: {'rich': 32, 'moderate': 7}
+
+  the 14 narrow probes (TOC allocation <= 2 pages):
+     G9 Magnitude of force                       gtTOC  1.0  total_relevant  35  band rich      chapters 6
+     G7 Kinetic energy                           gtTOC  2.0  total_relevant  24  band rich      chapters 6
+     G6 Sources of Light                         gtTOC  1.0  total_relevant  19  band rich      chapters 6
+     G8 Geomagnetism                             gtTOC  1.0  total_relevant  16  band rich      chapters 6
+     G9 Compounds                                gtTOC  2.0  total_relevant  14  band rich      chapters 5
+     G6 Weather                                  gtTOC  2.0  total_relevant  13  band rich      chapters 5
+     G7 Morphological features of flowering plan gtTOC  2.0  total_relevant  13  band rich      chapters 5
+     G8 Microorganisms                           gtTOC  2.0  total_relevant  13  band rich      chapters 5
+     G8 Floods                                   gtTOC  1.0  total_relevant  13  band rich      chapters 5
+     G9 Inclined plane                           gtTOC  2.0  total_relevant  12  band rich      chapters 4
+     G9 Structure of the human heart             gtTOC  1.0  total_relevant  11  band rich      chapters 4
+     G6 Types of Water based on Salinity         gtTOC  2.0  total_relevant   9  band rich      chapters 3
+     G6 Magnetic Poles                           gtTOC  1.0  total_relevant   9  band rich      chapters 3
+     G7 Identification of acids and bases        gtTOC  1.0  total_relevant   7  band rich      chapters 3
+
+================================================================================================
+MIDPOINT-REPORT CLAIM: rheostat vs solar system phenomena
+================================================================================================
+
+  G8 'Rheostat'
+     total_relevant 1, chapters 1, band thin
+     best distance 1.0433, cohesion sd 0.1770, range 0.5904
+     sections actually retrieved (1), summed TOC allocation 6.0 pages:
+        G8P2.pdf Current controlling components                       6.0p
+
+  G8 'Phenomena and exploration associated with the solar system'
+     total_relevant 14, chapters 5, band rich
+     best distance 0.8215, cohesion sd 0.1790, range 0.4956
+     sections actually retrieved (4), summed TOC allocation 25.0 pages:
+        G8P2.pdf Constellations                                       10.0p
+        G8P2.pdf The Solar system                                     6.0p
+        G8P2.pdf Important incidents associated with solar system     5.0p
+        G8P2.pdf Artificial satellites                                4.0p
+
+  G8 'solar system phenomena'
+     total_relevant 13, chapters 5, band rich
+     best distance 0.7891, cohesion sd 0.1490, range 0.4427
+     sections actually retrieved (3), summed TOC allocation 21.0 pages:
+        G8P2.pdf Constellations                                       10.0p
+        G8P2.pdf The Solar system                                     6.0p
+        G8P2.pdf Important incidents associated with solar system     5.0p
+
+wrote C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t3_diagnostics.csv

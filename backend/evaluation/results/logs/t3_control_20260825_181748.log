@@ -1,0 +1,31 @@
+n = 40 topics
+
+AS DESIGNED (relative margin)
+  mean passages                     12.43
+  rho(TOC allocation, count)        -0.1336
+  rho(best distance, count)         +0.4314   <- the sign error
+
+CONTROL: same relative-margin rule, truncated to the top N by distance
+    N   mean passages   rho(TOC, count)   rho(best, count)
+    3            3.00           +0.0000            +0.0000
+    4            3.98           -0.1122            -0.2705
+    5            4.90           -0.0212            -0.1763
+    6            5.78           -0.0481            +0.0526
+    7            6.58           -0.2278            +0.2481
+    8            7.33           -0.1329            +0.3087
+    9            8.03           -0.1637            +0.3757
+   10            8.65           -0.0887            +0.3212
+   11            9.25           -0.1256            +0.3138
+   12            9.72           -0.1571            +0.4014
+   13           10.15           -0.1792            +0.4086
+   14           10.47           -0.1183            +0.4074
+   15           10.75           -0.1229            +0.4355
+
+MAGNITUDE-MATCHED CONTROL  (N = 8, mean 7.33 vs repair mean 7.22)
+  rho(TOC allocation, count)        -0.1329
+  rho(best distance, count)         +0.3087
+
+PROPOSED REPAIR (absolute radius 1.15)
+  mean passages                     7.22
+  rho(TOC allocation, count)        +0.3643
+  rho(best distance, count)         -0.6607   <- should collapse
