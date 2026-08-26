@@ -1,0 +1,221 @@
+set,grade,topic,best_distance,expected,would,ok
+in_syllabus_paraphrased,6,what makes something a living thing,1.1049,accept,accept,True
+in_syllabus_paraphrased,6,how are plants and animals different,0.7248,accept,accept,True
+in_syllabus_paraphrased,6,solids liquids and gases,0.6061,accept,accept,True
+in_syllabus_paraphrased,6,why are some solids hard and others bendy,0.8967,accept,accept,True
+in_syllabus_paraphrased,6,fresh water and salty water,0.653,accept,accept,True
+in_syllabus_paraphrased,6,where does light come from,0.8163,accept,accept,True
+in_syllabus_paraphrased,6,how we use light every day,0.9682,accept,accept,True
+in_syllabus_paraphrased,6,north and south ends of a magnet,0.7578,accept,accept,True
+in_syllabus_paraphrased,6,how is electricity made,0.9235,accept,accept,True
+in_syllabus_paraphrased,6,what is the weather like,1.1571,accept,REFUSE,False
+in_syllabus_paraphrased,7,parts of a flowering plant and what they look like,0.6185,accept,accept,True
+in_syllabus_paraphrased,7,animals with backbones and animals without,0.6506,accept,accept,True
+in_syllabus_paraphrased,7,the systems inside our body,0.9314,accept,accept,True
+in_syllabus_paraphrased,7,how can you tell if something is an acid or a base,0.6462,accept,accept,True
+in_syllabus_paraphrased,7,why does sugar dissolve in water,0.9551,accept,accept,True
+in_syllabus_paraphrased,7,what does a capacitor do,0.9762,accept,accept,True
+in_syllabus_paraphrased,7,energy of moving things,0.6922,accept,accept,True
+in_syllabus_paraphrased,7,why does a mirror flip your reflection,0.921,accept,accept,True
+in_syllabus_paraphrased,7,the layers of air above the earth,0.7447,accept,accept,True
+in_syllabus_paraphrased,7,how rocks break down over time,0.7405,accept,accept,True
+in_syllabus_paraphrased,8,tiny living things you cannot see,1.1436,accept,accept,True
+in_syllabus_paraphrased,8,groups of animals that have backbones,0.7167,accept,accept,True
+in_syllabus_paraphrased,8,how plants make their own food,0.7512,accept,accept,True
+in_syllabus_paraphrased,8,what happens when things burn,0.9771,accept,accept,True
+in_syllabus_paraphrased,8,what happens when an acid meets a base,0.9581,accept,accept,True
+in_syllabus_paraphrased,8,how do you control the current in a circuit,0.9061,accept,accept,True
+in_syllabus_paraphrased,8,why do some wires resist electricity,0.785,accept,accept,True
+in_syllabus_paraphrased,8,why does the earth act like a magnet,0.8141,accept,accept,True
+in_syllabus_paraphrased,8,the sun and the planets around it,0.9609,accept,accept,True
+in_syllabus_paraphrased,8,why do floods happen,0.8265,accept,accept,True
+in_syllabus_paraphrased,9,how does the eye work,0.7604,accept,accept,True
+in_syllabus_paraphrased,9,how does the heart work,1.0132,accept,accept,True
+in_syllabus_paraphrased,9,how living things changed over millions of years,0.9595,accept,accept,True
+in_syllabus_paraphrased,9,coating metal using electricity,0.6996,accept,accept,True
+in_syllabus_paraphrased,9,what is a compound made of,0.9301,accept,accept,True
+in_syllabus_paraphrased,9,how do you measure how strong a push is,1.0711,accept,accept,True
+in_syllabus_paraphrased,9,the instrument that measures how dense a liquid is,0.5812,accept,accept,True
+in_syllabus_paraphrased,9,how does a ramp make lifting easier,0.9905,accept,accept,True
+in_syllabus_paraphrased,9,why do earthquakes happen,0.6511,accept,accept,True
+in_syllabus_paraphrased,9,science of very very small things,0.9178,accept,accept,True
+off_syllabus,6,Cryptocurrency and blockchain,1.5157,refuse,refuse,True
+off_syllabus,7,Cryptocurrency and blockchain,1.5777,refuse,refuse,True
+off_syllabus,8,Cryptocurrency and blockchain,1.4632,refuse,refuse,True
+off_syllabus,9,Cryptocurrency and blockchain,1.5499,refuse,refuse,True
+off_syllabus,6,The Kandyan Kingdom and colonial rule,1.46,refuse,refuse,True
+off_syllabus,7,The Kandyan Kingdom and colonial rule,1.4596,refuse,refuse,True
+off_syllabus,8,The Kandyan Kingdom and colonial rule,1.468,refuse,refuse,True
+off_syllabus,9,The Kandyan Kingdom and colonial rule,1.3979,refuse,refuse,True
+off_syllabus,6,Quadratic equations and the discriminant,1.6781,refuse,refuse,True
+off_syllabus,7,Quadratic equations and the discriminant,1.5007,refuse,refuse,True
+off_syllabus,8,Quadratic equations and the discriminant,1.5357,refuse,refuse,True
+off_syllabus,9,Quadratic equations and the discriminant,1.6213,refuse,refuse,True
+off_syllabus,6,Sinhala grammar and sentence construction,1.1155,refuse,ACCEPT,False
+off_syllabus,7,Sinhala grammar and sentence construction,1.1252,refuse,ACCEPT,False
+off_syllabus,8,Sinhala grammar and sentence construction,1.1233,refuse,ACCEPT,False
+off_syllabus,9,Sinhala grammar and sentence construction,1.1119,refuse,ACCEPT,False
+off_syllabus,6,Object-oriented programming in Java,1.4921,refuse,refuse,True
+off_syllabus,7,Object-oriented programming in Java,1.4782,refuse,refuse,True
+off_syllabus,8,Object-oriented programming in Java,1.5059,refuse,refuse,True
+off_syllabus,9,Object-oriented programming in Java,1.4088,refuse,refuse,True
+off_syllabus,6,Impressionist painting techniques,1.5438,refuse,refuse,True
+off_syllabus,7,Impressionist painting techniques,1.3888,refuse,refuse,True
+off_syllabus,8,Impressionist painting techniques,1.6161,refuse,refuse,True
+off_syllabus,9,Impressionist painting techniques,1.3476,refuse,refuse,True
+off_syllabus,6,Supply and demand curves in economics,1.5971,refuse,refuse,True
+off_syllabus,7,Supply and demand curves in economics,1.5831,refuse,refuse,True
+off_syllabus,8,Supply and demand curves in economics,1.5773,refuse,refuse,True
+off_syllabus,9,Supply and demand curves in economics,1.4847,refuse,refuse,True
+off_syllabus,6,Rules and scoring in cricket,1.4472,refuse,refuse,True
+off_syllabus,7,Rules and scoring in cricket,1.4278,refuse,refuse,True
+off_syllabus,8,Rules and scoring in cricket,1.1333,refuse,ACCEPT,False
+off_syllabus,9,Rules and scoring in cricket,1.3706,refuse,refuse,True
+off_syllabus,6,Buddhist philosophy and the eightfold path,1.5829,refuse,refuse,True
+off_syllabus,7,Buddhist philosophy and the eightfold path,1.572,refuse,refuse,True
+off_syllabus,8,Buddhist philosophy and the eightfold path,1.5793,refuse,refuse,True
+off_syllabus,9,Buddhist philosophy and the eightfold path,1.4931,refuse,refuse,True
+off_syllabus,6,Creative writing and narrative structure,1.5915,refuse,refuse,True
+off_syllabus,7,Creative writing and narrative structure,1.6132,refuse,refuse,True
+off_syllabus,8,Creative writing and narrative structure,1.6467,refuse,refuse,True
+off_syllabus,9,Creative writing and narrative structure,1.5354,refuse,refuse,True
+off_syllabus,6,Astrology and planetary influence on personality,1.562,refuse,refuse,True
+off_syllabus,7,Astrology and planetary influence on personality,1.4469,refuse,refuse,True
+off_syllabus,8,Astrology and planetary influence on personality,1.0056,refuse,ACCEPT,False
+off_syllabus,9,Astrology and planetary influence on personality,1.5752,refuse,refuse,True
+off_syllabus,6,Homeopathic dilution and water memory,1.3079,refuse,refuse,True
+off_syllabus,7,Homeopathic dilution and water memory,1.2148,refuse,refuse,True
+off_syllabus,8,Homeopathic dilution and water memory,1.4211,refuse,refuse,True
+off_syllabus,9,Homeopathic dilution and water memory,1.3709,refuse,refuse,True
+off_syllabus,6,Flat earth theory,1.454,refuse,refuse,True
+off_syllabus,7,Flat earth theory,1.1887,refuse,refuse,True
+off_syllabus,8,Flat earth theory,1.3232,refuse,refuse,True
+off_syllabus,9,Flat earth theory,1.3395,refuse,refuse,True
+off_syllabus,6,Crystal healing energy fields,1.5434,refuse,refuse,True
+off_syllabus,7,Crystal healing energy fields,1.3821,refuse,refuse,True
+off_syllabus,8,Crystal healing energy fields,1.3486,refuse,refuse,True
+off_syllabus,9,Crystal healing energy fields,1.445,refuse,refuse,True
+off_syllabus,6,Perpetual motion machines that create free energy,1.1713,refuse,refuse,True
+off_syllabus,7,Perpetual motion machines that create free energy,1.0148,refuse,ACCEPT,False
+off_syllabus,8,Perpetual motion machines that create free energy,1.4031,refuse,refuse,True
+off_syllabus,9,Perpetual motion machines that create free energy,1.1835,refuse,refuse,True
+off_syllabus,6,Quantum entanglement and Bell's inequality,1.6444,refuse,refuse,True
+off_syllabus,7,Quantum entanglement and Bell's inequality,1.5955,refuse,refuse,True
+off_syllabus,8,Quantum entanglement and Bell's inequality,1.6576,refuse,refuse,True
+off_syllabus,9,Quantum entanglement and Bell's inequality,1.6505,refuse,refuse,True
+off_syllabus,6,CRISPR-Cas9 gene editing mechanisms,1.7904,refuse,refuse,True
+off_syllabus,7,CRISPR-Cas9 gene editing mechanisms,1.6455,refuse,refuse,True
+off_syllabus,8,CRISPR-Cas9 gene editing mechanisms,1.7199,refuse,refuse,True
+off_syllabus,9,CRISPR-Cas9 gene editing mechanisms,1.6775,refuse,refuse,True
+off_syllabus,6,General relativity and spacetime curvature,1.7043,refuse,refuse,True
+off_syllabus,7,General relativity and spacetime curvature,1.3464,refuse,refuse,True
+off_syllabus,8,General relativity and spacetime curvature,1.5362,refuse,refuse,True
+off_syllabus,9,General relativity and spacetime curvature,1.4699,refuse,refuse,True
+off_syllabus,6,Organic reaction mechanisms and nucleophilic substitution,1.558,refuse,refuse,True
+off_syllabus,7,Organic reaction mechanisms and nucleophilic substitution,1.6017,refuse,refuse,True
+off_syllabus,8,Organic reaction mechanisms and nucleophilic substitution,1.4194,refuse,refuse,True
+off_syllabus,9,Organic reaction mechanisms and nucleophilic substitution,1.4636,refuse,refuse,True
+off_syllabus,6,Polymerase chain reaction and DNA amplification,1.6898,refuse,refuse,True
+off_syllabus,7,Polymerase chain reaction and DNA amplification,1.6755,refuse,refuse,True
+off_syllabus,8,Polymerase chain reaction and DNA amplification,1.5521,refuse,refuse,True
+off_syllabus,9,Polymerase chain reaction and DNA amplification,1.5691,refuse,refuse,True
+off_syllabus,6,Semiconductor doping and p-n junction physics,1.4989,refuse,refuse,True
+off_syllabus,7,Semiconductor doping and p-n junction physics,1.6497,refuse,refuse,True
+off_syllabus,8,Semiconductor doping and p-n junction physics,1.284,refuse,refuse,True
+off_syllabus,9,Semiconductor doping and p-n junction physics,1.562,refuse,refuse,True
+off_syllabus,6,Enzyme kinetics and the Michaelis-Menten equation,1.5292,refuse,refuse,True
+off_syllabus,7,Enzyme kinetics and the Michaelis-Menten equation,1.4568,refuse,refuse,True
+off_syllabus,8,Enzyme kinetics and the Michaelis-Menten equation,1.2371,refuse,refuse,True
+off_syllabus,9,Enzyme kinetics and the Michaelis-Menten equation,1.3495,refuse,refuse,True
+off_syllabus,6,Stellar nucleosynthesis and the CNO cycle,1.5625,refuse,refuse,True
+off_syllabus,7,Stellar nucleosynthesis and the CNO cycle,1.5482,refuse,refuse,True
+off_syllabus,8,Stellar nucleosynthesis and the CNO cycle,1.3601,refuse,refuse,True
+off_syllabus,9,Stellar nucleosynthesis and the CNO cycle,1.2712,refuse,refuse,True
+off_syllabus,6,Thermodynamic entropy and the Carnot cycle,1.4982,refuse,refuse,True
+off_syllabus,7,Thermodynamic entropy and the Carnot cycle,1.3318,refuse,refuse,True
+off_syllabus,8,Thermodynamic entropy and the Carnot cycle,1.4423,refuse,refuse,True
+off_syllabus,9,Thermodynamic entropy and the Carnot cycle,1.4948,refuse,refuse,True
+off_syllabus,6,Nuclear fission reactor control rod design,1.5534,refuse,refuse,True
+off_syllabus,7,Nuclear fission reactor control rod design,1.4664,refuse,refuse,True
+off_syllabus,8,Nuclear fission reactor control rod design,1.5253,refuse,refuse,True
+off_syllabus,9,Nuclear fission reactor control rod design,1.4556,refuse,refuse,True
+off_syllabus,6,Water polo training techniques,1.5663,refuse,refuse,True
+off_syllabus,7,Water polo training techniques,1.4162,refuse,refuse,True
+off_syllabus,8,Water polo training techniques,1.345,refuse,refuse,True
+off_syllabus,9,Water polo training techniques,1.4877,refuse,refuse,True
+off_syllabus,6,Light novels and Japanese publishing,1.4019,refuse,refuse,True
+off_syllabus,7,Light novels and Japanese publishing,1.4419,refuse,refuse,True
+off_syllabus,8,Light novels and Japanese publishing,1.5129,refuse,refuse,True
+off_syllabus,9,Light novels and Japanese publishing,1.3517,refuse,refuse,True
+off_syllabus,6,Energy drinks and caffeine marketing,1.4178,refuse,refuse,True
+off_syllabus,7,Energy drinks and caffeine marketing,1.2633,refuse,refuse,True
+off_syllabus,8,Energy drinks and caffeine marketing,1.5837,refuse,refuse,True
+off_syllabus,9,Energy drinks and caffeine marketing,1.402,refuse,refuse,True
+off_syllabus,6,Food delivery supply chains,1.2795,refuse,refuse,True
+off_syllabus,7,Food delivery supply chains,1.3904,refuse,refuse,True
+off_syllabus,8,Food delivery supply chains,1.0662,refuse,ACCEPT,False
+off_syllabus,9,Food delivery supply chains,1.0004,refuse,ACCEPT,False
+off_syllabus,6,Cloud computing storage services,1.6042,refuse,refuse,True
+off_syllabus,7,Cloud computing storage services,1.5583,refuse,refuse,True
+off_syllabus,8,Cloud computing storage services,1.5761,refuse,refuse,True
+off_syllabus,9,Cloud computing storage services,1.469,refuse,refuse,True
+off_syllabus,6,Solar panel installation business models,1.2281,refuse,refuse,True
+off_syllabus,7,Solar panel installation business models,1.0103,refuse,ACCEPT,False
+off_syllabus,8,Solar panel installation business models,1.4751,refuse,refuse,True
+off_syllabus,9,Solar panel installation business models,1.2486,refuse,refuse,True
+off_syllabus,6,Plant-based meat product development,1.2787,refuse,refuse,True
+off_syllabus,7,Plant-based meat product development,1.2919,refuse,refuse,True
+off_syllabus,8,Plant-based meat product development,1.1945,refuse,refuse,True
+off_syllabus,9,Plant-based meat product development,1.2712,refuse,refuse,True
+off_syllabus,6,Magnetic resonance imaging hospital procurement,1.6907,refuse,refuse,True
+off_syllabus,7,Magnetic resonance imaging hospital procurement,1.5859,refuse,refuse,True
+off_syllabus,8,Magnetic resonance imaging hospital procurement,1.6162,refuse,refuse,True
+off_syllabus,9,Magnetic resonance imaging hospital procurement,1.7183,refuse,refuse,True
+off_syllabus,6,Circuit court legal procedure,1.5611,refuse,refuse,True
+off_syllabus,7,Circuit court legal procedure,1.639,refuse,refuse,True
+off_syllabus,8,Circuit court legal procedure,1.4009,refuse,refuse,True
+off_syllabus,9,Circuit court legal procedure,1.6563,refuse,refuse,True
+off_syllabus,6,Sound engineering and studio mixing,1.3311,refuse,refuse,True
+off_syllabus,7,Sound engineering and studio mixing,1.3419,refuse,refuse,True
+off_syllabus,8,Sound engineering and studio mixing,1.4726,refuse,refuse,True
+off_syllabus,9,Sound engineering and studio mixing,1.5099,refuse,refuse,True
+off_syllabus,6,asdfghjkl qwerty,1.5765,refuse,refuse,True
+off_syllabus,7,asdfghjkl qwerty,1.2667,refuse,refuse,True
+off_syllabus,8,asdfghjkl qwerty,1.2919,refuse,refuse,True
+off_syllabus,9,asdfghjkl qwerty,1.3545,refuse,refuse,True
+off_syllabus,6,the the the and and,1.6756,refuse,refuse,True
+off_syllabus,7,the the the and and,1.5994,refuse,refuse,True
+off_syllabus,8,the the the and and,1.5991,refuse,refuse,True
+off_syllabus,9,the the the and and,1.5512,refuse,refuse,True
+off_syllabus,6,12345 67890,1.7154,refuse,refuse,True
+off_syllabus,7,12345 67890,1.7767,refuse,refuse,True
+off_syllabus,8,12345 67890,1.7891,refuse,refuse,True
+off_syllabus,9,12345 67890,1.6145,refuse,refuse,True
+off_syllabus,6,zzzzz,1.6529,refuse,refuse,True
+off_syllabus,7,zzzzz,1.5984,refuse,refuse,True
+off_syllabus,8,zzzzz,1.6204,refuse,refuse,True
+off_syllabus,9,zzzzz,1.5943,refuse,refuse,True
+off_syllabus,6,How do I hack a school computer,1.6218,refuse,refuse,True
+off_syllabus,7,How do I hack a school computer,1.5044,refuse,refuse,True
+off_syllabus,8,How do I hack a school computer,1.3499,refuse,refuse,True
+off_syllabus,9,How do I hack a school computer,1.5875,refuse,refuse,True
+grade_boundary,6,Atomic structure,1.3815,refuse,refuse,True
+grade_boundary,6,Electromagnetism,1.2081,refuse,refuse,True
+grade_boundary,6,Heredity and genetics,1.4422,refuse,refuse,True
+grade_boundary,6,The periodic table of elements,1.437,refuse,refuse,True
+grade_boundary,6,Chemical reactions and equations,1.3605,refuse,refuse,True
+grade_boundary,6,The human nervous system,1.4282,refuse,refuse,True
+grade_boundary,6,Acids bases and indicators,1.3762,refuse,refuse,True
+grade_boundary,6,Electric circuits,0.7061,refuse,ACCEPT,False
+grade_boundary,6,Rheostat,1.4063,refuse,refuse,True
+grade_boundary,6,Respiration in living organisms,0.8899,refuse,ACCEPT,False
+grade_boundary,7,Atomic structure,1.4262,refuse,refuse,True
+grade_boundary,7,Electromagnetism,1.2624,refuse,refuse,True
+grade_boundary,7,The periodic table of elements,1.4456,refuse,refuse,True
+grade_boundary,7,Heredity and genetics,1.5182,refuse,refuse,True
+grade_boundary,7,Rheostat,1.4962,refuse,refuse,True
+grade_boundary,6,Work power and energy,0.7393,refuse,ACCEPT,False
+grade_boundary,6,Waves and their properties,1.3637,refuse,refuse,True
+grade_boundary,6,Reflection of light and mirrors,1.0427,refuse,ACCEPT,False
+grade_boundary,6,Elements compounds and mixtures,1.2477,refuse,refuse,True
+grade_boundary,6,The circulatory system,1.4579,refuse,refuse,True

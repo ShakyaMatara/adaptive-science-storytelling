@@ -24,107 +24,17 @@ frontend/dist/
 .DS_Store
 Thumbs.db
 
-# --- Evaluation harness ---
-# Generated results are reproducible by re-running the eval_* commands, so they are
-# not version-controlled...
-backend/evaluation/results/*
-# ...with one exception: the pre-repair index measurement cannot be reproduced once
-# the index is rebuilt, so the defect-and-repair evidence is kept under version control.
-!backend/evaluation/results/index_quality_before.csv
-!backend/evaluation/results/index_quality_after.csv
-# ...along with the curated evidence the thesis cites directly.
-!backend/evaluation/results/corpus_defects.md
-!backend/evaluation/results/text_quality_impact.md
-!backend/evaluation/results/g9p1_coverage_gap.md
-!backend/evaluation/results/toc_page_validation.csv
-!backend/evaluation/results/chunk_page_spans.csv
-!backend/evaluation/results/duplicate_impact.csv
-!backend/evaluation/results/ocr_dual_extraction.csv
-!backend/evaluation/results/t1_false_positive_analysis.md
-!backend/evaluation/results/t1_verbatim_vs_paraphrased.csv
-!backend/evaluation/results/t3_diagnostics.csv
-# The headline result CSVs each experiment's tables are drawn from.
-!backend/evaluation/results/t1_gate_margins_verbatim_latest.csv
-!backend/evaluation/results/t1_gate_margins_paraphrased_latest.csv
-!backend/evaluation/results/t1_gate_counterfactual_verbatim_latest.csv
-!backend/evaluation/results/t1_gate_counterfactual_paraphrased_latest.csv
-!backend/evaluation/results/t2_paraphrase_vs_legitimate_latest.csv
-!backend/evaluation/results/t4_interjudge_agreement_latest.csv
-!backend/evaluation/results/t5_adjacent_separation_latest.csv
-!backend/evaluation/results/t6_models_summary_latest.csv
-!backend/evaluation/results/t1_gate_verbatim_latest.csv
-!backend/evaluation/results/t1_gate_paraphrased_latest.csv
-!backend/evaluation/results/t1_gate_sweep_verbatim_latest.csv
-!backend/evaluation/results/t1_gate_sweep_paraphrased_latest.csv
-!backend/evaluation/results/t1_gate_by_family_verbatim_latest.csv
-!backend/evaluation/results/t2_anticheat_latest.csv
-!backend/evaluation/results/t2_anticheat_by_class_latest.csv
-!backend/evaluation/results/t2_anticheat_sweep_latest.csv
-!backend/evaluation/results/t3_planner_latest.csv
-!backend/evaluation/results/t3_ablation_latest.csv
-!backend/evaluation/results/t4_faithfulness_latest.csv
-!backend/evaluation/results/t4_faithfulness_summary_latest.csv
-!backend/evaluation/results/t4_faithfulness_by_provenance_latest.csv
-!backend/evaluation/results/t4_judge_validation_TEMPLATE_latest.csv
-!backend/evaluation/results/t5_difficulty_latest.csv
-!backend/evaluation/results/t6_models_latest.csv
-!backend/evaluation/results/t4_faithfulness_deepseek_primary_latest.csv
-!backend/evaluation/results/t4_faithfulness_summary_deepseek_primary_latest.csv
-!backend/evaluation/results/t4_faithfulness_by_provenance_deepseek_primary_latest.csv
-!backend/evaluation/results/t4_interjudge_agreement_deepseek_primary_latest.csv
-!backend/evaluation/results/t4_significance_latest.csv
-!backend/evaluation/results/figures/
-!backend/evaluation/results/midpoint_corrections.md
-!backend/evaluation/results/corpus_defects.md
-!backend/evaluation/results/text_quality_impact.md
-!backend/evaluation/results/duplicate_impact.csv
-!backend/evaluation/results/ocr_dual_extraction.csv
-!backend/evaluation/results/t1_false_positive_analysis.md
-!backend/evaluation/results/t1_verbatim_vs_paraphrased.csv
-!backend/evaluation/results/t3_diagnostics.csv
-!backend/evaluation/results/midpoint_corrections.md
-!backend/evaluation/results/chunk_page_spans.csv
-
-# T4 run 3 — evidence persistence (FINDING-10) and the retained run-2 copies.
-# The chapter prose and evidence blocks ARE the audit trail for section 7.7;
-# without them the faithfulness figures cannot be checked by anyone.
-!backend/evaluation/results/t4_chapters_latest.json
-!backend/evaluation/results/t4_judge_validation_BLIND_latest.csv
-!backend/evaluation/results/t4_chapter_dossier_BLIND_latest.md
-!backend/evaluation/results/t4_faithfulness_by_evidence_base_latest.csv
-!backend/evaluation/results/t4_faithfulness_by_richness_latest.csv
-!backend/evaluation/results/t4_fallback_sensitivity_latest.csv
-!backend/evaluation/results/t4_generation_variance_latest.csv
-!backend/evaluation/results/t4_faithfulness_gemini_run1_latest.csv
-!backend/evaluation/results/t4_faithfulness_summary_gemini_run1_latest.csv
-!backend/evaluation/results/t4_faithfulness_by_provenance_gemini_run1_latest.csv
-!backend/evaluation/results/t4_judge_validation_TEMPLATE_gemini_run1_latest.csv
-!backend/evaluation/results/t4_significance_gemini_run1_latest.csv
-!backend/evaluation/results/t4_interjudge_agreement_gemini_run1_latest.csv
-
-# T4 human validation of the judge, and the corpus-composition measurement
-# that the hand-scoring prompted.
-!backend/evaluation/results/t4_human_validation_latest.csv
-!backend/evaluation/results/t4_human_agreement_latest.csv
-!backend/evaluation/results/t4_human_ablation_latest.csv
-!backend/evaluation/results/t4_evidence_composition_latest.csv
-!backend/evaluation/results/index_assessment_content_latest.csv
-
-# Chapter 7 writing pack and the submission-readiness audit.
-!backend/evaluation/results/CHAPTER7_WRITING_PACK.md
-!backend/evaluation/results/REPO_AUDIT.md
-
-# --- Audit trail -------------------------------------------------------------
-# The timestamped result files are the provenance chain behind every *_latest
-# copy the thesis cites, and logs/ is cited as an appendix in RESULTS_SUMMARY
-# section 13. Together they are ~1 MB and they existed on one machine only.
-# The directory itself must be re-included first: `results/*` above excludes it,
-# and git does not descend into an excluded directory.
-!backend/evaluation/results/logs/
-!backend/evaluation/results/*_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9].csv
-!backend/evaluation/results/*_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9].json
-!backend/evaluation/results/*_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9].md
-
 # The submission archive is a build artefact, rebuilt by
 # scripts/make_submission_zip.ps1. Never commit it.
 *.zip
+
+# --- Evaluation evidence ------------------------------------------------------
+# backend/evaluation/results/ is tracked IN FULL and deliberately so. It is 3.5 MB
+# of CSVs, figures, run logs and markdown records, it is the evidence Chapter 7
+# cites, and it is NOT regenerable: the T4 chapters were sampled at temperature
+# 0.7, so re-running produces different text and different numbers.
+#
+# This was previously an exclusion plus ~80 `!` re-inclusions. That arrangement
+# fails silently - a file nobody remembers to add is simply missing from a clone
+# and nothing warns you - and it had already lost seven files that back reported
+# tables. Track the directory; do not reintroduce an allowlist.
