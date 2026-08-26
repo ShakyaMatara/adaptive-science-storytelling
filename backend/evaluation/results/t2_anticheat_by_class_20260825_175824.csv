@@ -1,0 +1,7 @@
+class,n,blocked,block_rate,desired,mean_ratio,sd
+verbatim,12,12,1.0,block,1.0,0.0
+surface,12,12,1.0,block,0.999,0.002
+lexical,12,12,1.0,block,0.931,0.033
+reorder,12,6,0.5,block,0.641,0.184
+paraphrase,12,0,0.0,block,0.357,0.103
+legitimate,12,0,0.0,allow,0.354,0.115

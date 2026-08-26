@@ -1,0 +1,8 @@
+coverage measure,plan measure,n,spearman_rho,strength
+manual page count,chapter count,39,0.27,weak
+manual page count,question budget,39,0.27,weak
+manual page count,distinct pages retrieved,39,0.4753,moderate
+distinct textbook pages,chapter count,39,0.9273,very strong
+distinct textbook pages,question budget,39,0.9273,very strong
+distinct textbook pages,paragraph budget,39,0.9273,very strong
+textbook page span,chapter count,39,0.7277,strong

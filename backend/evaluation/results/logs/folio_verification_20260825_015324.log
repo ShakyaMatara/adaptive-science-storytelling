@@ -1,0 +1,39 @@
+==============================================================================
+VERIFICATION 2 - folio parse against the printed books
+==============================================================================
+
+--- CHECK 1: G7P2.pdf ---
+  rendered citation : pp. 13-15
+  PDF page index    : 25   (open this page in a PDF viewer)
+  folios parsed     : start=13  end=15
+  footer on PDF p25:
+      Science | Biological processes 13
+  section           : Organisational levels of life
+  FIRST SENTENCE (should be on printed page 13):
+      "common function The following diagrams show different types of tissues found in living organisms."
+
+--- CHECK 2: G8P1.pdf ---
+  rendered citation : pp. 14-17
+  PDF page index    : 25   (open this page in a PDF viewer)
+  folios parsed     : start=14  end=17
+  footer on PDF p25:
+      14 Science | Animal Classification Science | Animal Classification 15
+  section           : Main invertebrate groups
+  FIRST SENTENCE (should be on printed page 14):
+      "Annelida Annelids live in both marine and fresh water environments as well as in wet terrestial environments."
+
+--- CHECK 3: G9P2.pdf ---
+  rendered citation : pp. 12-15
+  PDF page index    : 25   (open this page in a PDF viewer)
+  folios parsed     : start=12  end=15
+  footer on PDF p25:
+      12 Science | Density Science | Density 13
+  section           : Hydrometers
+  FIRST SENTENCE (should be on printed page 12):
+      "If you want to find the density of a liquid, you can measure the volume and mass of it and calculate the density, as you have done in activity 11.2."
+
+==============================================================================
+What to check: the FIRST SENTENCE should appear on the printed page numbered
+page_label_start. If it is consistently on the FOLLOWING printed page instead,
+the parser has a systematic left/right offset on spread pages.
+==============================================================================

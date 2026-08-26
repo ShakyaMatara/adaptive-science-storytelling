@@ -1,0 +1,40 @@
+ PDF  prt  A chars  B chars    seq  jaccard  B in A   dict  gate
+------------------------------------------------------------------------------
+  14    2     1069     1118  0.782    0.952   0.961  0.954  PASS
+  25   13     1264     1219  0.859    0.963   0.981  0.938  PASS
+  28   16      953      929  0.942    0.955   0.988  0.888  PASS
+  29   17      723      695  0.918    0.877   0.985  0.738  PASS
+  45   33     1697     1670  0.990    0.986   1.000  0.923  PASS
+  54   42     1468     1552  0.932    0.973   0.991  0.887  PASS
+  65   53     1860     1816  0.981    0.969   1.000  0.883  PASS
+  66   54     1536     1608  0.946    0.910   0.946  0.878  PASS
+  68   56     1978     1970  0.946    0.974   1.000  0.863  PASS
+  71   59      951     1185  0.824    0.615   0.957  0.752  PASS
+  84   72      937      944  0.934    0.895   0.971  0.887  PASS
+  86   74     1019     1100  0.955    0.917   0.928  0.929  PASS
+  96   84     1174     1151  0.905    0.947   0.989  0.915  PASS
+ 101   89      961     1021  0.953    0.946   0.946  0.893  PASS
+ 102   90      890     1074  0.882    0.919   0.940  0.956  PASS
+ 103   91     1261     1265  0.872    0.957   0.982  0.835  PASS
+ 115  103     1824     1791  0.986    0.993   1.000  0.927  PASS
+ 117  105     1167     1151  0.989    0.971   0.981  0.929  PASS
+ 118  106     1641     1747  0.961    0.936   0.936  0.935  PASS
+
+PASS 19/19    mean sequence agreement 0.924    min 0.782   max 0.990
+
+--- substantive divergences on the three lowest-agreement pages ---
+
+  printed p.2 (seq 0.782, B-in-A 0.961)
+     tokens only in A (Tesseract): ['ar']
+     tokens only in B (vision)   : ['2', 'figure', 'labels', 'protozoa']
+
+  printed p.59 (seq 0.824, B-in-A 0.957)
+     tokens only in A (Tesseract): ['08a', '62', '8as', '8dd0na', 'aand', 'acod', 'acs', 'ages']
+     tokens only in B (vision)   : ['all', 'technical', 'terms']
+
+  printed p.13 (seq 0.859, B-in-A 0.981)
+     tokens only in A (Tesseract): ['e', 'o']
+     tokens only in B (vision)   : ['bread', 'milk']
+
+wrote C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\ocr_dual_extraction.csv
+wrote per-page agreement map to C:/Users/user/AppData/Local/Temp/claude/C--Users-user-Desktop-adaptive-science-storytelling--claude-worktrees-interesting-montalcini-83d41a/abd9ad7e-9043-4c64-9e52-95bd46e42b59/scratchpad/agreement.json

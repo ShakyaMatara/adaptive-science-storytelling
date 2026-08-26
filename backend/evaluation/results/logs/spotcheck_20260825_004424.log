@@ -1,0 +1,32 @@
+Chunks read back from the rebuilt Chroma collection: 1101
+LIVE INDEX page attribution (8-word probe): 1074/1101 = 97.55%
+
+==============================================================================
+THREE CHUNKS FOR MANUAL SPOT-CHECK
+==============================================================================
+
+--- SPOT-CHECK 1 ---
+  file            : G6.pdf   (Grade 6)
+  PDF page index  : 22   <- open this page in the PDF viewer
+  printed page no : (not printed on this page)
+  chapter / section: '(document)' / 'Characteristics of Organisms'
+  chunk begins    : "within themselves. Hence, these plants are called autotrophic. They use carbon dioxide from air, soil water and sun light to produce food. This process is called photosynthesis. Sunlight Oxygen Carbon ..."
+  -- first lines actually on PDF page 22: --
+       Nutrition
+       All organisms including humans need food for survival. Satisfying the
+       food requirements of organisms is called nutrition.
+       Most green plants produce food within themselves. Hence, these plants
+       are called autotrophic.
+
+--- SPOT-CHECK 2 ---
+  file            : G8P1.pdf   (Grade 8)
+  PDF page index  : 21   <- open this page in the PDF viewer
+  printed page no : 11
+  chapter / section: '(document)' / 'Impact of microorganisms on humans and their activities'
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Temp\claude\C--Users-user-Desktop-adaptive-science-storytelling--claude-worktrees-interesting-montalcini-83d41a\abd9ad7e-9043-4c64-9e52-95bd46e42b59\scratchpad\spotcheck.py", line 55, in <module>
+    print(f"  chunk begins    : \"{' '.join(d.split()[:30])} ...\"")
+  File "C:\Python312\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u03bc' in position 109: character maps to <undefined>

@@ -1,0 +1,95 @@
+====================================================================================
+REVERT CRITERIA (live index)
+====================================================================================
+chunk count : 1122   (1101 -> 1122, +21 from recovery)
+per grade   : {6: 156, 7: 275, 8: 332, 9: 359}
+Grade 7 chapters: 19 (must be 19) -> PASS
+chapters per grade: {6: 11, 7: 19, 8: 15, 9: 19}
+
+====================================================================================
+PROVENANCE
+====================================================================================
+   {'text_layer': 1086, 'ocr_vision': 36}
+   recovered chunks: 36  (3.2% of the index)
+   recovered pages covered: [13, 14, 24, 27, 28, 29, 44, 45, 53, 54, 65, 66, 67, 68, 70, 71, 82, 84, 85, 86, 95, 96, 100, 101, 102, 103, 114, 115, 116, 117, 118]
+
+====================================================================================
+DEFECT INCIDENCE - live index, before vs after
+====================================================================================
+   FINDING-3 doubled chars : 97/1101 (8.8%) -> 7/1122 (0.6%)
+   FINDING-4 mojibake      : 97/1101 (8.8%) -> 96/1122 (8.6%)  [untouched]
+   FINDING-7 PUA glyphs    :   9/1101 (0.8%) -> 0/1122 (0.0%)
+   tick/cross marks restored: 16
+
+====================================================================================
+Three previously DISPUTED chunks - must still start p.13, p.15, p.13
+====================================================================================
+
+--- re-verify G7P2.pdf ---
+  G7P2.pdf  PDF p25   offset 12  =>  printed p.13
+  CITATION : pp. 13-15
+  chapter  : Biological Processes
+  section  : Organisational levels of life
+  source   : text_layer
+  first sentence (printed p.13):
+      "common function The following diagrams show different types of tissues found in living organisms."
+
+--- re-verify G8P1.pdf ---
+  G8P1.pdf  PDF p25   offset 10  =>  printed p.15
+  CITATION : pp. 15-16
+  chapter  : Animal Classification
+  section  : Main invertebrate groups
+  source   : text_layer
+  first sentence (printed p.15):
+      "Annelida Annelids live in both marine and fresh water environments as well as in wet terrestial environments."
+
+--- re-verify G9P2.pdf ---
+  G9P2.pdf  PDF p25   offset 12  =>  printed p.13
+  CITATION : pp. 13-14
+  chapter  : Density
+  section  : Hydrometers
+  source   : text_layer
+  first sentence (printed p.13):
+      "If you want to find the density of a liquid, you can measure the volume and mass of it and calculate the density, as you have done in activity 11.2."
+
+====================================================================================
+Three END-OF-BOOK checks - must still read p.175, p.148, p.109
+====================================================================================
+
+--- end-of-book G6.pdf ---
+  G6.pdf  PDF p189   offset 14  =>  printed p.175
+  CITATION : p. 175
+  chapter  : Weather and Climate
+  section  : The Effects of heat to the Environment
+  source   : text_layer
+  first sentence (printed p.175):
+      "² Prepare a booklet about the methods used by our ancestors to forecast weather."
+
+--- end-of-book G7P1.pdf ---
+  G7P1.pdf  PDF p160   offset 12  =>  printed p.148
+  CITATION : p. 148
+  chapter  : The Correct Use of the Microscope
+  section  : The electron microscope
+  source   : text_layer
+  first sentence (printed p.148):
+      "● The electron microscope has a higher magnification and a higher resolving power than the light microscope."
+
+--- end-of-book G9P1.pdf ---
+  G9P1.pdf  PDF p121   offset 12  =>  printed p.109
+  CITATION : p. 109
+  chapter  : The Evolutionary Process
+  section  : Importance of evolution in bio-diversity
+  source   : text_layer
+  first sentence (printed p.109):
+      "modification on feet of horse occurred during its evolution."
+
+====================================================================================
+SPOT-CHECK: a RECOVERED chunk from printed p.72 (heart), for manual review
+====================================================================================
+  G9P1.pdf PDF p84 -> citation pp. 72-73
+  chapter='The Human Circulatory System'  section='Structure of the human heart'
+  source_type='ocr_vision'
+
+  FULL CHUNK TEXT:
+
+  Figure 6.2 shows the longitudinal section of human heart. Superior vena cava Aorta Left pulmonary artery Pulmonary artery Pulmonary veins Left atrium Semi lunar valves Bicuspid valve (Mitral valve) Right atrium Tricuspid valve Left ventricle Right ventricle Inferior vena cava Figure 6.2 - Longitudinal section of the human heart ² The heart has four chambers. The upper chambers are called atria and the lower chambers are called ventricles. ³ Left atrium ³ Right atrium ³ Left ventricle ³ Right ventricle ² There are two valves between the atria and ventricles. ³ Bicuspid valve is in between the left atrium and left ventricle. ³ Tricuspid valve is in between the right atrium and right ventricle. ² There are two main arteries connected to the ventricles. ³ Aorta starts from the left ventricle. ³ Pulmonary artery starts from the right ventricle. ² There are semi lunar valves at the starting points of the main arteries. ³ Aortic semi lunar valve is at the starting point of the aorta. ³ Pulmonary semi lunar valve is at the starting point of the pulmonary artery. ² Main veins are connected to the atria. ³ The superior vena cava and inferior vena cava open to the right atrium. ³ Left and right pulmonary veins open to the left artrium. Assignment 6.1 ² Construct a model of the heart to show the structure of the heart.

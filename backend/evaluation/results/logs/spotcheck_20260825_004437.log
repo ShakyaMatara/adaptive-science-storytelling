@@ -1,0 +1,45 @@
+Chunks read back from the rebuilt Chroma collection: 1101
+LIVE INDEX page attribution (8-word probe): 1074/1101 = 97.55%
+
+==============================================================================
+THREE CHUNKS FOR MANUAL SPOT-CHECK
+==============================================================================
+
+--- SPOT-CHECK 1 ---
+  file            : G6.pdf   (Grade 6)
+  PDF page index  : 22   <- open this page in the PDF viewer
+  printed page no : (not printed on this page)
+  chapter / section: '(document)' / 'Characteristics of Organisms'
+  chunk begins    : "within themselves. Hence, these plants are called autotrophic. They use carbon dioxide from air, soil water and sun light to produce food. This process is called photosynthesis. Sunlight Oxygen Carbon ..."
+  -- first lines actually on PDF page 22: --
+       Nutrition
+       All organisms including humans need food for survival. Satisfying the
+       food requirements of organisms is called nutrition.
+       Most green plants produce food within themselves. Hence, these plants
+       are called autotrophic.
+
+--- SPOT-CHECK 2 ---
+  file            : G8P1.pdf   (Grade 8)
+  PDF page index  : 21   <- open this page in the PDF viewer
+  printed page no : 11
+  chapter / section: '(document)' / 'Impact of microorganisms on humans and their activities'
+  chunk begins    : "- laIqø Ôù ydhkh - ~sn[Q¨ ¤›øP¯õUP® Application of microbes - laIqø Ôù Ndú; - ~sn[QPÎß ¤μ÷¯õP® Infectious diseases - fndajk frda. - öuõØÖ ÷|õ´PÒ Animal Among those animals, yellow ..."
+  -- first lines actually on PDF page 21: --
+       III. Environmental conditions, suitable for microbial growth are given below.
+       a)Temperature b) Moisture c) pH
+       which of the above conditions are controlled by refregerating food?
+       1) a and b 2) a and c 3) b and c 4) a, b and c
+       IV. The microbial activity on lipid food such as 'dodol'/'dothal' and 'kavum'/
+
+--- SPOT-CHECK 3 ---
+  file            : G9P1.pdf   (Grade 9)
+  PDF page index  : 21   <- open this page in the PDF viewer
+  printed page no : 9
+  chapter / section: '(document)' / 'Effects of micro-organisms'
+  chunk begins    : "growth of other micro-organisms get retarded and enhance preservation. Refrigerating further retards bacterial growth. Figure 1.7 - Dairy products (yoghurt, curd, cheese, butter) ² Products based on plant fibres Plant ..."
+  -- first lines actually on PDF page 21: --
+       When boiling, unfavourable bacteria in milk get
+       destroyed. Lactobacillus and Streptococcus are
+       used as culture in producing yoghurt. They turn
+       Lactose into Lactic acid. Since it creates an acidic
+       medium, growth of other micro-organisms get

@@ -1,0 +1,77 @@
+
+T6 — Model selection benchmark
+Models (5): openai/gpt-5.4-mini, openai/gpt-5.6-luna, deepseek/deepseek-v4-flash-0731, google/gemini-3.7-flash, qwen/qwen3.8-27b
+Topics (6): G9 Nanotechnology, G7 Images formed by plane mirrors, G6 Generating Electricity, G9 Structure and function of the human eye, G8 Photosynthesis, G7 Morphological features of flowering plants
+Planned calls: 5 x 6 = 30
+
+  openai/gpt-5.4-mini
+    [1/30] ok  Nanotechnology                       7.73s  fkgl=9.87
+    [2/30] FAIL Images formed by plane mirrors       4.99s  fkgl=0.0
+    [3/30] ok  Generating Electricity               5.99s  fkgl=9.37
+    [4/30] ok  Structure and function of the huma   5.96s  fkgl=8.95
+    [5/30] ok  Photosynthesis                       5.43s  fkgl=8.03
+    [6/30] FAIL Morphological features of flowerin   5.22s  fkgl=0.0
+
+  openai/gpt-5.6-luna
+    [7/30] FAIL Nanotechnology                      12.79s  fkgl=0.0
+    [8/30] ok  Images formed by plane mirrors       9.54s  fkgl=9.37
+    [9/30] ok  Generating Electricity               9.82s  fkgl=9.55
+    [10/30] FAIL Structure and function of the huma   9.45s  fkgl=0.0
+    [11/30] FAIL Photosynthesis                       9.41s  fkgl=0.0
+    [12/30] FAIL Morphological features of flowerin  12.41s  fkgl=0.0
+
+  deepseek/deepseek-v4-flash-0731
+    [13/30] ok  Nanotechnology                      22.75s  fkgl=7.93
+    [14/30] ok  Images formed by plane mirrors      26.41s  fkgl=5.21
+    [15/30] FAIL Generating Electricity              15.54s  fkgl=0.0
+    [16/30] FAIL Structure and function of the huma  26.01s  fkgl=0.0
+    [17/30] FAIL Photosynthesis                      10.57s  fkgl=0.0
+    [18/30] FAIL Morphological features of flowerin  55.59s  fkgl=0.0
+
+  google/gemini-3.7-flash
+    [19/30] FAIL Nanotechnology                      11.72s  fkgl=0.0
+    [20/30] FAIL Images formed by plane mirrors      11.63s  fkgl=0.0
+    [21/30] FAIL Generating Electricity              11.34s  fkgl=0.0
+    [22/30] FAIL Structure and function of the huma  12.73s  fkgl=0.0
+    [23/30] FAIL Photosynthesis                      14.24s  fkgl=0.0
+    [24/30] FAIL Morphological features of flowerin  12.34s  fkgl=0.0
+
+  qwen/qwen3.8-27b
+    [25/30] FAIL Nanotechnology                      40.43s  fkgl=0.0
+    [26/30] ok  Images formed by plane mirrors      46.36s  fkgl=7.18
+    [27/30] FAIL Generating Electricity              27.42s  fkgl=0.0
+    [28/30] FAIL Structure and function of the huma  24.42s  fkgl=0.0
+    [29/30] FAIL Photosynthesis                      39.99s  fkgl=0.0
+    [30/30] FAIL Morphological features of flowerin  15.85s  fkgl=0.0
+
+[t6_models] calls=30 failures=0 prompt_tokens=53204 completion_tokens=34144 total_tokens=87348 estimated_cost_usd=0.0831
+
+Model comparison
+model                            n  json_ok  json_rate  schema_rate  options_rate  median_latency_s  mean_fkgl  fkgl_band_fit  mean_tokens  cost_per_chapter
+-------------------------------  -  -------  ---------  -----------  ------------  ----------------  ---------  -------------  -----------  ----------------
+openai/gpt-5.4-mini              6  4/6      0.667      0.667        0.667         5.7               9.055      no             2364         0.00409         
+openai/gpt-5.6-luna              6  2/6      0.333      0.333        0.333         9.68              9.46       no             2562         0.00133         
+deepseek/deepseek-v4-flash-0731  6  2/6      0.333      0.333        0.333         24.38             6.57       yes            3032         0.00026         
+google/gemini-3.7-flash          6  0/6      0.0        0.0          0.0           12.03             0.0        no             3139         0.00327         
+qwen/qwen3.8-27b                 6  1/6      0.167      0.167        0.167         33.7              7.18       yes            3461         0.0049          
+
+Highest first-attempt schema compliance: openai/gpt-5.4-mini (4/6, median 5.7s).
+Sentence for Chapter 6 (Technology Selection):
+  "openai/gpt-5.4-mini was selected on the evidence of Table 7.n, which recorded the highest
+  first-attempt strict-JSON compliance (67%) at a median latency of
+  5.7 s, within the NFR-05 budget, while producing text in the
+  readability band appropriate for the target cohort."
+Adjust the wording if a different model wins on your run — the point is that the choice is
+now evidenced rather than asserted, which is exactly what the midpoint feedback asked for.
+
+21 first-attempt failures — include a sample in Chapter 7 as the 'failures compared to the success' evidence:
+    openai/gpt-5.4-mini / Images formed by plane mirro: JSONDecodeError: Expecting ',' delimiter: line 1 column 1787 (char 1786)
+    openai/gpt-5.4-mini / Morphological features of fl: JSONDecodeError: Expecting ',' delimiter: line 1 column 1890 (char 1889)
+    openai/gpt-5.6-luna / Nanotechnology: JSONDecodeError: Expecting ',' delimiter: line 1 column 2087 (char 2086)
+    openai/gpt-5.6-luna / Structure and function of th: JSONDecodeError: Expecting ',' delimiter: line 1 column 2366 (char 2365)
+    openai/gpt-5.6-luna / Photosynthesis: JSONDecodeError: Expecting ',' delimiter: line 1 column 1589 (char 1588)
+    openai/gpt-5.6-luna / Morphological features of fl: JSONDecodeError: Expecting ',' delimiter: line 1 column 2104 (char 2103)
+    deepseek/deepseek-v4-flash-0731 / Generating Electricity: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+    deepseek/deepseek-v4-flash-0731 / Structure and function of th: JSONDecodeError: Expecting ',' delimiter: line 9 column 1 (char 2485)
+
+Per-call detail: C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t6_models_20260825_185020.csv

@@ -1,0 +1,6 @@
+usage: manage.py eval_probes [-h] [--verify] [--suggest] [--grade GRADE]
+                             [--limit LIMIT] [--version] [-v {0,1,2,3}]
+                             [--settings SETTINGS] [--pythonpath PYTHONPATH]
+                             [--traceback] [--no-color] [--force-color]
+                             [--skip-checks]
+manage.py eval_probes: error: unrecognized arguments: --positives in_syllabus_paraphrased

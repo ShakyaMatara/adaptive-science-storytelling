@@ -1,0 +1,126 @@
+============================================================================================
+CHECK A - page arithmetic: (PDF pages) - (front matter) - (trailing blanks) == last textbook page
+============================================================================================
+book       PDF pages  front  trailing  content  expected  result
+G6.pdf           190     14         1      175       175  PASS
+G7P1.pdf         160     12         0      148       148  PASS
+G7P2.pdf         140     12         1      127       127  PASS
+G8P1.pdf         137     10         0      127       127  PASS
+G8P2.pdf         152     10         0      142       142  PASS
+G9P1.pdf         122     12         1      109       109  PASS
+G9P2.pdf         180     12         0      168       168  PASS
+
+arithmetic: ALL PASS - the 1:1 mapping holds
+
+TOC parsed: 292 entries across 7 books
+   G6.pdf      11 chapters,  41 sections
+   G7P1.pdf    10 chapters,  35 sections
+   G7P2.pdf     9 chapters,  24 sections
+   G8P1.pdf     8 chapters,  27 sections
+   G8P2.pdf     7 chapters,  34 sections
+   G9P1.pdf     9 chapters,  32 sections
+   G9P2.pdf    10 chapters,  35 sections
+
+============================================================================================
+CHECK B - TOC agreement: locate each title, apply the offset, compare printed pages
+============================================================================================
+
+book        agree  mismatch  not located  skipped  located     rate
+G6.pdf         49         2            1        0       51    96.1%
+G7P1.pdf       36         7            1        1       43    83.7%
+G7P2.pdf       25         5            0        3       30    83.3%
+G8P1.pdf       15        18            1        1       33    45.5%
+G8P2.pdf       26        14            1        0       40    65.0%
+G9P1.pdf       16        15            9        1       31    51.6%
+G9P2.pdf       32         9            0        4       41    78.0%
+ALL           199        70           13       10      269    74.0%
+
+--- every MISMATCH ---
+   G6.pdf     3.1    States of Water                              expected p.36   found p.35   (2 page hits)
+   G6.pdf     11.2   Climate                                      expected p.161  found p.31   (6 page hits)
+   G7P1.pdf   4.3    Water as a medium of life                    expected p.60   found p.61   (1 page hits)
+   G7P1.pdf   7.2    Potential energy                             expected p.92   found p.90   (5 page hits)
+   G7P1.pdf   7.3    Electrical energy                            expected p.94   found p.90   (9 page hits)
+   G7P1.pdf   7.4    Sound energy                                 expected p.96   found p.90   (5 page hits)
+   G7P1.pdf   7.5    Light energy                                 expected p.97   found p.90   (5 page hits)
+   G7P1.pdf   7.7    Chemical energy                              expected p.101  found p.90   (5 page hits)
+   G7P1.pdf   9.2    Images formed by plane mirrors               expected p.121  found p.120  (5 page hits)
+   G7P2.pdf   14.2   Thermometers                                 expected p.42   found p.41   (5 page hits)
+   G7P2.pdf   14.3   Heat transfer                                expected p.49   found p.40   (9 page hits)
+   G7P2.pdf   18.3   Rock weathering                              expected p.104  found p.102  (6 page hits)
+   G7P2.pdf   19.1   Renewable energy sources                     expected p.115  found p.113  (8 page hits)
+   G7P2.pdf   19.2   Non-renewable energy sources                 expected p.122  found p.113  (7 page hits)
+   G8P1.pdf   1.2    Effects of microorganisms on food            expected p.3    found p.2    (2 page hits)
+   G8P1.pdf   2.1    Main invertebrate groups                     expected p.13   found p.12   (2 page hits)
+   G8P1.pdf   2.2    Main vertebrate groups                       expected p.17   found p.16   (2 page hits)
+   G8P1.pdf   3.1    Diversity and functions of plant leaves      expected p.25   found p.24   (2 page hits)
+   G8P1.pdf   3.3    Diversity and functions of plant roots       expected p.33   found p.32   (2 page hits)
+   G8P1.pdf   4.2    Utilizing physical properties of matter      expected p.45   found p.44   (2 page hits)
+   G8P1.pdf   5.3    Musical instruments that produce sound by vi expected p.69   found p.68   (2 page hits)
+   G8P1.pdf   6.1    Poles of a magnet                            expected p.79   found p.78   (3 page hits)
+   G8P1.pdf   6.2    Magnetic field of a magnet                   expected p.81   found p.80   (3 page hits)
+   G8P1.pdf   6.3    Compass                                      expected p.83   found p.80   (9 page hits)
+   G8P1.pdf   6.4    Geomagnetism                                 expected p.85   found p.84   (4 page hits)
+   G8P1.pdf   7.1    Electric current                             expected p.95   found p.89   (9 page hits)
+   G8P1.pdf   7.2    Potential difference                         expected p.99   found p.98   (7 page hits)
+   G8P1.pdf   7.3    Resistance of a conductor                    expected p.103  found p.102  (3 page hits)
+   G8P1.pdf   8.2    Changes of state as physical changes         expected p.109  found p.108  (2 page hits)
+   G8P1.pdf   8.3    Chemical changes                             expected p.110  found p.107  (8 page hits)
+   G8P1.pdf   8.4    Combustion                                   expected p.115  found p.112  (10 page hits)
+   G8P1.pdf   8.5    Tarnishing of metals                         expected p.119  found p.112  (4 page hits)
+   G8P2.pdf   9.3    Human skin                                   expected p.11   found p.10   (3 page hits)
+   G8P2.pdf   10.6   Light effect of electric current             expected p.35   found p.34   (2 page hits)
+   G8P2.pdf   10.8   Chemical effect of electric current          expected p.39   found p.38   (4 page hits)
+   G8P2.pdf   11.2   Transportation                               expected p.51   found p.50   (8 page hits)
+   G8P2.pdf   11.3   Transpiration                                expected p.55   found p.54   (10 page hits)
+   G8P2.pdf   11.4   Guttation                                    expected p.57   found p.56   (5 page hits)
+   G8P2.pdf   12.2   Life cycles of plants                        expected p.71   found p.64   (3 page hits)
+   G8P2.pdf   13.3   Food preservatives                           expected p.87   found p.86   (2 page hits)
+   G8P2.pdf   13.4   Advantages and disadvantages of food preserv expected p.91   found p.90   (2 page hits)
+   G8P2.pdf   14.5   Exploring the universe                       expected p.111  found p.110  (2 page hits)
+   G8P2.pdf   15.1   Drought                                      expected p.129  found p.128  (9 page hits)
+   G8P2.pdf   15.2   Floods                                       expected p.134  found p.128  (5 page hits)
+   G8P2.pdf   15.3   Landslide / Earth slip                       expected p.135  found p.134  (2 page hits)
+   G8P2.pdf   15.4   Lightning and thundering                     expected p.137  found p.128  (5 page hits)
+   G9P1.pdf   2      Eye and Ear                                  expected p.16   found p.34   (1 page hits)
+   G9P1.pdf   2.3    Eye diseases                                 expected p.29   found p.28   (3 page hits)
+   G9P1.pdf   2.4    Structure and function of the human ear      expected p.31   found p.30   (2 page hits)
+   G9P1.pdf   2.5    Defects of ear                               expected p.33   found p.32   (1 page hits)
+   G9P1.pdf   3.1    Elements                                     expected p.39   found p.38   (13 page hits)
+   G9P1.pdf   3.2    Compounds                                    expected p.44   found p.38   (6 page hits)
+   G9P1.pdf   3.3    Mixtures                                     expected p.46   found p.38   (7 page hits)
+   G9P1.pdf   4.2    Magnitude of force                           expected p.53   found p.52   (2 page hits)
+   G9P1.pdf   5.1    Pressure                                     expected p.60   found p.30   (16 page hits)
+   G9P1.pdf   5.2    Factors affecting the pressure               expected p.61   found p.60   (2 page hits)
+   G9P1.pdf   5.4    Changing the factors affecting pressure as n expected p.67   found p.66   (2 page hits)
+   G9P1.pdf   6.4    Blood transfusion                            expected p.76   found p.11   (5 page hits)
+   G9P1.pdf   9      The Evolutionary Process                     expected p.98   found p.109  (1 page hits)
+   G9P1.pdf   9.2    Origin of life on the Earth                  expected p.99   found p.98   (3 page hits)
+   G9P1.pdf   9.3    Evolution                                    expected p.102  found p.98   (7 page hits)
+   G9P2.pdf   10.3   Electroplating                               expected p.5    found p.4    (6 page hits)
+   G9P2.pdf   11     Density                                      expected p.10   found p.8    (12 page hits)
+   G9P2.pdf   15.2   Inclined plane                               expected p.93   found p.84   (9 page hits)
+   G9P2.pdf   15.3   Wheel and axle                               expected p.95   found p.85   (5 page hits)
+   G9P2.pdf   16.2   Nanotechnology                               expected p.105  found p.103  (11 page hits)
+   G9P2.pdf   18.2   Earthquakes                                  expected p.134  found p.129  (12 page hits)
+   G9P2.pdf   18.3   Tsunami                                      expected p.141  found p.24   (11 page hits)
+   G9P2.pdf   18.4   Wild fires                                   expected p.145  found p.129  (3 page hits)
+   G9P2.pdf   19.2   Minerals and rocks                           expected p.155  found p.153  (5 page hits)
+
+--- every NOT LOCATED ---
+   G6.pdf     7.2    Different Type of Magnets                          TOC p.100
+   G7P1.pdf   5.2    Acids and bases available in school laboratory and TOC p.64
+   G8P1.pdf   3      Diversity and Functions of Plant Parts             TOC p.24
+   G8P2.pdf   13.2   Food preservation Methods                          TOC p.82
+   G9P1.pdf   2.1    Structure and function of the human eye            TOC p.16
+   G9P1.pdf   4      Basic Concepts Associated with Force               TOC p.52
+   G9P1.pdf   4.3    Direction of force and point of application        TOC p.54
+   G9P1.pdf   4.4    Graphical representation of force                  TOC p.56
+   G9P1.pdf   6      The Human Circulatory System                       TOC p.72
+   G9P1.pdf   6.1    Structure of the human heart                       TOC p.72
+   G9P1.pdf   8      Support and Movements of Organisms                 TOC p.89
+   G9P1.pdf   8.1    Support and movements of animals                   TOC p.89
+   G9P1.pdf   8.2    Bones, muscles and joints                          TOC p.90
+
+VERDICT: STOP (overall 74.0%, books below 95%: [('G7P1.pdf', 83.72093023255815), ('G7P2.pdf', 83.33333333333333), ('G8P1.pdf', 45.45454545454545), ('G8P2.pdf', 65.0), ('G9P1.pdf', 51.61290322580645), ('G9P2.pdf', 78.04878048780488)])
+wrote evaluation/results/toc_page_validation.csv

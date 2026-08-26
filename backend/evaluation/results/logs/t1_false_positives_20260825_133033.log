@@ -1,0 +1,15 @@
+accepted negatives: 10
+  caused by FINDING-4 (refused once mojibake chunks removed): 4
+     G6 Sinhala grammar and sentence construction  best 1.1155 -> 1.3893
+     G7 Sinhala grammar and sentence construction  best 1.1252 -> 1.3816
+     G8 Sinhala grammar and sentence construction  best 1.1233 -> 1.4064
+     G9 Sinhala grammar and sentence construction  best 1.1119 -> 1.2136
+  survive exclusion (other cause): 6
+     G8 Astrology and planetary influence on personality  best 1.0056, 0/8 mojibake chunks
+     G8 Food delivery supply chains  best 1.0662, 1/8 mojibake chunks
+     G9 Food delivery supply chains  best 1.0004, 0/8 mojibake chunks
+     G7 Perpetual motion machines that create free energy  best 1.0148, 0/8 mojibake chunks
+     G8 Rules and scoring in cricket  best 1.1333, 2/8 mojibake chunks
+     G7 Solar panel installation business models  best 1.0103, 0/8 mojibake chunks
+
+wrote C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t1_false_positive_analysis.md

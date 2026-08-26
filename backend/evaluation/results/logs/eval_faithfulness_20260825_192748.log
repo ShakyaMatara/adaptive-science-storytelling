@@ -1,0 +1,58 @@
+
+T4 — Groundedness ablation (RAG on vs RAG off)
+Topics (12): G7 Capacitors, G6 Weather, G8 Geomagnetism, G7 Kinetic energy, G8 Resistance of a conductor, G9 Structure of the human heart, G7 Morphological features of flowering plants, G8 Photosynthesis, G9 Structure and function of the human eye, G6 Generating Electricity, G7 Images formed by plane mirrors, G9 Nanotechnology
+Planned calls: 12 x (2 generations + 2 judgements) = 48
+Judge model: deepseek/deepseek-v4-flash-0731
+Second judge: google/gemini-3.7-flash (first 6 chapters)
+  [1/24] rag_on   Capacitors                     faithfulness=1.0 claims=10
+  [2/24] rag_off  Capacitors                     faithfulness=0.0 claims=0
+  [3/24] rag_on   Weather                        faithfulness=0.0 claims=0
+  [4/24] rag_off  Weather                        faithfulness=0.0 claims=0
+  [5/24] rag_on   Geomagnetism                   faithfulness=1.0 claims=7
+  [6/24] rag_off  Geomagnetism                   faithfulness=0.0 claims=0
+  [7/24] rag_on   Kinetic energy                 faithfulness=1.0 claims=5
+  [8/24] rag_off  Kinetic energy                 faithfulness=0.0 claims=0
+  [9/24] rag_on   Resistance of a conductor      faithfulness=0.0 claims=0
+  [10/24] rag_off  Resistance of a conductor      faithfulness=0.0 claims=0
+  [11/24] rag_on   Structure of the human heart   faithfulness=0.0 claims=0
+  [12/24] rag_off  Structure of the human heart   faithfulness=0.0 claims=0
+  [13/24] rag_on   Morphological features of flow faithfulness=0.0 claims=0
+  [14/24] rag_off  Morphological features of flow faithfulness=0.0 claims=0
+  [15/24] rag_on   Photosynthesis                 faithfulness=1.0 claims=11
+  [16/24] rag_off  Photosynthesis                 faithfulness=1.0 claims=8
+  [17/24] rag_on   Structure and function of the  faithfulness=0.0 claims=0
+  [18/24] rag_off  Structure and function of the  faithfulness=0.0 claims=0
+  [19/24] rag_on   Generating Electricity         faithfulness=1.0 claims=7
+  [20/24] rag_off  Generating Electricity         faithfulness=0.0 claims=0
+  [21/24] rag_on   Images formed by plane mirrors faithfulness=0.0 claims=0
+  [22/24] rag_off  Images formed by plane mirrors faithfulness=0.0 claims=0
+  [23/24] rag_on   Nanotechnology                 faithfulness=0.875 claims=8
+  [24/24] rag_off  Nanotechnology                 faithfulness=0.0 claims=0
+
+[t4_faithfulness] calls=55 failures=19 prompt_tokens=52945 completion_tokens=39568 total_tokens=92513 estimated_cost_usd=0.0273
+
+Ablation results
+condition  n  mean_faithfulness  sd     mean_claims  mean_unsupported  mean_contradicted
+---------  -  -----------------  -----  -----------  ----------------  -----------------
+rag_on     6  0.979              0.051  8.0          0.167             0.0              
+rag_off    1  1.0                0.0    8.0          0.0               0.0              
+
+Grounding effect: faithfulness rises by -0.021 (1.0 -> 0.979) when retrieval is enabled.
+Unsupported claims per chapter fall from 0.0 to 0.167. In a narrative science tool each unsupported claim is a candidate
+misconception delivered in a memorable form, so this is the safety argument for the RAG layer,
+not merely an accuracy improvement.
+
+17 judgements failed — exclude them from the means and report the exclusion.
+
+Faithfulness by provenance of the grounding passages
+grounding        n  mean_faithfulness  sd     mean_unsupported
+---------------  -  -----------------  -----  ----------------
+text layer only  7  0.982              0.047  0.143           
+  No chapter in this run was grounded on recovered text, so the T4 figure rests entirely on the text layer.
+
+Judge-validation template: C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t4_judge_validation_TEMPLATE_20260825_201219.csv
+Fill in human_faithfulness for these chapters yourself, then report the agreement between your
+scores and the judge's in Chapter 7. Roughly 12 chapters is enough for a defensible statement,
+and it converts the automated score from an assertion into a validated instrument.
+
+Per-chapter detail: C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t4_faithfulness_20260825_201219.csv

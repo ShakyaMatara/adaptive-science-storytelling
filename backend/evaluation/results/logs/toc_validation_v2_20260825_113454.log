@@ -1,0 +1,78 @@
+============================================================================================
+DISTRIBUTION of (found PDF page - expected PDF page), heading matches only
+============================================================================================
+   delta -3:    2  (  0.6%)  
+   delta -2:    4  (  1.1%)  
+   delta -1:   30  (  8.5%)  <- title also appears one page EARLIER
+   delta +0:  248  ( 70.5%)  <- title is on the page the TOC predicts
+   delta +1:   24  (  6.8%)  
+   delta +2:   19  (  5.4%)  
+   delta +3:   25  (  7.1%)  
+   total heading hits in +/-3 window: 352
+
+per book:
+book           -3     -2     -1     +0     +1     +2     +3
+G6.pdf          0      0      0     51      3      0      0
+G7P1.pdf        0      0      1     35      4      2      3
+G7P2.pdf        0      1      2     33      5      6      4
+G8P1.pdf        2      1      9     30      3      2      1
+G8P2.pdf        0      0      9     35      1      0      4
+G9P1.pdf        0      0      4     25      1      2      3
+G9P2.pdf        0      2      5     39      7      7     10
+
+============================================================================================
+AGREEMENT under two candidate rules
+============================================================================================
+located entries: 254 of 292
+   FIRST heading hit == TOC page : 208/254 = 81.9%
+   LAST  heading hit == TOC page : 170/254 = 66.9%
+   ANY   heading hit == TOC page : 248/254 = 97.6%
+
+book        located    first     last      any
+G6.pdf           51   100.0%    86.3%   100.0%
+G7P1.pdf         38    89.5%    71.1%    92.1%
+G7P2.pdf         33    87.9%    60.6%   100.0%
+G8P1.pdf         30    66.7%    63.3%   100.0%
+G8P2.pdf         36    69.4%    69.4%    97.2%
+G9P1.pdf         27    77.8%    59.3%    92.6%
+G9P2.pdf         39    71.8%    48.7%   100.0%
+
+NOT LOCATED as a heading: 38
+   G6.pdf     7.2    Different Type of Magnets                            TOC p.100
+   G7P1.pdf   1      Plant Diversity                                      TOC p.1
+   G7P1.pdf   4      Functions of Water                                   TOC p.54
+   G7P1.pdf   4.3    Water as a medium of life                            TOC p.60
+   G7P1.pdf   5.2    Acids and bases available in school laboratory and h TOC p.64
+   G7P1.pdf   6      Animal Diversity                                     TOC p.72
+   G7P1.pdf   7      Forms of Energy and Uses                             TOC p.87
+   G7P1.pdf   8      The Nature of the Earth                              TOC p.105
+   G8P1.pdf   1      Importance of Microorganisms                         TOC p.1
+   G8P1.pdf   2      Animal Classification                                TOC p.12
+   G8P1.pdf   3      Diversity and Functions of Plant Parts               TOC p.24
+   G8P1.pdf   4      Properties of Matter                                 TOC p.39
+   G8P1.pdf   7      Measurements Associated with Electricity             TOC p.95
+   G8P2.pdf   9      Human organ systems                                  TOC p.1
+   G8P2.pdf   11     Main biological processes in plants                  TOC p.46
+   G8P2.pdf   12     Life cycles of living organisms                      TOC p.62
+   G8P2.pdf   13.2   Food preservation Methods                            TOC p.82
+   G8P2.pdf   14     Phenomena and exploration associated with the solar  TOC p.97
+   G9P1.pdf   2      Eye and Ear                                          TOC p.16
+   G9P1.pdf   2.1    Structure and function of the human eye              TOC p.16
+   G9P1.pdf   2.5    Defects of ear                                       TOC p.33
+   G9P1.pdf   3      Nature and Properties of Matter                      TOC p.38
+   G9P1.pdf   4      Basic Concepts Associated with Force                 TOC p.52
+   G9P1.pdf   4.2    Magnitude of force                                   TOC p.53
+   G9P1.pdf   4.3    Direction of force and point of application          TOC p.54
+   G9P1.pdf   4.4    Graphical representation of force                    TOC p.56
+   G9P1.pdf   6      The Human Circulatory System                         TOC p.72
+   G9P1.pdf   6.1    Structure of the human heart                         TOC p.72
+   G9P1.pdf   8      Support and Movements of Organisms                   TOC p.89
+   G9P1.pdf   8.1    Support and movements of animals                     TOC p.89
+   G9P1.pdf   8.2    Bones, muscles and joints                            TOC p.90
+   G9P1.pdf   9      The Evolutionary Process                             TOC p.98
+   G9P2.pdf   13     Artificial Environment and Green Concept             TOC p.42
+   G9P2.pdf   14     Reflection and Refraction of Waves                   TOC p.58
+   G9P2.pdf   16     Nanotechnology and its Applications                  TOC p.103
+   G9P2.pdf   16.4   Future condition that may arise because of nanotechn TOC p.115
+   G9P2.pdf   18.5   The relationship between increase in global warming  TOC p.146
+   G9P2.pdf   19     Sustainable Use of Natural Resources                 TOC p.152

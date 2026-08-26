@@ -113,3 +113,18 @@ backend/evaluation/results/*
 # Chapter 7 writing pack and the submission-readiness audit.
 !backend/evaluation/results/CHAPTER7_WRITING_PACK.md
 !backend/evaluation/results/REPO_AUDIT.md
+
+# --- Audit trail -------------------------------------------------------------
+# The timestamped result files are the provenance chain behind every *_latest
+# copy the thesis cites, and logs/ is cited as an appendix in RESULTS_SUMMARY
+# section 13. Together they are ~1 MB and they existed on one machine only.
+# The directory itself must be re-included first: `results/*` above excludes it,
+# and git does not descend into an excluded directory.
+!backend/evaluation/results/logs/
+!backend/evaluation/results/*_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9].csv
+!backend/evaluation/results/*_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9].json
+!backend/evaluation/results/*_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9].md
+
+# The submission archive is a build artefact, rebuilt by
+# scripts/make_submission_zip.ps1. Never commit it.
+*.zip

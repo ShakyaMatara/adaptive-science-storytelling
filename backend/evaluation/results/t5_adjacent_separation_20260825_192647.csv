@@ -1,0 +1,5 @@
+pair,mean_lower,mean_upper,gap,pooled_sd,cohens_d,overlapping_samples,verdict
+1->2,5.728,7.351,1.623,1.046,1.552,7,SEPARATED
+2->3,7.351,8.631,1.28,1.583,0.809,12,partial
+3->4,8.631,9.562,0.931,1.96,0.475,12,COLLAPSED
+4->5,9.562,11.277,1.715,2.542,0.675,12,COLLAPSED

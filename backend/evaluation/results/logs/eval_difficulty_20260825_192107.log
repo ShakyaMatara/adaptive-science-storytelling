@@ -1,0 +1,35 @@
+
+T5 — Difficulty adaptation validity
+Topics: G9 Nanotechnology, G7 Images formed by plane mirrors
+Planned generations: 2 topics x 5 levels x 4 reps = 40
+  ... 5/40
+  ... 10/40
+  ... 15/40
+  ... 20/40
+  ... 25/40
+  ... 30/40
+  ... 35/40
+  ... 40/40
+
+[t5_difficulty] calls=40 failures=0 prompt_tokens=0 completion_tokens=0 total_tokens=0 estimated_cost_usd=n/a (populate PRICES_PER_MTOK)
+
+Readability by configured difficulty
+difficulty  n  mean_fkgl  sd_fkgl  mean_fre  mean_words_per_sentence  mean_ttr  mean_words
+----------  -  ---------  -------  --------  -----------------------  --------  ----------
+1           8  5.728      0.69     72.526    10.399                   0.567     234.75    
+2           8  7.351      1.308    65.647    13.075                   0.571     253.375   
+3           8  8.631      1.816    58.613    14.277                   0.6       259.5     
+4           8  9.562      2.094    54.267    15.581                   0.62      287.75    
+5           8  11.277     2.922    49.819    19.991                   0.563     357.625   
+
+Monotonicity — Spearman's rho against configured difficulty
+  FKGL (expect POSITIVE)              rho = 0.7696
+  Flesch Reading Ease (expect NEGATIVE) rho = -0.7098
+  words per sentence (expect POSITIVE) rho = 0.6945
+  type-token ratio (expect POSITIVE)   rho = 0.0896
+
+The ladder moves in the intended direction: higher configured difficulty produces linguistically more complex text. Report this as evidence that difficulty adaptation is operationally real rather than a label.
+
+Target-band fit: mean FKGL at difficulty 3 is 8.631, which is within the 6.0-9.0 band appropriate for learners aged 11-14.
+
+Per-generation detail: C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t5_difficulty_20260825_192603.csv

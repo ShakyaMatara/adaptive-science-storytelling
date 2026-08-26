@@ -1,0 +1,44 @@
+
+T3 — Content-Derived Instructional Scaling
+Loaded 290 manual ground-truth entries.
+Planned 39 covered topics.
+
+Convergent validity — Spearman's rho
+coverage measure         plan measure              n   spearman_rho  strength   
+-----------------------  ------------------------  --  ------------  -----------
+manual page count        chapter count             39  -0.143        negligible 
+manual page count        question budget           39  -0.143        negligible 
+manual page count        distinct pages retrieved  39  0.0166        negligible 
+distinct textbook pages  chapter count             39  0.9296        very strong
+distinct textbook pages  question budget           39  0.9296        very strong
+distinct textbook pages  paragraph budget          39  0.9296        very strong
+textbook page span       chapter count             39  0.638         strong     
+
+Interpretation for Chapter 7: a strong positive rho between an INDEPENDENT measure of textbook
+coverage and the planner's output is evidence that instructional volume is derived from curricular
+emphasis. Note honestly that distinct-pages is only quasi-independent (it comes from the same
+retrieval call, though not from any quantity the planner consumes), which is exactly why the
+manual page count is worth collecting.
+
+Discrimination by richness band
+richness  topics  mean_passages  mean_chapters  sd_chapters  mean_questions  sd_questions
+--------  ------  -------------  -------------  -----------  --------------  ------------
+moderate  7       5.143          2.0            0.0          4.0             0.0         
+rich      32      14.312         4.625          1.157        13.875          3.471       
+
+Worked contrast for the thesis:
+  thinnest: G6 'Specific Properties of Solid Matter' -> 2 chapter(s), 4 question(s) from 6 passages
+  richest : G6 'Characteristics of Organisms' -> 6 chapter(s), 18 question(s) from 17 passages
+
+Provenance of total_relevant
+  Topics drawing on recovered text: 6/39
+  Recovered passages as a share of all counted passages: 19/494 (3.8%)
+     grade 9 Structure of the human heart                 5/11 (45%)
+     grade 9 Magnitude of force                           7/35 (20%)
+     grade 9 Structure and function of the human eye      2/11 (18%)
+     grade 9 Evolution                                    3/17 (18%)
+     grade 9 Inclined plane                               1/12 (8%)
+     grade 9 Compounds                                    1/14 (7%)
+  Any correlation below can be recomputed with these topics excluded.
+
+Per-topic detail: C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t3_planner_20260825_175926.csv

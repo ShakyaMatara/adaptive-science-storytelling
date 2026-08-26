@@ -1,0 +1,107 @@
+
+T4 — Groundedness ablation (RAG on vs RAG off)
+Topics (12): G7 Capacitors, G6 Weather, G8 Geomagnetism, G7 Kinetic energy, G8 Resistance of a conductor, G9 Structure of the human heart, G7 Morphological features of flowering plants, G8 Photosynthesis, G9 Structure and function of the human eye, G6 Generating Electricity, G7 Images formed by plane mirrors, G9 Nanotechnology
+Planned calls: 12 x (2 generations + 2 judgements) = 48
+Judge model: google/gemini-3.7-flash
+Second judge: deepseek/deepseek-v4-flash-0731 (first 6 chapters)
+  [1/24] rag_on   Capacitors                     faithfulness=1.0 claims=10 rel=2
+  [2/24] rag_off  Capacitors                     faithfulness=0.4286 claims=7 rel=2
+  [3/24] rag_on   Weather                        faithfulness=0.3333 claims=9 rel=2
+  [4/24] rag_off  Weather                        faithfulness=0.0 claims=4 rel=2
+  [5/24] rag_on   Geomagnetism                   faithfulness=1.0 claims=7 rel=4
+  [6/24] rag_off  Geomagnetism                   faithfulness=0.8 claims=5 rel=4
+  [7/24] rag_on   Kinetic energy                 faithfulness=1.0 claims=7 rel=4
+  [8/24] rag_off  Kinetic energy                 faithfulness=0.4 claims=5 rel=4
+  [9/24] rag_on   Resistance of a conductor      faithfulness=1.0 claims=10 rel=4
+  [10/24] rag_off  Resistance of a conductor      faithfulness=0.8333 claims=6 rel=4
+  [11/24] rag_on   Structure of the human heart   faithfulness=0.9 claims=10 rel=4
+  [12/24] rag_off  Structure of the human heart   faithfulness=0.5556 claims=9 rel=4
+  [13/24] rag_on   Morphological features of flow faithfulness=1.0 claims=10 rel=13
+  [14/24] rag_off  Morphological features of flow faithfulness=0.5 claims=14 rel=13
+  [15/24] rag_on   Photosynthesis                 faithfulness=1.0 claims=10 rel=13
+  [16/24] rag_off  Photosynthesis                 faithfulness=0.8571 claims=7 rel=13
+  [17/24] rag_on   Structure and function of the  faithfulness=1.0 claims=18 rel=13
+  [18/24] rag_off  Structure and function of the  faithfulness=0.7 claims=10 rel=13
+  [19/24] rag_on   Generating Electricity         faithfulness=1.0 claims=9 rel=14
+  [20/24] rag_off  Generating Electricity         faithfulness=0.4286 claims=7 rel=14
+  [21/24] rag_on   Images formed by plane mirrors faithfulness=0.0 claims=3 rel=15
+  [22/24] rag_off  Images formed by plane mirrors faithfulness=0.5714 claims=7 rel=15
+  [23/24] rag_on   Nanotechnology                 faithfulness=1.0 claims=12 rel=16
+  [24/24] rag_off  Nanotechnology                 faithfulness=0.7143 claims=7 rel=16
+
+[t4_faithfulness] calls=57 failures=3 prompt_tokens=54242 completion_tokens=54513 total_tokens=108755 estimated_cost_usd=0.0824
+
+Ablation results
+condition  n   mean_faithfulness  sd     mean_claims  mean_unsupported  mean_contradicted
+---------  --  -----------------  -----  -----------  ----------------  -----------------
+rag_on     12  0.853              0.33   9.583        0.833             0.0              
+rag_off    12  0.566              0.241  7.333        3.083             0.0              
+
+Grounding effect: faithfulness rises by 0.287 (0.566 -> 0.853) when retrieval is enabled.
+Unsupported claims per chapter fall from 3.083 to 0.833. In a narrative science tool each unsupported claim is a candidate
+misconception delivered in a memorable form, so this is the safety argument for the RAG layer,
+not merely an accuracy improvement.
+
+Faithfulness against the size of the evidence base
+topic                         grade  condition  total_relevant  richness  passages_used  evidence_chars  claims  faithfulness
+----------------------------  -----  ---------  --------------  --------  -------------  --------------  ------  ------------
+Capacitors                    7      rag_off    2               thin      2              2990            7       0.4286      
+Capacitors                    7      rag_on     2               thin      2              2990            10      1.0         
+Weather                       6      rag_off    2               thin      2              1890            4       0.0         
+Weather                       6      rag_on     2               thin      2              1890            9       0.3333      
+Geomagnetism                  8      rag_off    4               moderate  4              5751            5       0.8         
+Geomagnetism                  8      rag_on     4               moderate  4              5751            7       1.0         
+Kinetic energy                7      rag_off    4               moderate  4              4336            5       0.4         
+Kinetic energy                7      rag_on     4               moderate  4              4336            7       1.0         
+Resistance of a conductor     8      rag_off    4               moderate  4              6030            6       0.8333      
+Resistance of a conductor     8      rag_on     4               moderate  4              6030            10      1.0         
+Structure of the human heart  9      rag_off    4               moderate  4              4445            9       0.5556      
+Structure of the human heart  9      rag_on     4               moderate  4              4445            10      0.9         
+Morphological features of fl  7      rag_off    13              rich      4              6006            14      0.5         
+Morphological features of fl  7      rag_on     13              rich      4              6006            10      1.0         
+Photosynthesis                8      rag_off    13              rich      4              5132            7       0.8571      
+Photosynthesis                8      rag_on     13              rich      4              5132            10      1.0         
+Structure and function of th  9      rag_off    13              rich      4              5329            10      0.7         
+Structure and function of th  9      rag_on     13              rich      4              5329            18      1.0         
+Generating Electricity        6      rag_off    14              rich      4              5787            7       0.4286      
+Generating Electricity        6      rag_on     14              rich      4              5787            9       1.0         
+Images formed by plane mirro  7      rag_off    15              rich      4              4734            7       0.5714      
+Images formed by plane mirro  7      rag_on     15              rich      4              4734            3       0.0         
+Nanotechnology                9      rag_off    16              rich      4              5944            7       0.7143      
+Nanotechnology                9      rag_on     16              rich      4              5944            12      1.0         
+
+richness  condition  n  mean_total_relevant  mean_evidence_chars  mean_faithfulness  sd   
+--------  ---------  -  -------------------  -------------------  -----------------  -----
+thin      rag_on     2  2.0                  2440.0               0.667              0.471
+thin      rag_off    2  2.0                  2440.0               0.214              0.303
+moderate  rag_on     4  4.0                  5140.5               0.975              0.05 
+moderate  rag_off    4  4.0                  5140.5               0.647              0.206
+rich      rag_on     6  14.0                 5488.667             0.833              0.408
+rich      rag_off    6  14.0                 5488.667             0.629              0.158
+
+Within rag_on (n=12): rho(total_relevant, faithfulness) = 0.0802, rho(evidence_chars, faithfulness) = 0.514.
+A NEGATIVE correlation means the highest scores sit on the smallest evidence
+bases, i.e. the headline figure is carried by the topics where there was least
+to contradict. State the sign wherever the T4 figure is quoted.
+
+Faithfulness by provenance of the grounding passages
+grounding           n   mean_faithfulness  sd     mean_unsupported
+------------------  --  -----------------  -----  ----------------
+text layer only     20  0.693              0.339  1.95            
+includes recovered  4   0.789              0.199  2.0             
+  CAVEAT: for the rows above that include recovered text, the evidence the
+  judge scores against is a model transcription of a page image, not the
+  text layer of the book. Their faithfulness measures consistency with that
+  transcription. State this wherever the T4 figure is quoted.
+
+Full audit record (prose + evidence + per-claim verdicts): C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t4_chapters_20260826_200444.json
+
+Judge validation, 12 chapters:
+  SCORE FROM THIS (no judge output):  C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t4_judge_validation_BLIND_20260826_200444.csv
+  readable version of the same:       C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t4_chapter_dossier_BLIND_20260826_200444.md
+  merge target (judge's scores):      C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t4_judge_validation_TEMPLATE_20260826_200444.csv
+Fill human_total_claims / human_supported / human_faithfulness in the BLIND file,
+then merge on row_id and report the agreement in Chapter 7. Scoring beside the
+judge's number is not an independent measurement.
+
+Per-chapter detail: C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\results\t4_faithfulness_20260826_200444.csv

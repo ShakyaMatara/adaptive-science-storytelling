@@ -1,0 +1,86 @@
+======================================================================================
+REVERT CRITERIA (live rebuilt index)
+======================================================================================
+1. chunk count: 1101 (must be 1101) -> PASS
+   per grade {6: 156, 7: 275, 8: 332, 9: 338} -> PASS
+2. Grade 7 chapter labels: 19 (must be 19) -> PASS
+
+======================================================================================
+TASK 2 - chapter coverage after the TOC lookup
+======================================================================================
+grade    chunks  labelled  coverage  distinct now  distinct before
+6           156       145     92.9%            11                0
+7           275       258     93.8%            19               18
+8           332       318     95.8%            15                0
+9           338       319     94.4%            19                0
+
+still '(document)' (front/back matter, no printed page): 61 (5.5%)
+
+======================================================================================
+TASK 1 - citation distribution
+======================================================================================
+   range      857 ( 77.8%)
+   single     244 ( 22.2%)
+   printed-page span: 1p=183, 2p=658, 3p=186, 4p=12, 5p=1
+
+======================================================================================
+TASK 3a - the three previously DISPUTED chunks (must start p.13, p.15, p.13)
+======================================================================================
+
+--- re-verify G7P2.pdf PDF p25 ---
+  file / PDF page   : G7P2.pdf  PDF p25
+  offset            : 12   =>  printed page 13
+  RENDERED CITATION : pp. 13-15
+  chapter (from TOC): Biological Processes
+  section           : Organisational levels of life
+  FIRST SENTENCE (should be on printed page 13):
+      "common function The following diagrams show different types of tissues found in living organisms."
+
+--- re-verify G8P1.pdf PDF p25 ---
+  file / PDF page   : G8P1.pdf  PDF p25
+  offset            : 10   =>  printed page 15
+  RENDERED CITATION : pp. 15-16
+  chapter (from TOC): Animal Classification
+  section           : Main invertebrate groups
+  FIRST SENTENCE (should be on printed page 15):
+      "Annelida Annelids live in both marine and fresh water environments as well as in wet terrestial environments."
+
+--- re-verify G9P2.pdf PDF p25 ---
+  file / PDF page   : G9P2.pdf  PDF p25
+  offset            : 12   =>  printed page 13
+  RENDERED CITATION : pp. 13-14
+  chapter (from TOC): Density
+  section           : Hydrometers
+  FIRST SENTENCE (should be on printed page 13):
+      "If you want to find the density of a liquid, you can measure the volume and mass of it and calculate the density, as you have done in activity 11.2."
+
+======================================================================================
+TASK 3b - THREE NEW CHECKS near the END of G6, G7P1, G9P1
+======================================================================================
+
+--- END-OF-BOOK check: G6.pdf ---
+  file / PDF page   : G6.pdf  PDF p189
+  offset            : 14   =>  printed page 175
+  RENDERED CITATION : p. 175
+  chapter (from TOC): Weather and Climate
+  section           : The Effects of heat to the Environment
+  FIRST SENTENCE (should be on printed page 175):
+      "² Prepare a booklet about the methods used by our ancestors to forecast weather."
+
+--- END-OF-BOOK check: G7P1.pdf ---
+  file / PDF page   : G7P1.pdf  PDF p160
+  offset            : 12   =>  printed page 148
+  RENDERED CITATION : p. 148
+  chapter (from TOC): The Correct Use of the Microscope
+  section           : The electron microscope
+  FIRST SENTENCE (should be on printed page 148):
+      "● The electron microscope has a higher magnification and a higher resolving power than the light microscope."
+
+--- END-OF-BOOK check: G9P1.pdf ---
+  file / PDF page   : G9P1.pdf  PDF p121
+  offset            : 12   =>  printed page 109
+  RENDERED CITATION : p. 109
+  chapter (from TOC): The Evolutionary Process
+  section           : Importance of evolution in bio-diversity
+  FIRST SENTENCE (should be on printed page 109):
+      "modification on feet of horse occurred during its evolution."

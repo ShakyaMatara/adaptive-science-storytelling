@@ -1,0 +1,30 @@
+lexicon built from 1101 text-layer chunks: 7263 distinct words (seen at least twice)
+
+  PDF  printed  chars  words   dict  gate   TOC cross-check
+----------------------------------------------------------------------------------------------------
+   14        2   1118    146  0.890  PASS   no TOC entry starts here
+   25       13   1219    172  0.942  PASS   no TOC entry starts here
+   28       16    929    166  0.946  PASS   MATCH: Eye and Ear
+   29       17    695    132  0.788  PASS   no TOC entry starts here
+   45       33   1670    286  0.948  PASS   MATCH: Defects of ear
+   54       42   1552    236  0.945  PASS   no TOC entry starts here
+   65       53   1816    316  0.924  PASS   MATCH: Magnitude of force
+   66       54   1608    279  0.943  PASS   MATCH: Direction of force and point of application
+   68       56   1970    359  0.903  PASS   MATCH: Graphical representation of force
+   71       59   1185    130  0.815  PASS   no TOC entry starts here
+   84       72    944    148  0.953  PASS   MATCH: The Human Circulatory System
+   86       74   1100    173  0.983  PASS   no TOC entry starts here
+   96       84   1151    194  0.943  PASS   no TOC entry starts here
+  101       89   1021    163  0.951  PASS   MATCH: Support and Movements of Organisms
+  102       90   1074    153  0.961  PASS   MATCH: Bones, muscles and joints
+  103       91   1265    215  0.847  PASS   no TOC entry starts here
+  115      103   1791    286  0.909  PASS   no TOC entry starts here
+  117      105   1151    176  0.903  PASS   no TOC entry starts here
+  118      106   1747    297  0.956  PASS   no TOC entry starts here
+
+PASS 19/19   FAIL 0
+total characters recovered: 25006
+total words recovered     : 4027
+TOC cross-check: 8/8 pages whose TOC heading was found verbatim
+
+A/B token agreement: UNAVAILABLE - Tesseract is not installed on this machine.

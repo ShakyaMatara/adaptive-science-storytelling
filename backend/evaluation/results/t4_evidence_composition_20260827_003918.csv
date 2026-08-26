@@ -1,0 +1,13 @@
+topic,grade,total_relevant,passages_used,assessment_passages,assessment_share,assessment_char_share,expository_share,min_expository_share,faithfulness_rag_on
+Capacitors,7,2,2,2,1.0,1.0,0.8,0.6,1.0
+Weather,6,2,2,2,1.0,1.0,0.5109,0.5,0.3333
+Geomagnetism,8,4,4,1,0.25,0.2821,0.8425,0.7391,1.0
+Kinetic energy,7,4,4,2,0.5,0.5037,0.9208,0.875,1.0
+Resistance of a conductor,8,4,4,1,0.25,0.2626,0.7172,0.5185,1.0
+Structure of the human heart,9,4,4,2,0.5,0.6271,0.9129,0.8571,0.9
+Morphological features of flowering plants,7,13,4,3,0.75,0.7432,0.6937,0.4815,1.0
+Photosynthesis,8,13,4,2,0.5,0.596,0.7975,0.3636,1.0
+Structure and function of the human eye,9,13,4,1,0.25,0.2487,0.8151,0.7857,1.0
+Generating Electricity,6,14,4,2,0.5,0.5012,0.7234,0.65,1.0
+Images formed by plane mirrors,7,15,4,3,0.75,0.7077,0.6551,0.1667,0.0
+Nanotechnology,9,16,4,0,0.0,0.0,0.8016,0.7,1.0

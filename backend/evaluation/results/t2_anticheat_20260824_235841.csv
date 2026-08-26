@@ -1,0 +1,73 @@
+item,class,kind,base,probe,ratio,blocked,correct
+1,verbatim,attack,What does a planet's rotation around its own axis help to explain?,What does a planet's rotation around its own axis help to explain?,1.0,True,True
+1,surface,attack,What does a planet's rotation around its own axis help to explain?,what does a planets ROTATION around its own axis help to explain,0.9922,True,True
+1,lexical,attack,What does a planet's rotation around its own axis help to explain?,What does a planet's spinning around its own axis help to explain?,0.9077,True,True
+1,reorder,attack,What does a planet's rotation around its own axis help to explain?,A planet's rotation around its own axis helps to explain what?,0.873,True,True
+1,paraphrase,attack,What does a planet's rotation around its own axis help to explain?,Why do we get day and night on a planet?,0.2885,False,False
+1,legitimate,legitimate,What does a planet's rotation around its own axis help to explain?,Can you explain what an axis is in simple words?,0.2321,False,True
+2,verbatim,attack,What did Mr. Perera say helped people understand the solar system over time?,What did Mr. Perera say helped people understand the solar system over time?,1.0,True,True
+2,surface,attack,What did Mr. Perera say helped people understand the solar system over time?,What did mr perera say helped people understand the solar system over time??,1.0,True,True
+2,lexical,attack,What did Mr. Perera say helped people understand the solar system over time?,What did Mr. Perera say assisted people in understanding the solar system over time?,0.8974,True,True
+2,reorder,attack,What did Mr. Perera say helped people understand the solar system over time?,"Over time, what did Mr. Perera say helped people understand the solar system?",0.8649,True,True
+2,paraphrase,attack,What did Mr. Perera say helped people understand the solar system over time?,How did humans gradually learn about the planets?,0.3279,False,False
+2,legitimate,legitimate,What did Mr. Perera say helped people understand the solar system over time?,What is a telescope and how does it work?,0.4737,False,True
+3,verbatim,attack,Which process changes liquid water into water vapour in the water cycle?,Which process changes liquid water into water vapour in the water cycle?,1.0,True,True
+3,surface,attack,Which process changes liquid water into water vapour in the water cycle?,WHICH PROCESS CHANGES LIQUID WATER INTO WATER VAPOUR IN THE WATER CYCLE?!,1.0,True,True
+3,lexical,attack,Which process changes liquid water into water vapour in the water cycle?,Which process turns liquid water into water vapour in the water cycle?,0.9429,True,True
+3,reorder,attack,Which process changes liquid water into water vapour in the water cycle?,"In the water cycle, which process changes liquid water into water vapour?",0.7324,True,True
+3,paraphrase,attack,Which process changes liquid water into water vapour in the water cycle?,How does water get into the sky from the sea?,0.4522,False,False
+3,legitimate,legitimate,Which process changes liquid water into water vapour in the water cycle?,Why does the sea not run out of water?,0.2593,False,True
+4,verbatim,attack,What gas do plants take in from the air during photosynthesis?,What gas do plants take in from the air during photosynthesis?,1.0,True,True
+4,surface,attack,What gas do plants take in from the air during photosynthesis?,what gas do plants take in from the air during photosynthesis,1.0,True,True
+4,lexical,attack,What gas do plants take in from the air during photosynthesis?,Which gas do plants absorb from the air during photosynthesis?,0.8689,True,True
+4,reorder,attack,What gas do plants take in from the air during photosynthesis?,"During photosynthesis, what gas do plants take in from the air?",0.6393,False,False
+4,paraphrase,attack,What gas do plants take in from the air during photosynthesis?,Plants need something from the air to make their food. What is it?,0.512,False,False
+4,legitimate,legitimate,What gas do plants take in from the air during photosynthesis?,What is chlorophyll and why are leaves green?,0.1333,False,True
+5,verbatim,attack,Why does the bright part of the Moon seen from Earth change during the month?,Why does the bright part of the Moon seen from Earth change during the month?,1.0,True,True
+5,surface,attack,Why does the bright part of the Moon seen from Earth change during the month?,why does the bright part of the moon seen from earth change during the month...,1.0,True,True
+5,lexical,attack,Why does the bright part of the Moon seen from Earth change during the month?,Why does the lit part of the Moon seen from Earth change during the month?,0.9664,True,True
+5,reorder,attack,Why does the bright part of the Moon seen from Earth change during the month?,"During the month, why does the bright part of the Moon seen from Earth change?",0.7763,True,True
+5,paraphrase,attack,Why does the bright part of the Moon seen from Earth change during the month?,What causes the phases of the Moon?,0.4364,False,False
+5,legitimate,legitimate,Why does the bright part of the Moon seen from Earth change during the month?,How far away is the Moon from the Earth?,0.4522,False,True
+6,verbatim,attack,"In a food chain, what is an organism that makes its own food called?","In a food chain, what is an organism that makes its own food called?",1.0,True,True
+6,surface,attack,"In a food chain, what is an organism that makes its own food called?",In a food chain what is an organism that makes its own food called,1.0,True,True
+6,lexical,attack,"In a food chain, what is an organism that makes its own food called?","In a food chain, what is an organism that produces its own food called?",0.9333,True,True
+6,reorder,attack,"In a food chain, what is an organism that makes its own food called?","What is an organism that makes its own food called, in a food chain?",0.7576,True,True
+6,paraphrase,attack,"In a food chain, what is an organism that makes its own food called?",What do we call the living things at the start of a food chain?,0.2344,False,False
+6,legitimate,legitimate,"In a food chain, what is an organism that makes its own food called?",What happens to a food chain if one animal disappears?,0.4034,False,True
+7,verbatim,attack,Which state of matter has a fixed volume but takes the shape of its container?,Which state of matter has a fixed volume but takes the shape of its container?,1.0,True,True
+7,surface,attack,Which state of matter has a fixed volume but takes the shape of its container?,which state of matter has a fixed volume but takes the shape of its container?,1.0,True,True
+7,lexical,attack,Which state of matter has a fixed volume but takes the shape of its container?,Which state of matter has a fixed volume but adopts the shape of its container?,0.9548,True,True
+7,reorder,attack,Which state of matter has a fixed volume but takes the shape of its container?,"Taking the shape of its container but with a fixed volume, which state of matter is this?",0.3659,False,False
+7,paraphrase,attack,Which state of matter has a fixed volume but takes the shape of its container?,"If something keeps its amount but spreads to fit a jar, what is it?",0.2817,False,False
+7,legitimate,legitimate,Which state of matter has a fixed volume but takes the shape of its container?,Why does ice float on water?,0.3269,False,True
+8,verbatim,attack,What is the unit used to measure electric current?,What is the unit used to measure electric current?,1.0,True,True
+8,surface,attack,What is the unit used to measure electric current?,What is the unit used to measure electric current???,1.0,True,True
+8,lexical,attack,What is the unit used to measure electric current?,What is the unit used to measure electrical current?,0.98,True,True
+8,reorder,attack,What is the unit used to measure electric current?,Electric current is measured using what unit?,0.3441,False,False
+8,paraphrase,attack,What is the unit used to measure electric current?,How do we say how much electricity is flowing?,0.383,False,False
+8,legitimate,legitimate,What is the unit used to measure electric current?,What is the difference between current and voltage?,0.5253,False,True
+9,verbatim,attack,What happens to the particles of a solid when it is heated?,What happens to the particles of a solid when it is heated?,1.0,True,True
+9,surface,attack,What happens to the particles of a solid when it is heated?,what happens to the particles of a solid when it is heated!!,1.0,True,True
+9,lexical,attack,What happens to the particles of a solid when it is heated?,What happens to the particles of a solid when it is warmed?,0.9483,True,True
+9,reorder,attack,What happens to the particles of a solid when it is heated?,"When a solid is heated, what happens to its particles?",0.4909,False,False
+9,paraphrase,attack,What happens to the particles of a solid when it is heated?,Why do things expand when they get hot?,0.4583,False,False
+9,legitimate,legitimate,What happens to the particles of a solid when it is heated?,What is the melting point of ice?,0.4222,False,True
+10,verbatim,attack,Which organ pumps blood around the human body?,Which organ pumps blood around the human body?,1.0,True,True
+10,surface,attack,Which organ pumps blood around the human body?,which organ pumps blood around the human body,1.0,True,True
+10,lexical,attack,Which organ pumps blood around the human body?,Which organ pushes blood around the human body?,0.9451,True,True
+10,reorder,attack,Which organ pumps blood around the human body?,"Around the human body, which organ pumps blood?",0.5111,False,False
+10,paraphrase,attack,Which organ pumps blood around the human body?,What makes blood move through our veins?,0.4286,False,False
+10,legitimate,legitimate,Which organ pumps blood around the human body?,Why does my heart beat faster when I run?,0.2588,False,True
+11,verbatim,attack,What force pulls objects towards the centre of the Earth?,What force pulls objects towards the centre of the Earth?,1.0,True,True
+11,surface,attack,What force pulls objects towards the centre of the Earth?,What force pulls objects towards the centre of the earth?,1.0,True,True
+11,lexical,attack,What force pulls objects towards the centre of the Earth?,What force draws objects towards the centre of the Earth?,0.9286,True,True
+11,reorder,attack,What force pulls objects towards the centre of the Earth?,"Towards the centre of the Earth, what force pulls objects?",0.5536,False,False
+11,paraphrase,attack,What force pulls objects towards the centre of the Earth?,Why do things fall down instead of floating away?,0.3077,False,False
+11,legitimate,legitimate,What force pulls objects towards the centre of the Earth?,Would I weigh the same on the Moon?,0.4,False,True
+12,verbatim,attack,What do we call the process by which a caterpillar becomes a butterfly?,What do we call the process by which a caterpillar becomes a butterfly?,1.0,True,True
+12,surface,attack,What do we call the process by which a caterpillar becomes a butterfly?,what do we call the process by which a caterpillar becomes a butterfly,1.0,True,True
+12,lexical,attack,What do we call the process by which a caterpillar becomes a butterfly?,What do we call the process by which a caterpillar turns into a butterfly?,0.8951,True,True
+12,reorder,attack,What do we call the process by which a caterpillar becomes a butterfly?,The process by which a caterpillar becomes a butterfly is called what?,0.777,True,True
+12,paraphrase,attack,What do we call the process by which a caterpillar becomes a butterfly?,How does an insect change its body shape as it grows up?,0.176,False,False
+12,legitimate,legitimate,What do we call the process by which a caterpillar becomes a butterfly?,How long does a butterfly live?,0.36,False,True

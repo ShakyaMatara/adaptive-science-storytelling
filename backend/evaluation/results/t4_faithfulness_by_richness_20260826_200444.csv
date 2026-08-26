@@ -1,0 +1,7 @@
+richness,condition,n,mean_total_relevant,mean_evidence_chars,mean_faithfulness,sd
+thin,rag_on,2,2.0,2440.0,0.667,0.471
+thin,rag_off,2,2.0,2440.0,0.214,0.303
+moderate,rag_on,4,4.0,5140.5,0.975,0.05
+moderate,rag_off,4,4.0,5140.5,0.647,0.206
+rich,rag_on,6,14.0,5488.667,0.833,0.408
+rich,rag_off,6,14.0,5488.667,0.629,0.158

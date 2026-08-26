@@ -25,7 +25,7 @@ figures can be checked against the material they were computed from.
 | Judge model, T4 (run 1, retained) | `deepseek/deepseek-v4-flash-0731`, with gemini secondary |
 | T4 runs | three; all reported. Runs 2 and 3 differ only in the sample drawn at temperature 0.7 |
 | Provider | OpenRouter, `https://openrouter.ai/api/v1/` |
-| `USE_MOCK_LLM` | `false` throughout; `backend/.env` was never modified |
+| `USE_MOCK_LLM` | `false` throughout, and unmodified. `backend/.env` was edited once, after all measurement was complete, to add the rotated `SECRET_KEY` (section 9.5). No experiment ran after that edit except the 27-test regression suite. |
 | Index | Chroma collection `textbooks`, **1,122 chunks** |
 | Embedding | Chroma default, computed locally |
 | Total API spend | **≈ US$0.65** of a US$5.00 cap (see section 10) |
@@ -826,6 +826,47 @@ audit trail. Full detail in `results/corpus_defects.md`.
   mildly lenient on chapters it cannot trace to evidence, which biases the measured
   ablation effect *downwards*.
 
+### 9.5 Security review
+
+A review of the repository before submission scanned every tracked file at `HEAD`
+(145 files) and **every unique blob in all 19 commits across all refs** (196 blobs) for
+provider credentials, private keys and bearer tokens.
+
+**`backend/.env` is not tracked and no commit has ever touched a `.env` path.** No API
+key or provider token exists in the working tree or in history. `backend/.env.example`
+carries empty and truncated placeholders only.
+
+**One finding.** `backend/config/settings.py` held a hardcoded Django `SECRET_KEY`,
+tracked in version control since the initial commit. This is **contrary to NFR-01**,
+which requires credentials to reside only in server-side environment configuration.
+
+| | |
+|---|---|
+| Severity | Low in practice, non-conforming in principle |
+| Exposure | The key carried Django's own `django-insecure-` prefix, `DEBUG` was `True`, `ALLOWED_HOSTS` was localhost-only, and the project was never deployed. It signs session cookies, CSRF tokens and password-reset tokens, none of which existed outside a local development database |
+| Introduced | Initial commit, by `django-admin startproject`. It predates the evaluation programme |
+| Detected | Pre-submission repository audit, `results/REPO_AUDIT.md` |
+
+**Remediation applied.** A new key was generated with Django's own
+`get_random_secret_key()` and written to `backend/.env`, which is git-ignored.
+`settings.py` now reads `os.getenv("SECRET_KEY")` and falls back to a placeholder that
+is explicitly marked `django-insecure-` so it cannot be mistaken for a real key; a guard
+raises `ImproperlyConfigured` if that placeholder is ever reached with `DEBUG = False`.
+`.env.example` documents the variable with an empty value and the command to generate
+one. `python manage.py test core` passes 27 tests after the change.
+
+**Git history was deliberately NOT rewritten, and the reasoning is recorded rather than
+left implicit.** Rewriting 19 commits would change every commit hash, and those hashes
+are the audit trail this chapter's reproducibility claims rest on — `corpus_defects.md`,
+`midpoint_corrections.md` and section 13 all identify work by commit. The old key was
+never deployed, so purging it from history buys no security while destroying the
+provenance chain. Rotation makes the old value worthless; that is the property that
+matters, and it is achieved without touching history.
+
+**Residual risk.** The superseded key remains readable in the repository's history. Any
+future deployment must use the environment-supplied key, which the `DEBUG = False` guard
+now enforces.
+
 ---
 
 ## 10. API spend
@@ -1019,7 +1060,8 @@ unapplied.
 | `duplicate_impact.csv` | 7.3.x — duplication effect on coverage |
 | `textbook_toc.md` | 7.3, 7.6 — transcribed contents pages |
 | `g9p1_recovered_pages.json` | 7.3.x — recovered page text |
-| `logs/` | Appendix — console output of every command run |
+| `logs/` | Appendix — console output of every command run, 64 files, tracked |
+| `*_YYYYMMDD_HHMMSS.{csv,json,md}` | Appendix — the timestamped provenance chain behind every `_latest` file, 103 files, tracked |
 | `CHAPTER7_WRITING_PACK.md` | 7.3–7.10 — every reportable number as a finished sentence, with its n, its caveat and its source file |
 | `REPO_AUDIT.md` | Submission readiness — file classification, sizes, credential scan of the working tree and full history |
 

@@ -1,0 +1,221 @@
+set,family,topic,grade,correct_grade,expected,best_distance,best_distance_clean,kept_passages,ocr_passages,ocr_share,layer1_accept,layer2_in_syllabus,layer2_reason,correct
+in_syllabus,positive,Characteristics of Organisms,6,6,accept,0.8163329362869263,0.8279225826263428,8,0,0.0,True,,,True
+in_syllabus,positive,Differences between Plants and Animals,6,6,accept,0.6998487114906311,0.6998487114906311,11,0,0.0,True,,,True
+in_syllabus,positive,States of Matter,6,6,accept,1.014427661895752,1.014427661895752,1,0,0.0,True,,,True
+in_syllabus,positive,Specific Properties of Solid Matter,6,6,accept,0.7295304536819458,0.7295304536819458,6,0,0.0,True,,,True
+in_syllabus,positive,Types of Water based on Salinity,6,6,accept,0.8305330872535706,0.8305330872535706,4,0,0.0,True,,,True
+in_syllabus,positive,Sources of Light,6,6,accept,0.8271028399467468,0.8271028399467468,7,0,0.0,True,,,True
+in_syllabus,positive,Applications of Light,6,6,accept,0.857699990272522,0.857699990272522,9,0,0.0,True,,,True
+in_syllabus,positive,Magnetic Poles,6,6,accept,0.7821657657623291,0.7821657657623291,5,0,0.0,True,,,True
+in_syllabus,positive,Generating Electricity,6,6,accept,0.7091400027275085,0.7091400027275085,14,0,0.0,True,,,True
+in_syllabus,positive,Weather,6,6,accept,1.054917812347412,1.1712571382522583,2,0,0.0,True,,,True
+in_syllabus,positive,Morphological features of flowering plants,7,7,accept,0.7174317240715027,0.7174317240715027,13,0,0.0,True,,,True
+in_syllabus,positive,Vertebrates and invertebrates,7,7,accept,0.6271085143089294,0.6271085143089294,6,0,0.0,True,,,True
+in_syllabus,positive,Systems of the human body,7,7,accept,0.7992697954177856,0.7992697954177856,6,0,0.0,True,,,True
+in_syllabus,positive,Identification of acids and bases,7,7,accept,0.7096430659294128,0.7096430659294128,7,0,0.0,True,,,True
+in_syllabus,positive,Water as a solvent,7,7,accept,0.662111759185791,0.662111759185791,5,0,0.0,True,,,True
+in_syllabus,positive,Capacitors,7,7,accept,0.9862483739852905,0.9862483739852905,2,0,0.0,True,,,True
+in_syllabus,positive,Kinetic energy,7,7,accept,0.9254465103149414,0.9254465103149414,4,0,0.0,True,,,True
+in_syllabus,positive,Images formed by plane mirrors,7,7,accept,0.4913250207901001,0.4913250207901001,15,0,0.0,True,,,True
+in_syllabus,positive,Layers of atmosphere,7,7,accept,0.6450343132019043,0.6450343132019043,11,0,0.0,True,,,True
+in_syllabus,positive,Rock weathering,7,7,accept,0.6885037422180176,0.6885037422180176,7,0,0.0,True,,,True
+in_syllabus,positive,Microorganisms,8,8,accept,0.7903850674629211,0.7903850674629211,11,0,0.0,True,,,True
+in_syllabus,positive,Main vertebrate groups,8,8,accept,0.8204317092895508,0.8582895994186401,8,0,0.0,True,,,True
+in_syllabus,positive,Photosynthesis,8,8,accept,0.6766018867492676,0.6766018867492676,13,0,0.0,True,,,True
+in_syllabus,positive,Combustion,8,8,accept,0.9332483410835266,0.9332483410835266,9,0,0.0,True,,,True
+in_syllabus,positive,Neutralisation,8,8,accept,1.1648503541946411,1.1648503541946411,0,0,0.0,False,,,False
+in_syllabus,positive,Current controlling components,8,8,accept,1.067161202430725,1.067161202430725,1,0,0.0,True,,,True
+in_syllabus,positive,Resistance of a conductor,8,8,accept,0.6645846366882324,0.6645846366882324,4,0,0.0,True,,,True
+in_syllabus,positive,Geomagnetism,8,8,accept,0.8432297706604004,0.8432297706604004,4,0,0.0,True,,,True
+in_syllabus,positive,The Solar system,8,8,accept,0.8573852181434631,0.8573852181434631,5,0,0.0,True,,,True
+in_syllabus,positive,Floods,8,8,accept,0.8306226134300232,0.8306226134300232,7,0,0.0,True,,,True
+in_syllabus,positive,Structure and function of the human eye,9,9,accept,0.6683890223503113,0.6683890223503113,13,2,0.1538,True,,,True
+in_syllabus,positive,Structure of the human heart,9,9,accept,0.9332857131958008,0.9332857131958008,4,2,0.5,True,,,True
+in_syllabus,positive,Evolution,9,9,accept,0.9651213884353638,0.9651213884353638,5,0,0.0,True,,,True
+in_syllabus,positive,Electroplating,9,9,accept,0.6940001249313354,0.6940001249313354,11,0,0.0,True,,,True
+in_syllabus,positive,Compounds,9,9,accept,0.7903834581375122,0.7903834581375122,8,0,0.0,True,,,True
+in_syllabus,positive,Magnitude of force,9,9,accept,0.8843414783477783,0.8843414783477783,5,4,0.8,True,,,True
+in_syllabus,positive,Hydrometers,9,9,accept,0.7391009330749512,0.7391009330749512,8,0,0.0,True,,,True
+in_syllabus,positive,Inclined plane,9,9,accept,0.8173481225967407,0.8173481225967407,5,0,0.0,True,,,True
+in_syllabus,positive,Earthquakes,9,9,accept,0.6040329933166504,0.6040329933166504,9,0,0.0,True,,,True
+in_syllabus,positive,Nanotechnology,9,9,accept,0.6769047975540161,0.6769047975540161,16,0,0.0,True,,,True
+off_syllabus,other-subject,Cryptocurrency and blockchain,6,,refuse,1.5157407522201538,1.5157407522201538,0,,,False,,,True
+off_syllabus,other-subject,Cryptocurrency and blockchain,7,,refuse,1.5776952505111694,1.6074295043945312,0,,,False,,,True
+off_syllabus,other-subject,Cryptocurrency and blockchain,8,,refuse,1.463186264038086,1.463186264038086,0,,,False,,,True
+off_syllabus,other-subject,Cryptocurrency and blockchain,9,,refuse,1.5499179363250732,1.5499179363250732,0,,,False,,,True
+off_syllabus,other-subject,The Kandyan Kingdom and colonial rule,6,,refuse,1.4600073099136353,1.4974247217178345,0,,,False,,,True
+off_syllabus,other-subject,The Kandyan Kingdom and colonial rule,7,,refuse,1.4596242904663086,1.4596242904663086,0,,,False,,,True
+off_syllabus,other-subject,The Kandyan Kingdom and colonial rule,8,,refuse,1.467977523803711,1.467977523803711,0,,,False,,,True
+off_syllabus,other-subject,The Kandyan Kingdom and colonial rule,9,,refuse,1.3978776931762695,1.3978776931762695,0,,,False,,,True
+off_syllabus,other-subject,Quadratic equations and the discriminant,6,,refuse,1.67814302444458,1.67814302444458,0,,,False,,,True
+off_syllabus,other-subject,Quadratic equations and the discriminant,7,,refuse,1.5007401704788208,1.5007401704788208,0,,,False,,,True
+off_syllabus,other-subject,Quadratic equations and the discriminant,8,,refuse,1.5357211828231812,1.5357211828231812,0,,,False,,,True
+off_syllabus,other-subject,Quadratic equations and the discriminant,9,,refuse,1.6213314533233643,1.6213314533233643,0,,,False,,,True
+off_syllabus,other-subject,Sinhala grammar and sentence construction,6,,refuse,1.1154934167861938,1.3892920017242432,1,,,True,,,False
+off_syllabus,other-subject,Sinhala grammar and sentence construction,7,,refuse,1.1252458095550537,1.3816332817077637,1,,,True,,,False
+off_syllabus,other-subject,Sinhala grammar and sentence construction,8,,refuse,1.1232529878616333,1.406388759613037,2,,,True,,,False
+off_syllabus,other-subject,Sinhala grammar and sentence construction,9,,refuse,1.1119054555892944,1.213557481765747,2,,,True,,,False
+off_syllabus,other-subject,Object-oriented programming in Java,6,,refuse,1.4921239614486694,1.4921239614486694,0,,,False,,,True
+off_syllabus,other-subject,Object-oriented programming in Java,7,,refuse,1.4781675338745117,1.4781675338745117,0,,,False,,,True
+off_syllabus,other-subject,Object-oriented programming in Java,8,,refuse,1.5058581829071045,1.5608975887298584,0,,,False,,,True
+off_syllabus,other-subject,Object-oriented programming in Java,9,,refuse,1.4087811708450317,1.4087811708450317,0,,,False,,,True
+off_syllabus,other-subject,Impressionist painting techniques,6,,refuse,1.5437875986099243,1.5437875986099243,0,,,False,,,True
+off_syllabus,other-subject,Impressionist painting techniques,7,,refuse,1.3887958526611328,1.3887958526611328,0,,,False,,,True
+off_syllabus,other-subject,Impressionist painting techniques,8,,refuse,1.6160517930984497,1.6160517930984497,0,,,False,,,True
+off_syllabus,other-subject,Impressionist painting techniques,9,,refuse,1.347571849822998,1.347571849822998,0,,,False,,,True
+off_syllabus,other-subject,Supply and demand curves in economics,6,,refuse,1.5970656871795654,1.5970656871795654,0,,,False,,,True
+off_syllabus,other-subject,Supply and demand curves in economics,7,,refuse,1.5830793380737305,1.5830793380737305,0,,,False,,,True
+off_syllabus,other-subject,Supply and demand curves in economics,8,,refuse,1.5772905349731445,1.5772905349731445,0,,,False,,,True
+off_syllabus,other-subject,Supply and demand curves in economics,9,,refuse,1.4847162961959839,1.4847162961959839,0,,,False,,,True
+off_syllabus,other-subject,Rules and scoring in cricket,6,,refuse,1.4472436904907227,1.4472436904907227,0,,,False,,,True
+off_syllabus,other-subject,Rules and scoring in cricket,7,,refuse,1.4278494119644165,1.4278494119644165,0,,,False,,,True
+off_syllabus,other-subject,Rules and scoring in cricket,8,,refuse,1.1332603693008423,1.1332603693008423,1,,,True,,,False
+off_syllabus,other-subject,Rules and scoring in cricket,9,,refuse,1.3705729246139526,1.3705729246139526,0,,,False,,,True
+off_syllabus,other-subject,Buddhist philosophy and the eightfold path,6,,refuse,1.582883358001709,1.6073458194732666,0,,,False,,,True
+off_syllabus,other-subject,Buddhist philosophy and the eightfold path,7,,refuse,1.571981430053711,1.5845005512237549,0,,,False,,,True
+off_syllabus,other-subject,Buddhist philosophy and the eightfold path,8,,refuse,1.579290509223938,1.6302683353424072,0,,,False,,,True
+off_syllabus,other-subject,Buddhist philosophy and the eightfold path,9,,refuse,1.4930729866027832,1.4930729866027832,0,,,False,,,True
+off_syllabus,other-subject,Creative writing and narrative structure,6,,refuse,1.5914955139160156,1.5914955139160156,0,,,False,,,True
+off_syllabus,other-subject,Creative writing and narrative structure,7,,refuse,1.6131541728973389,1.6131541728973389,0,,,False,,,True
+off_syllabus,other-subject,Creative writing and narrative structure,8,,refuse,1.6467223167419434,1.6467223167419434,0,,,False,,,True
+off_syllabus,other-subject,Creative writing and narrative structure,9,,refuse,1.5353960990905762,1.5353960990905762,0,,,False,,,True
+off_syllabus,pseudo-scientific,Astrology and planetary influence on personality,6,,refuse,1.561995506286621,1.561995506286621,0,,,False,,,True
+off_syllabus,pseudo-scientific,Astrology and planetary influence on personality,7,,refuse,1.446887731552124,1.446887731552124,0,,,False,,,True
+off_syllabus,pseudo-scientific,Astrology and planetary influence on personality,8,,refuse,1.0056031942367554,1.0056031942367554,1,,,True,,,False
+off_syllabus,pseudo-scientific,Astrology and planetary influence on personality,9,,refuse,1.5751757621765137,1.5751757621765137,0,,,False,,,True
+off_syllabus,pseudo-scientific,Homeopathic dilution and water memory,6,,refuse,1.307926058769226,1.307926058769226,0,,,False,,,True
+off_syllabus,pseudo-scientific,Homeopathic dilution and water memory,7,,refuse,1.2148346900939941,1.2148346900939941,0,,,False,,,True
+off_syllabus,pseudo-scientific,Homeopathic dilution and water memory,8,,refuse,1.4211399555206299,1.4211399555206299,0,,,False,,,True
+off_syllabus,pseudo-scientific,Homeopathic dilution and water memory,9,,refuse,1.3709442615509033,1.3709442615509033,0,,,False,,,True
+off_syllabus,pseudo-scientific,Flat earth theory,6,,refuse,1.4540321826934814,1.4540321826934814,0,,,False,,,True
+off_syllabus,pseudo-scientific,Flat earth theory,7,,refuse,1.1886579990386963,1.1886579990386963,0,,,False,,,True
+off_syllabus,pseudo-scientific,Flat earth theory,8,,refuse,1.3231594562530518,1.3231594562530518,0,,,False,,,True
+off_syllabus,pseudo-scientific,Flat earth theory,9,,refuse,1.3394839763641357,1.3394839763641357,0,,,False,,,True
+off_syllabus,pseudo-scientific,Crystal healing energy fields,6,,refuse,1.5433956384658813,1.55257248878479,0,,,False,,,True
+off_syllabus,pseudo-scientific,Crystal healing energy fields,7,,refuse,1.3821340799331665,1.3821340799331665,0,,,False,,,True
+off_syllabus,pseudo-scientific,Crystal healing energy fields,8,,refuse,1.3485634326934814,1.3485634326934814,0,,,False,,,True
+off_syllabus,pseudo-scientific,Crystal healing energy fields,9,,refuse,1.4450260400772095,1.4450260400772095,0,,,False,,,True
+off_syllabus,pseudo-scientific,Perpetual motion machines that create free energy,6,,refuse,1.1712909936904907,1.1712909936904907,0,,,False,,,True
+off_syllabus,pseudo-scientific,Perpetual motion machines that create free energy,7,,refuse,1.0147786140441895,1.0147786140441895,2,,,True,,,False
+off_syllabus,pseudo-scientific,Perpetual motion machines that create free energy,8,,refuse,1.4030835628509521,1.4030835628509521,0,,,False,,,True
+off_syllabus,pseudo-scientific,Perpetual motion machines that create free energy,9,,refuse,1.183506965637207,1.183506965637207,0,,,False,,,True
+off_syllabus,advanced-science,Quantum entanglement and Bell's inequality,6,,refuse,1.6443679332733154,1.6443679332733154,0,,,False,,,True
+off_syllabus,advanced-science,Quantum entanglement and Bell's inequality,7,,refuse,1.5954794883728027,1.5954794883728027,0,,,False,,,True
+off_syllabus,advanced-science,Quantum entanglement and Bell's inequality,8,,refuse,1.6575713157653809,1.6575713157653809,0,,,False,,,True
+off_syllabus,advanced-science,Quantum entanglement and Bell's inequality,9,,refuse,1.6504919528961182,1.6504919528961182,0,,,False,,,True
+off_syllabus,advanced-science,CRISPR-Cas9 gene editing mechanisms,6,,refuse,1.790440320968628,1.790440320968628,0,,,False,,,True
+off_syllabus,advanced-science,CRISPR-Cas9 gene editing mechanisms,7,,refuse,1.6455137729644775,1.6455137729644775,0,,,False,,,True
+off_syllabus,advanced-science,CRISPR-Cas9 gene editing mechanisms,8,,refuse,1.7199444770812988,1.7687292098999023,0,,,False,,,True
+off_syllabus,advanced-science,CRISPR-Cas9 gene editing mechanisms,9,,refuse,1.6774702072143555,1.6774702072143555,0,,,False,,,True
+off_syllabus,advanced-science,General relativity and spacetime curvature,6,,refuse,1.7042696475982666,1.7042696475982666,0,,,False,,,True
+off_syllabus,advanced-science,General relativity and spacetime curvature,7,,refuse,1.3463515043258667,1.3463515043258667,0,,,False,,,True
+off_syllabus,advanced-science,General relativity and spacetime curvature,8,,refuse,1.5361517667770386,1.5361517667770386,0,,,False,,,True
+off_syllabus,advanced-science,General relativity and spacetime curvature,9,,refuse,1.4699199199676514,1.4699199199676514,0,,,False,,,True
+off_syllabus,advanced-science,Organic reaction mechanisms and nucleophilic substitution,6,,refuse,1.5580209493637085,1.5580209493637085,0,,,False,,,True
+off_syllabus,advanced-science,Organic reaction mechanisms and nucleophilic substitution,7,,refuse,1.6017268896102905,1.6017268896102905,0,,,False,,,True
+off_syllabus,advanced-science,Organic reaction mechanisms and nucleophilic substitution,8,,refuse,1.4194228649139404,1.4194228649139404,0,,,False,,,True
+off_syllabus,advanced-science,Organic reaction mechanisms and nucleophilic substitution,9,,refuse,1.4636482000350952,1.4636482000350952,0,,,False,,,True
+off_syllabus,advanced-science,Polymerase chain reaction and DNA amplification,6,,refuse,1.6898164749145508,1.6898164749145508,0,,,False,,,True
+off_syllabus,advanced-science,Polymerase chain reaction and DNA amplification,7,,refuse,1.6755338907241821,1.6755338907241821,0,,,False,,,True
+off_syllabus,advanced-science,Polymerase chain reaction and DNA amplification,8,,refuse,1.5520787239074707,1.5520787239074707,0,,,False,,,True
+off_syllabus,advanced-science,Polymerase chain reaction and DNA amplification,9,,refuse,1.569091558456421,1.5787464380264282,0,,,False,,,True
+off_syllabus,advanced-science,Semiconductor doping and p-n junction physics,6,,refuse,1.4989269971847534,1.4989269971847534,0,,,False,,,True
+off_syllabus,advanced-science,Semiconductor doping and p-n junction physics,7,,refuse,1.6497039794921875,1.6497039794921875,0,,,False,,,True
+off_syllabus,advanced-science,Semiconductor doping and p-n junction physics,8,,refuse,1.2839601039886475,1.2839601039886475,0,,,False,,,True
+off_syllabus,advanced-science,Semiconductor doping and p-n junction physics,9,,refuse,1.5619755983352661,1.6600090265274048,0,,,False,,,True
+off_syllabus,advanced-science,Enzyme kinetics and the Michaelis-Menten equation,6,,refuse,1.5292302370071411,1.5292302370071411,0,,,False,,,True
+off_syllabus,advanced-science,Enzyme kinetics and the Michaelis-Menten equation,7,,refuse,1.456773042678833,1.456773042678833,0,,,False,,,True
+off_syllabus,advanced-science,Enzyme kinetics and the Michaelis-Menten equation,8,,refuse,1.23714017868042,1.23714017868042,0,,,False,,,True
+off_syllabus,advanced-science,Enzyme kinetics and the Michaelis-Menten equation,9,,refuse,1.349543571472168,1.4512509107589722,0,,,False,,,True
+off_syllabus,advanced-science,Stellar nucleosynthesis and the CNO cycle,6,,refuse,1.5624918937683105,1.5624918937683105,0,,,False,,,True
+off_syllabus,advanced-science,Stellar nucleosynthesis and the CNO cycle,7,,refuse,1.5482338666915894,1.5926827192306519,0,,,False,,,True
+off_syllabus,advanced-science,Stellar nucleosynthesis and the CNO cycle,8,,refuse,1.3601295948028564,1.3601295948028564,0,,,False,,,True
+off_syllabus,advanced-science,Stellar nucleosynthesis and the CNO cycle,9,,refuse,1.2711913585662842,1.2711913585662842,0,,,False,,,True
+off_syllabus,advanced-science,Thermodynamic entropy and the Carnot cycle,6,,refuse,1.498225212097168,1.498225212097168,0,,,False,,,True
+off_syllabus,advanced-science,Thermodynamic entropy and the Carnot cycle,7,,refuse,1.3317909240722656,1.3317909240722656,0,,,False,,,True
+off_syllabus,advanced-science,Thermodynamic entropy and the Carnot cycle,8,,refuse,1.4422743320465088,1.4422743320465088,0,,,False,,,True
+off_syllabus,advanced-science,Thermodynamic entropy and the Carnot cycle,9,,refuse,1.4947607517242432,1.4947607517242432,0,,,False,,,True
+off_syllabus,advanced-science,Nuclear fission reactor control rod design,6,,refuse,1.5534203052520752,1.5534203052520752,0,,,False,,,True
+off_syllabus,advanced-science,Nuclear fission reactor control rod design,7,,refuse,1.4663739204406738,1.4663739204406738,0,,,False,,,True
+off_syllabus,advanced-science,Nuclear fission reactor control rod design,8,,refuse,1.5252571105957031,1.5252571105957031,0,,,False,,,True
+off_syllabus,advanced-science,Nuclear fission reactor control rod design,9,,refuse,1.4555772542953491,1.4555772542953491,0,,,False,,,True
+off_syllabus,adversarial,Water polo training techniques,6,,refuse,1.5663461685180664,1.5663461685180664,0,,,False,,,True
+off_syllabus,adversarial,Water polo training techniques,7,,refuse,1.4161566495895386,1.4161566495895386,0,,,False,,,True
+off_syllabus,adversarial,Water polo training techniques,8,,refuse,1.3450038433074951,1.3450038433074951,0,,,False,,,True
+off_syllabus,adversarial,Water polo training techniques,9,,refuse,1.4876658916473389,1.4876658916473389,0,,,False,,,True
+off_syllabus,adversarial,Light novels and Japanese publishing,6,,refuse,1.401939868927002,1.401939868927002,0,,,False,,,True
+off_syllabus,adversarial,Light novels and Japanese publishing,7,,refuse,1.4418761730194092,1.4418761730194092,0,,,False,,,True
+off_syllabus,adversarial,Light novels and Japanese publishing,8,,refuse,1.5129185914993286,1.5129185914993286,0,,,False,,,True
+off_syllabus,adversarial,Light novels and Japanese publishing,9,,refuse,1.351707935333252,1.351707935333252,0,,,False,,,True
+off_syllabus,adversarial,Energy drinks and caffeine marketing,6,,refuse,1.417778730392456,1.417778730392456,0,,,False,,,True
+off_syllabus,adversarial,Energy drinks and caffeine marketing,7,,refuse,1.2632594108581543,1.2632594108581543,0,,,False,,,True
+off_syllabus,adversarial,Energy drinks and caffeine marketing,8,,refuse,1.583707571029663,1.583707571029663,0,,,False,,,True
+off_syllabus,adversarial,Energy drinks and caffeine marketing,9,,refuse,1.4019930362701416,1.4019930362701416,0,,,False,,,True
+off_syllabus,adversarial,Food delivery supply chains,6,,refuse,1.279482364654541,1.279482364654541,0,,,False,,,True
+off_syllabus,adversarial,Food delivery supply chains,7,,refuse,1.3904412984848022,1.3904412984848022,0,,,False,,,True
+off_syllabus,adversarial,Food delivery supply chains,8,,refuse,1.066206693649292,1.066206693649292,1,,,True,,,False
+off_syllabus,adversarial,Food delivery supply chains,9,,refuse,1.0003767013549805,1.0003767013549805,1,,,True,,,False
+off_syllabus,adversarial,Cloud computing storage services,6,,refuse,1.6042144298553467,1.6042144298553467,0,,,False,,,True
+off_syllabus,adversarial,Cloud computing storage services,7,,refuse,1.5582690238952637,1.6097891330718994,0,,,False,,,True
+off_syllabus,adversarial,Cloud computing storage services,8,,refuse,1.5760773420333862,1.5760773420333862,0,,,False,,,True
+off_syllabus,adversarial,Cloud computing storage services,9,,refuse,1.4689946174621582,1.4689946174621582,0,,,False,,,True
+off_syllabus,adversarial,Solar panel installation business models,6,,refuse,1.228119134902954,1.228119134902954,0,,,False,,,True
+off_syllabus,adversarial,Solar panel installation business models,7,,refuse,1.0102823972702026,1.0102823972702026,1,,,True,,,False
+off_syllabus,adversarial,Solar panel installation business models,8,,refuse,1.4751486778259277,1.4751486778259277,0,,,False,,,True
+off_syllabus,adversarial,Solar panel installation business models,9,,refuse,1.2485768795013428,1.2485768795013428,0,,,False,,,True
+off_syllabus,adversarial,Plant-based meat product development,6,,refuse,1.2787408828735352,1.2864136695861816,0,,,False,,,True
+off_syllabus,adversarial,Plant-based meat product development,7,,refuse,1.2918578386306763,1.2918578386306763,0,,,False,,,True
+off_syllabus,adversarial,Plant-based meat product development,8,,refuse,1.1945126056671143,1.2192895412445068,0,,,False,,,True
+off_syllabus,adversarial,Plant-based meat product development,9,,refuse,1.2711795568466187,1.2711795568466187,0,,,False,,,True
+off_syllabus,adversarial,Magnetic resonance imaging hospital procurement,6,,refuse,1.6906616687774658,1.6906616687774658,0,,,False,,,True
+off_syllabus,adversarial,Magnetic resonance imaging hospital procurement,7,,refuse,1.5859439373016357,1.5859439373016357,0,,,False,,,True
+off_syllabus,adversarial,Magnetic resonance imaging hospital procurement,8,,refuse,1.6162493228912354,1.661353588104248,0,,,False,,,True
+off_syllabus,adversarial,Magnetic resonance imaging hospital procurement,9,,refuse,1.7183220386505127,1.7183220386505127,0,,,False,,,True
+off_syllabus,adversarial,Circuit court legal procedure,6,,refuse,1.561133861541748,1.561133861541748,0,,,False,,,True
+off_syllabus,adversarial,Circuit court legal procedure,7,,refuse,1.638971209526062,1.6609935760498047,0,,,False,,,True
+off_syllabus,adversarial,Circuit court legal procedure,8,,refuse,1.4008835554122925,1.4008835554122925,0,,,False,,,True
+off_syllabus,adversarial,Circuit court legal procedure,9,,refuse,1.6562607288360596,1.6562607288360596,0,,,False,,,True
+off_syllabus,adversarial,Sound engineering and studio mixing,6,,refuse,1.331100344657898,1.331100344657898,0,,,False,,,True
+off_syllabus,adversarial,Sound engineering and studio mixing,7,,refuse,1.341861367225647,1.341861367225647,0,,,False,,,True
+off_syllabus,adversarial,Sound engineering and studio mixing,8,,refuse,1.4725931882858276,1.4725931882858276,0,,,False,,,True
+off_syllabus,adversarial,Sound engineering and studio mixing,9,,refuse,1.5098609924316406,1.5098609924316406,0,,,False,,,True
+off_syllabus,nonsense,asdfghjkl qwerty,6,,refuse,1.5765126943588257,1.6857717037200928,0,,,False,,,True
+off_syllabus,nonsense,asdfghjkl qwerty,7,,refuse,1.2666670083999634,1.4981489181518555,0,,,False,,,True
+off_syllabus,nonsense,asdfghjkl qwerty,8,,refuse,1.291917085647583,1.477334976196289,0,,,False,,,True
+off_syllabus,nonsense,asdfghjkl qwerty,9,,refuse,1.3544559478759766,1.4290781021118164,0,,,False,,,True
+off_syllabus,nonsense,the the the and and,6,,refuse,1.6755621433258057,1.6755621433258057,0,,,False,,,True
+off_syllabus,nonsense,the the the and and,7,,refuse,1.5993568897247314,1.729933738708496,0,,,False,,,True
+off_syllabus,nonsense,the the the and and,8,,refuse,1.5990710258483887,1.6846282482147217,0,,,False,,,True
+off_syllabus,nonsense,the the the and and,9,,refuse,1.551196575164795,1.6522494554519653,0,,,False,,,True
+off_syllabus,nonsense,12345 67890,6,,refuse,1.715442180633545,1.715442180633545,0,,,False,,,True
+off_syllabus,nonsense,12345 67890,7,,refuse,1.7767212390899658,1.7767212390899658,0,,,False,,,True
+off_syllabus,nonsense,12345 67890,8,,refuse,1.7890756130218506,1.7890756130218506,0,,,False,,,True
+off_syllabus,nonsense,12345 67890,9,,refuse,1.6144781112670898,1.6144781112670898,0,,,False,,,True
+off_syllabus,nonsense,zzzzz,6,,refuse,1.6528788805007935,1.6528788805007935,0,,,False,,,True
+off_syllabus,nonsense,zzzzz,7,,refuse,1.598446011543274,1.6560642719268799,0,,,False,,,True
+off_syllabus,nonsense,zzzzz,8,,refuse,1.6204137802124023,1.6204137802124023,0,,,False,,,True
+off_syllabus,nonsense,zzzzz,9,,refuse,1.5942538976669312,1.7444195747375488,0,,,False,,,True
+off_syllabus,nonsense,How do I hack a school computer,6,,refuse,1.6218031644821167,1.6218031644821167,0,,,False,,,True
+off_syllabus,nonsense,How do I hack a school computer,7,,refuse,1.5044125318527222,1.5044125318527222,0,,,False,,,True
+off_syllabus,nonsense,How do I hack a school computer,8,,refuse,1.3498759269714355,1.3498759269714355,0,,,False,,,True
+off_syllabus,nonsense,How do I hack a school computer,9,,refuse,1.5874757766723633,1.5874757766723633,0,,,False,,,True
+grade_boundary,grade-boundary,Atomic structure,6,9,refuse,1.3814576864242554,1.4643418788909912,0,,,False,,,True
+grade_boundary,grade-boundary,Electromagnetism,6,9,refuse,1.2080756425857544,1.2784233093261719,0,,,False,,,True
+grade_boundary,grade-boundary,Heredity and genetics,6,9,refuse,1.4421571493148804,1.4421571493148804,0,,,False,,,True
+grade_boundary,grade-boundary,The periodic table of elements,6,9,refuse,1.4370158910751343,1.4370158910751343,0,,,False,,,True
+grade_boundary,grade-boundary,Chemical reactions and equations,6,9,refuse,1.3605138063430786,1.4532623291015625,0,,,False,,,True
+grade_boundary,grade-boundary,The human nervous system,6,9,refuse,1.428187370300293,1.428187370300293,0,,,False,,,True
+grade_boundary,grade-boundary,Acids bases and indicators,6,8,refuse,1.3762366771697998,1.3762366771697998,0,,,False,,,True
+grade_boundary,grade-boundary,Electric circuits,6,8,refuse,0.7060795426368713,0.7060795426368713,6,,,True,,,False
+grade_boundary,grade-boundary,Rheostat,6,8,refuse,1.4063100814819336,1.4063100814819336,0,,,False,,,True
+grade_boundary,grade-boundary,Respiration in living organisms,6,8,refuse,0.8898983001708984,0.8898983001708984,2,,,True,,,False
+grade_boundary,grade-boundary,Atomic structure,7,9,refuse,1.42616868019104,1.42616868019104,0,,,False,,,True
+grade_boundary,grade-boundary,Electromagnetism,7,9,refuse,1.2624411582946777,1.2624411582946777,0,,,False,,,True
+grade_boundary,grade-boundary,The periodic table of elements,7,9,refuse,1.4456372261047363,1.4456372261047363,0,,,False,,,True
+grade_boundary,grade-boundary,Heredity and genetics,7,9,refuse,1.5182487964630127,1.5182487964630127,0,,,False,,,True
+grade_boundary,grade-boundary,Rheostat,7,8,refuse,1.496230125427246,1.496230125427246,0,,,False,,,True
+grade_boundary,grade-boundary,Work power and energy,6,9,refuse,0.7393104434013367,0.7393104434013367,6,,,True,,,False
+grade_boundary,grade-boundary,Waves and their properties,6,9,refuse,1.363720417022705,1.3844401836395264,0,,,False,,,True
+grade_boundary,grade-boundary,Reflection of light and mirrors,6,8,refuse,1.0426918268203735,1.0426918268203735,1,,,True,,,False
+grade_boundary,grade-boundary,Elements compounds and mixtures,6,8,refuse,1.2476717233657837,1.3038817644119263,0,,,False,,,True
+grade_boundary,grade-boundary,The circulatory system,6,9,refuse,1.4579089879989624,1.4579089879989624,0,,,False,,,True

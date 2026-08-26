@@ -1,0 +1,26 @@
+
+T3 ground truth — pages per topic, from the published contents pages
+book      grade  entries  chapters  sections  min  median  max
+--------  -----  -------  --------  --------  ---  ------  ---
+G6.pdf    6      52       11        41        0    5       23 
+G7P1.pdf  7      45       10        35        0    4       23 
+G7P2.pdf  7      33       9         24        0    7       19 
+G8P1.pdf  8      35       8         27        1    5       23 
+G8P2.pdf  8      41       7         34        1    5       31 
+G9P1.pdf  9      41       9         32        1    4       22 
+G9P2.pdf  9      45       10        35        1    6       26 
+
+  292 entries total: 64 chapters, 228 sections
+  Sub-section spans: min 0, median 4, max 17, mean 4.1 pages
+  Distribution of sub-section spans (pages: count):
+   0p:4  1p:37  2p:47  3p:19  4p:24  5p:30  6p:27  7p:17  8p:8  9p:7  10p:1  11p:1  12p:1  13p:2  14p:2  17p:1
+
+  4 entries have a zero or negative span — these indicate a transcription slip in the contents pages and should be checked:
+     G6.pdf 7.1    Effects of Magnets                             p.100 -> p.100 = 0
+     G6.pdf 11.2   Climate                                        p.161 -> p.161 = 0
+     G7P1.pdf 10.1   The simple microscope                          p.139 -> p.139 = 0
+     G7P2.pdf 18.1   Features of minerals and rocks                 p.101 -> p.101 = 0
+
+Wrote C:\Users\user\Desktop\adaptive-science-storytelling\backend\evaluation\probes\ground_truth.csv
+  Columns beyond topic/grade/gt_pages are for sanity-checking and are ignored
+  by eval_planner, which matches on (topic, grade).

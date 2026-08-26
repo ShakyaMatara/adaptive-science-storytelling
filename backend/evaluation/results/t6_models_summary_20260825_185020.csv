@@ -1,0 +1,6 @@
+model,n,json_ok,json_rate,schema_rate,options_rate,median_latency_s,mean_fkgl,fkgl_band_fit,mean_tokens,cost_per_chapter
+openai/gpt-5.4-mini,6,4/6,0.667,0.667,0.667,5.7,9.055,no,2364,0.00409
+openai/gpt-5.6-luna,6,2/6,0.333,0.333,0.333,9.68,9.46,no,2562,0.00133
+deepseek/deepseek-v4-flash-0731,6,2/6,0.333,0.333,0.333,24.38,6.57,yes,3032,0.00026
+google/gemini-3.7-flash,6,0/6,0.0,0.0,0.0,12.03,0.0,no,3139,0.00327
+qwen/qwen3.8-27b,6,1/6,0.167,0.167,0.167,33.7,7.18,yes,3461,0.0049
