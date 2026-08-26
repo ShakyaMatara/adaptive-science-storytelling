@@ -1020,6 +1020,8 @@ unapplied.
 | `textbook_toc.md` | 7.3, 7.6 — transcribed contents pages |
 | `g9p1_recovered_pages.json` | 7.3.x — recovered page text |
 | `logs/` | Appendix — console output of every command run |
+| `CHAPTER7_WRITING_PACK.md` | 7.3–7.10 — every reportable number as a finished sentence, with its n, its caveat and its source file |
+| `REPO_AUDIT.md` | Submission readiness — file classification, sizes, credential scan of the working tree and full history |
 
 ### Figures
 

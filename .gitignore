@@ -109,3 +109,7 @@ backend/evaluation/results/*
 !backend/evaluation/results/t4_human_ablation_latest.csv
 !backend/evaluation/results/t4_evidence_composition_latest.csv
 !backend/evaluation/results/index_assessment_content_latest.csv
+
+# Chapter 7 writing pack and the submission-readiness audit.
+!backend/evaluation/results/CHAPTER7_WRITING_PACK.md
+!backend/evaluation/results/REPO_AUDIT.md
