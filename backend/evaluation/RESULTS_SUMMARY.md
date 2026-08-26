@@ -460,17 +460,170 @@ At n = 4 the recovered-text row still supports no inference. Where grounding inc
 recovered text the judge scores against a model transcription of a page image rather
 than the book's text layer, so that score measures consistency with the transcription.
 
-### Human validation
+### Human validation of the judge
 
-The programme's own instrument requires it and it has not yet been performed. Run 3
-writes what is needed for it, which no previous run did:
+Twelve chapters — the six paired topics, both conditions — were scored by hand from the
+blind dossier, which carries the chapter prose and the evidence and no judge output of
+any kind. The scorer did not see the judge's numbers until after all twelve were
+recorded. Scores were then merged on `row_id`.
 
-- `t4_judge_validation_BLIND_latest.csv` — twelve chapters with their evidence inline and
-  **no judge output of any kind**, to be scored without anchoring;
-- `t4_chapter_dossier_BLIND_latest.md` — the same twelve laid out to be read;
-- `t4_judge_validation_TEMPLATE_latest.csv` — the merge target, human columns first,
-  the judge's per-claim verdicts after;
-- `t4_chapters_latest.json` — the full audit record for all 24.
+| Statistic | **All 12** | Excl. row 8 | Excl. rows 3, 4, 8 |
+|---|---|---|---|
+| n | **12** | 11 | 9 |
+| **Spearman ρ** | **+0.971** | +0.981 | +0.982 |
+| **Mean absolute difference** | **0.039** | 0.040 | 0.045 |
+| **Within 0.10** | **10 / 12** | 9 / 11 | 7 / 9 |
+| Within 0.05 | 9 / 12 | 8 / 11 | 6 / 9 |
+| Exact | 5 / 12 | 5 / 11 | 4 / 9 |
+| Human mean | 0.660 (sd 0.356) | 0.681 | 0.799 |
+| Judge mean | 0.688 (sd 0.335) | 0.714 | 0.835 |
+| Mean signed difference (human − judge) | **−0.028** | −0.033 | −0.036 |
+
+The **all-12 column is the reported figure.** The other two are sensitivity analyses over
+rows the scorer flagged as not comparable, described below; they are shown because the
+flags were raised during scoring rather than after seeing the agreement, and they move
+nothing.
+
+**The judge is validated at ρ = +0.971 with a mean absolute error of 0.039 over twelve
+chapters.** T4's faithfulness figure is no longer an automated estimate: it is an
+automated measurement with reported human agreement, which is the standard the
+LLM-as-judge literature asks for.
+
+Two chapters disagreed by more than 0.10, **both in `rag_off`, both with the human
+stricter**: `Capacitors` (0.25 against 0.4286) and `Structure of the human heart` (0.45
+against 0.5556). The signed bias runs the same way throughout, so the judge is slightly
+*lenient* on ungrounded chapters. That matters for the direction of the conclusion: a
+human scorer widens the ablation effect rather than narrowing it.
+
+### The ablation under human scoring
+
+| Scorer | RAG off | RAG on | Effect |
+|---|---|---|---|
+| Human | 0.450 | 0.870 | **+0.420** |
+| Judge, same 12 chapters | 0.503 | 0.872 | **+0.369** |
+
+**The conclusion survives human scoring and is slightly larger under it.** The two
+scorers agree almost exactly on the RAG-on mean (0.870 against 0.872) and differ on the
+RAG-off mean, which is where the leniency sits.
+
+### The two scorers atomise claims differently and still agree on the ratio
+
+| | Human | Judge |
+|---|---|---|
+| Mean claims per chapter | **10.00** | **7.42** |
+| ρ(human claims, judge claims) | +0.600 | |
+| Human counted more claims | 10 / 12 chapters | |
+
+The human extracted 35% more claims from the same prose, and the *counts* correlate at
+only ρ = +0.600 — yet the *ratios* correlate at ρ = +0.971. Faithfulness is robust to
+the granularity at which claims are cut, which is the property a ratio metric needs and
+is not obvious in advance. The hand-written ratios were checked against the counts
+recorded beside them and agree to two decimal places in 12 of 12 cases, so no
+disagreement above is a transcription slip.
+
+### What hand-scoring surfaced that the metric could not
+
+Three defects were found by reading the chapters. None is visible in a faithfulness
+score, and none could have been found before the evidence was persisted (FINDING-10).
+
+**1 — A quiz leaked into the prose (row 8, `Kinetic energy` `rag_off`).** The chapter
+body ends:
+
+> *"When the bottle finally stopped, what happened to its kinetic energy? It disappeared
+> completely without changing form. It changed into sound, heat, and motion in the
+> marbles. It turned into light only. It became chemical energy inside the bottle."*
+
+That is a question stem and four answer options, flattened into narrative. The model
+wrote three multiple-choice questions; two were returned in the `questions` field and the
+third was emitted inside `paragraphs`. **It is a schema failure in generation, not
+textbook contamination** — this row is `rag_off`, so no textbook text reached the
+generator. One of 24 chapters. A learner would read the four options, including the three
+wrong ones, as part of the story. The judge and the human still agreed closely on it
+(0.400 against 0.43), so it did not distort the agreement, but the chapter is not a clean
+generation and the row is excluded in the sensitivity column above.
+
+**2 — Two topics are grounded on the books' furniture rather than their exposition
+(rows 3 and 4, `Weather` Grade 6).** Read directly, the two passages supplied are:
+
+| | Content | Chars |
+|---|---|---|
+| `[1]` p.175 | **entirely** a trilingual *Technical Terms* glossary — `Weather - ld,.=Kh - ÁõÛø»`, `Climate - foaY.=Kh - Põ»{ø»` … | 520 |
+| `[2]` pp.174–175 | a fill-in-the-blank stem, three comprehension questions, a June 2012 Colombo data table, five unanswered questions about it, a Project box, and the same glossary again | 1,344 |
+
+`total_relevant = 2`, so **that is the entire evidence base for `Weather` at Grade 6.**
+Neither passage defines weather, climate, humidity, thermometer, rain gauge, anemometer
+or wind vane. The glossary *names* those terms, but its definitions are the Sinhala and
+Tamil columns, and those are FINDING-4 mojibake: **3.28% of the characters in this
+evidence block are corrupted non-Latin letters rendered as Latin ones.**
+
+A faithful chapter here has almost nothing to be faithful to. Row 3's 0.30 is a retrieval
+failure wearing a generation failure's clothes, and both `Weather` rows depress the means
+on both sides of the comparison. **This is the first measured case of FINDING-4 reaching a
+learner-facing generation** — until now the mojibake defect was known only to cause T1
+gate false positives.
+
+Both passages also sit close to the syllabus gate (best distances 1.055 and 1.103 against
+a threshold of 1.15), which is consistent: the topic barely qualifies as covered, and what
+little it retrieves is furniture.
+
+**3 — Faithfulness cannot see specificity (rows 5 and 6, `Geomagnetism` Grade 8).** The
+`rag_off` chapter scored **0.82** — the highest ungrounded score in the set. Comparing the
+two chapters on the same point:
+
+| Condition | What the chapter says about magnetic north |
+|---|---|
+| `rag_on` | *"It is not exactly the same as real north; **it lies a little to the north-west of it**."* |
+| `rag_off` | *"magnetic north is **not exactly the same as** geographic north on a map."* |
+
+Both are true. Both are faithful — the ungrounded one simply asserts less. **On
+well-covered topics the generator's parametric knowledge overlaps the textbook heavily
+enough that faithfulness alone will not separate the conditions.** What separates them is
+*specificity*: the grounded chapter carries the textbook's actual detail, the ungrounded
+one carries a hedge.
+
+Faithfulness is a **precision** metric and the programme has no **recall** counterpart. A
+coverage or detail-retention measure — what proportion of the retrievable facts a chapter
+actually delivers — would catch what this one misses, and would be the single most
+valuable addition to the evaluation. It is recorded as future work rather than
+implemented, because it needs a per-passage fact inventory the programme does not have.
+
+### How much of the corpus is furniture rather than exposition
+
+Observation 2 generalises, so it was measured over the whole index. Chunks are classified
+by markers the textbooks use for their own assessment and reference apparatus.
+
+| Material | Chunks | Share of index |
+|---|---|---|
+| Exercise / assignment apparatus | 366 | 32.6% |
+| *Technical Terms* glossaries | 80 | 7.1% |
+| Runs of two or more question stems | 59 | 5.3% |
+| **Any of the above** | **423** | **37.7%** |
+
+| Grade | Chunks | Contains furniture |
+|---|---|---|
+| 6 | 156 | **51.9%** |
+| 7 | 275 | 44.0% |
+| 8 | 332 | 34.0% |
+| 9 | 359 | 30.1% |
+
+Across the twelve T4 topics, ρ(share of supplied passages flagged, `rag_on`
+faithfulness) = **−0.482**.
+
+**A necessary caution on this measure: it detects whether a chunk *contains* such
+material, not whether it *is* such material.** `Capacitors` and `Weather` are both flagged
+at 100% of supplied passages and score 1.000 and 0.333 — because `Capacitors`' chunks are
+exposition that happens to end in an *Activity* box, while `Weather`'s are a glossary and
+an exercise page and nothing else. A sentence-level expository-density measure separates
+them directionally (`Weather` 0.51, the lowest of the twelve, against a median near 0.80)
+but is unreliable on glossary text, which contains almost no sentence punctuation to split
+on. **The finding for `Weather` rests on reading the passages, not on the classifier**;
+the classifier is reported as a screening measure and as evidence that the exposure is
+widespread rather than a one-off.
+
+The retrieval layer does not distinguish exposition from apparatus, so chunks that are
+mostly questions compete on equal terms with chunks that state facts. That is a design
+gap in ingestion rather than a corpus defect: the material is correctly extracted, and it
+is the wrong material to ground a factual chapter on.
 
 **Finding 5.** Retrieval grounding raises measured faithfulness from 0.566 (sd 0.241,
 n = 12) to 0.853 (sd 0.330, n = 12), a difference of 0.287 that is statistically
@@ -483,8 +636,10 @@ generation, the figures are 0.930 and +0.364 (p = 0.00054).
 of the effect are firmly established, and it is significant in all three runs. Its
 *magnitude* carries wide uncertainty from two independent sources: the two judges differ
 by up to 0.135 on identical generations, and two runs of identical configuration differ
-by 0.114 on fresh generations at temperature 0.7. The figure remains an automated
-estimate until the blind validation set is scored.
+by 0.114 on fresh generations at temperature 0.7. The judge itself is now validated
+against a hand-scored subset of twelve chapters at Spearman ρ = +0.971 and a mean
+absolute error of 0.039, so the *scorer* is no longer a source of doubt about the
+conclusion — the sampling is.
 
 ---
 
@@ -661,6 +816,15 @@ audit trail. Full detail in `results/corpus_defects.md`.
   are genuine semantic near-misses.
 - **Grade-boundary leakage is the weakest family** at 16/20, and all four leaks are into
   Grade 6.
+- **A multiple-choice question leaked into a chapter's narrative.** One of 24 T4
+  chapters ends with a question stem and four answer options rendered as prose: the
+  model wrote three questions, two reached the `questions` field and the third was
+  emitted inside `paragraphs`. A learner would read the three wrong options as part of
+  the story. Found by reading, not by any metric.
+- **A human scorer is stricter than the judge, and only on ungrounded chapters.** Both
+  disagreements above 0.10 are `rag_off` rows where the human scored lower. The judge is
+  mildly lenient on chapters it cannot trace to evidence, which biases the measured
+  ablation effect *downwards*.
 
 ---
 
@@ -730,9 +894,11 @@ unapplied.
 1. **No classroom deployment and no human participants.** Every result is a property of
    the system measured in isolation. Nothing here evidences learning gain, engagement or
    usability.
-2. **Single annotator.** Probe curation, paraphrase authoring and defect classification
-   were performed by one party. The blind-authoring protocol for the paraphrased set
-   mitigates but does not remove this.
+2. **Single annotator.** Probe curation, paraphrase authoring, defect classification and
+   the T4 judge validation were performed by one party. The blind-authoring protocol for
+   the paraphrased set and the blind scoring protocol for the judge validation mitigate
+   but do not remove this: there is no human-human agreement figure to set against the
+   human-judge one.
 3. **Single corpus, English medium only.** Seven textbooks for one national curriculum.
    The Sinhala and Tamil editions are not evaluated, and the mojibake defect means the
    corpus's own non-English content is unusable.
@@ -740,19 +906,23 @@ unapplied.
    difficulty.** This bears directly on T5: the type–token ratio result (ρ = +0.090)
    shows the model lengthens sentences without broadening vocabulary, and FKGL cannot
    distinguish a hard idea in simple words from an easy idea in complex ones.
-5. **The LLM judge requires human validation before its scores carry weight.** Two
-   judges agreed at ρ = +0.718, +0.727 and +0.898 across the three runs, with a severe
-   divergence in the first two. The blind scoring set at
-   `t4_judge_validation_BLIND_latest.csv` is unfilled; until it is, T4's faithfulness
-   figure is an automated estimate, not a validated measurement. It could not have been
-   filled before run 3, because no earlier run kept the chapters it asked to be scored
-   (FINDING-10).
-6. **Faithfulness is not accuracy.** It measures whether a claim is traceable to the
-   supplied excerpts. The `Weather` chapter lost six of nine claims on statements that
-   are all true — that a thermometer measures temperature, that humidity is water vapour
-   in the air — and are simply absent from the two passages retrieved for that topic. The
-   metric is the right one for a grounding claim and the wrong one for a correctness
-   claim.
+5. **The LLM judge is validated, on twelve chapters, by one annotator.** Blind
+   hand-scoring agrees at ρ = +0.971 with a mean absolute error of 0.039, and the
+   ablation conclusion is slightly *larger* under human scoring (+0.420 against +0.369).
+   The validation nevertheless rests on a single annotator scoring twelve chapters from
+   six topics, with no second human and therefore no human-human agreement figure to set
+   against the human-judge one. It licenses the claim that the judge tracks a careful
+   reader on this corpus; it does not license extrapolation to other corpora or scorers.
+6. **Faithfulness is not accuracy, and it has no recall counterpart.** It measures
+   whether a claim is traceable to the supplied excerpts. The `Weather` chapter lost six
+   of nine claims on statements that are all true — that a thermometer measures
+   temperature, that humidity is water vapour in the air — and are simply absent from the
+   two passages retrieved for that topic. It is also blind to specificity: an ungrounded
+   `Geomagnetism` chapter scored 0.82 by asserting that magnetic north is "not exactly
+   the same as" geographic north, where the grounded chapter gave the north-west offset.
+   The programme measures precision against the evidence and never measures how much of
+   the evidence a chapter actually delivers. A coverage or detail-retention metric is the
+   single most valuable addition the evaluation could take.
 7. **Small samples, and generation is stochastic.** T4 rests on 12 chapters per
    condition, T5 on 8 generations per level, T6 on 6 prompts per model, and inter-judge
    agreement on 6 chapters. Generation runs at temperature 0.7, so the sample-size
@@ -764,15 +934,22 @@ unapplied.
 8. **3.2% of the index is recovered from page images** rather than read from a text
    layer. Each experiment reports its exposure; T4's recovered-text row has n = 4 and
    supports no conclusion.
-9. **The generation fallback is silent.** When the model's output fails to parse twice,
+9. **Over a third of the index is the books' own apparatus, not their exposition.**
+   37.7% of chunks contain exercise stems, assignment boxes or trilingual glossaries,
+   rising to 51.9% at Grade 6. Retrieval does not distinguish apparatus from exposition,
+   so for two of the twelve T4 topics every supplied passage was flagged, and for
+   `Weather` the entire evidence base is a glossary and an unanswered exercise page. The
+   classifier detects whether a chunk *contains* such material, not whether it *is* such
+   material, so the figure is an upper bound on exposure and a lower bound on nothing.
+10. **The generation fallback is silent.** When the model's output fails to parse twice,
    the application substitutes a canned chapter with no textbook sources and presents it
    under the requested topic. It fired on 1 of 36 grounded generations (2.8%) and is
    detectable only because zero sources are attached. Neither a learner nor a metric can
    tell it from a successful chapter without that check (FINDING-11).
-10. **Cost figures are partly derived.** 56 of 140 paid calls are not instrumented.
-11. **Provider prices and model availability change.** All costs are indicative of
+11. **Cost figures are partly derived.** 56 of 140 paid calls are not instrumented.
+12. **Provider prices and model availability change.** All costs are indicative of
     2026-08-25.
-12. **T3's repair is partial and its result is weak.** ρ = +0.270 for chapter count
+13. **T3's repair is partial and its result is weak.** ρ = +0.270 for chapter count
     does not establish that instructional volume is derived from curricular emphasis.
 
 ---
@@ -804,9 +981,15 @@ unapplied.
 | `t4_faithfulness_summary_latest.csv` | 7.7 — ablation summary |
 | `t4_faithfulness_by_provenance_latest.csv` | 7.7.x — provenance split |
 | `t4_interjudge_agreement_latest.csv` | 7.7.x — judge validation |
-| `t4_judge_validation_BLIND_latest.csv` | 7.7.x — **human scoring surface, unfilled** — chapters and evidence inline, no judge output |
+| `t4_judge_validation_BLIND_latest.csv` | 7.7.x — human scoring surface — chapters and evidence inline, no judge output |
+| `t4_human_validation_latest.csv` | 7.7 — **human vs judge, per chapter**, with claim counts |
+| `t4_human_agreement_latest.csv` | 7.7 — agreement summary and its two sensitivity bases |
+| `t4_human_ablation_latest.csv` | 7.7 — the ablation recomputed from the human scores |
+| `t4_evidence_composition_latest.csv` | 7.7.x — apparatus vs exposition in each topic's evidence |
+| `index_assessment_content_latest.csv` | 7.3, 7.7.x — exercise, glossary and question-stem content of the index |
 | `t4_chapter_dossier_BLIND_latest.md` | 7.7.x — the same twelve chapters laid out to be read and scored |
-| `t4_judge_validation_TEMPLATE_latest.csv` | 7.7.x — merge target: human columns first, judge's per-claim verdicts after |
+| `t4_judge_validation_TEMPLATE_latest.csv` | 7.7.x — merge target, human scores backfilled |
+| `t4_chapter_dossier_BLIND_latest.md` (scored) | 7.7 — the hand-written scoring tables, as recorded |
 | `t4_chapters_latest.json` | 7.7 — **full audit record**: chapter prose, evidence blocks, both judges' per-claim verdicts |
 | `t4_faithfulness_by_evidence_base_latest.csv` | 7.7.x — faithfulness against `total_relevant` and evidence size, per topic |
 | `t4_faithfulness_by_richness_latest.csv` | 7.7.x — faithfulness by richness band |

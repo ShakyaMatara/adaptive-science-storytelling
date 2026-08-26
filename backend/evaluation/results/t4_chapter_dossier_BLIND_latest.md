@@ -31,12 +31,12 @@ Mrs. Perera placed a small 1000 µF capacitor on the desk and smiled. “This li
 
 ### Your scoring
 
-| | |
-|---|---|
-| distinct scientific claims | |
-| of those, supported by the evidence | |
-| faithfulness (supported / total) | |
-| notes | |
+|                                     |     |
+| ----------------------------------- | --- |
+| distinct scientific claims          | 13  |
+| of those, supported by the evidence | 13  |
+| faithfulness (supported / total)    | 1.0 |
+| notes                               |     |
 
 ---
 
@@ -58,12 +58,12 @@ After lunch, Mrs. Perera brought a small box to the science club table. "Today w
 
 ### Your scoring
 
-| | |
-|---|---|
-| distinct scientific claims | |
-| of those, supported by the evidence | |
-| faithfulness (supported / total) | |
-| notes | |
+|                                     |      |
+| ----------------------------------- | ---- |
+| distinct scientific claims          | 12   |
+| of those, supported by the evidence | 3    |
+| faithfulness (supported / total)    | 0.25 |
+| notes                               |      |
 
 ---
 
@@ -85,12 +85,12 @@ On a warm June morning in Weligama, Anjali looked at the sky before school and s
 
 ### Your scoring
 
-| | |
-|---|---|
-| distinct scientific claims | |
-| of those, supported by the evidence | |
-| faithfulness (supported / total) | |
-| notes | |
+|                                     |     |
+| ----------------------------------- | --- |
+| distinct scientific claims          | 10  |
+| of those, supported by the evidence | 3   |
+| faithfulness (supported / total)    | 0.3 |
+| notes                               |     |
 
 ---
 
@@ -112,12 +112,12 @@ One morning, Aaloka and Nethmi noticed that the sky over the hills looked pale a
 
 ### Your scoring
 
-| | |
-|---|---|
-| distinct scientific claims | |
-| of those, supported by the evidence | |
-| faithfulness (supported / total) | |
-| notes | |
+|                                     |     |
+| ----------------------------------- | --- |
+| distinct scientific claims          | 4   |
+| of those, supported by the evidence | 0   |
+| faithfulness (supported / total)    | 0   |
+| notes                               |     |
 
 ---
 
@@ -143,12 +143,12 @@ Nethu placed a compass on the bench and watched the needle settle quietly. “It
 
 ### Your scoring
 
-| | |
-|---|---|
-| distinct scientific claims | |
-| of those, supported by the evidence | |
-| faithfulness (supported / total) | |
-| notes | |
+|                                     |     |
+| ----------------------------------- | --- |
+| distinct scientific claims          | 12  |
+| of those, supported by the evidence | 12  |
+| faithfulness (supported / total)    | 1   |
+| notes                               |     |
 
 ---
 
@@ -174,12 +174,12 @@ On a bright Friday afternoon, Nuwan and Ayesha hurried to the school science roo
 
 ### Your scoring
 
-| | |
-|---|---|
-| distinct scientific claims | |
-| of those, supported by the evidence | |
-| faithfulness (supported / total) | |
-| notes | |
+|                                     |      |
+| ----------------------------------- | ---- |
+| distinct scientific claims          | 11   |
+| of those, supported by the evidence | 9    |
+| faithfulness (supported / total)    | 0.82 |
+| notes                               |      |
 
 ---
 
@@ -205,12 +205,12 @@ On a rainy afternoon, the Grade 7 science club crowded around the sink in the la
 
 ### Your scoring
 
-| | |
-|---|---|
-| distinct scientific claims | |
-| of those, supported by the evidence | |
-| faithfulness (supported / total) | |
-| notes | |
+|                                     |     |
+| ----------------------------------- | --- |
+| distinct scientific claims          | 10  |
+| of those, supported by the evidence | 10  |
+| faithfulness (supported / total)    | 1   |
+| notes                               |     |
 
 ---
 
@@ -236,12 +236,12 @@ On a bright afternoon, Nisha carried a plastic bottle filled with marbles to the
 
 ### Your scoring
 
-| | |
-|---|---|
-| distinct scientific claims | |
-| of those, supported by the evidence | |
-| faithfulness (supported / total) | |
-| notes | |
+|                                     |      |
+| ----------------------------------- | ---- |
+| distinct scientific claims          | 7    |
+| of those, supported by the evidence | 3    |
+| faithfulness (supported / total)    | 0.43 |
+| notes                               |      |
 
 ---
 
@@ -267,12 +267,12 @@ Aruni looked at the glowing bulb on the desk and asked, “Sir, why does the bul
 
 ### Your scoring
 
-| | |
-|---|---|
-| distinct scientific claims | |
-| of those, supported by the evidence | |
-| faithfulness (supported / total) | |
-| notes | |
+|                                     |     |
+| ----------------------------------- | --- |
+| distinct scientific claims          | 10  |
+| of those, supported by the evidence | 10  |
+| faithfulness (supported / total)    | 1   |
+| notes                               |     |
 
 ---
 
@@ -298,12 +298,12 @@ On a rainy afternoon at St. Anne’s College in Kandy, Nadeesha and Imran were t
 
 ### Your scoring
 
-| | |
-|---|---|
-| distinct scientific claims | |
-| of those, supported by the evidence | |
-| faithfulness (supported / total) | |
-| notes | |
+|                                     |      |
+| ----------------------------------- | ---- |
+| distinct scientific claims          | 8    |
+| of those, supported by the evidence | 6    |
+| faithfulness (supported / total)    | 0.75 |
+| notes                               |      |
 
 ---
 
@@ -329,12 +329,12 @@ On a rainy afternoon, Ms. Perera placed a red-and-blue cardboard shape on the ta
 
 ### Your scoring
 
-| | |
-|---|---|
-| distinct scientific claims | |
-| of those, supported by the evidence | |
-| faithfulness (supported / total) | |
-| notes | |
+|                                     |      |
+| ----------------------------------- | ---- |
+| distinct scientific claims          | 12   |
+| of those, supported by the evidence | 11   |
+| faithfulness (supported / total)    | 0.92 |
+| notes                               |      |
 
 ---
 
@@ -360,9 +360,9 @@ On a rainy afternoon at Galle Central College, Ms. Perera placed a clay model on
 
 ### Your scoring
 
-| | |
-|---|---|
-| distinct scientific claims | |
-| of those, supported by the evidence | |
-| faithfulness (supported / total) | |
-| notes | |
+|                                     |      |
+| ----------------------------------- | ---- |
+| distinct scientific claims          | 11   |
+| of those, supported by the evidence | 5    |
+| faithfulness (supported / total)    | 0.45 |
+| notes                               |      |

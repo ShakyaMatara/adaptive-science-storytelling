@@ -101,3 +101,11 @@ backend/evaluation/results/*
 !backend/evaluation/results/t4_judge_validation_TEMPLATE_gemini_run1_latest.csv
 !backend/evaluation/results/t4_significance_gemini_run1_latest.csv
 !backend/evaluation/results/t4_interjudge_agreement_gemini_run1_latest.csv
+
+# T4 human validation of the judge, and the corpus-composition measurement
+# that the hand-scoring prompted.
+!backend/evaluation/results/t4_human_validation_latest.csv
+!backend/evaluation/results/t4_human_agreement_latest.csv
+!backend/evaluation/results/t4_human_ablation_latest.csv
+!backend/evaluation/results/t4_evidence_composition_latest.csv
+!backend/evaluation/results/index_assessment_content_latest.csv

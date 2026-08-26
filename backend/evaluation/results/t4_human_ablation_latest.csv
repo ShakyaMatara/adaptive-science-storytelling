@@ -1,0 +1,3 @@
+basis,rag_on_n,rag_off_n,human_rag_on,human_rag_on_sd,human_rag_off,human_rag_off_sd,human_effect,judge_rag_on,judge_rag_off,judge_effect
+all hand-scored,6,6,0.87,0.281,0.45,0.307,0.42,0.872,0.503,0.369
+"excluding rows 3, 4, 8",5,4,0.984,0.036,0.568,0.266,0.416,0.98,0.654,0.326

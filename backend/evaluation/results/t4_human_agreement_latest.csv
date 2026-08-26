@@ -1,0 +1,4 @@
+basis,n,spearman_rho,mean_abs_difference,within_0.10,within_0.05,exact,human_mean,human_sd,judge_mean,judge_sd,mean_signed_difference
+all hand-scored chapters (reported),12,0.971,0.039,10,9,5,0.66,0.356,0.688,0.335,-0.028
+sensitivity: excluding the quiz-contaminated row 8,11,0.981,0.04,9,8,5,0.681,0.366,0.714,0.338,-0.033
+"sensitivity: excluding rows 3, 4 and 8",9,0.9818,0.045,7,6,4,0.799,0.274,0.835,0.211,-0.036

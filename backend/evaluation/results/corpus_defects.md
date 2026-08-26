@@ -645,8 +645,13 @@ is not the one being evaluated - learners receive stories written at 0.7. Persis
 output is the correct repair; pinning the sampler is not.
 
 **Standing.** The T4 figures reported from the first two runs are unaffected and are not
-withdrawn. What changes is that the third run's figures can be checked, and the human
-validation the method depends on can finally be performed.
+withdrawn. What changed is that the third run's figures can be checked — and were. Twelve
+chapters were hand-scored from the blind dossier on 2026-08-26 and agree with the judge
+at Spearman ρ = +0.971, mean absolute error 0.039. Reading those twelve chapters also
+found three defects no metric had surfaced: a leaked quiz stem, a topic grounded entirely
+on a corrupted glossary and an exercise page, and faithfulness's blindness to
+specificity. All three are recorded in section 7.7 of RESULTS_SUMMARY.md. The repair paid
+for itself on its first use.
 
 ---
 
