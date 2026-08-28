@@ -325,3 +325,177 @@ body {
   .grade-grid { grid-template-columns: repeat(2, 1fr); }
   .app-header h1 { font-size: 1.6rem; }
 }
+
+/* ============================================================================
+   Navigation shell and the shared component vocabulary.
+   Added with the routed pages; the rules above are untouched.
+   ========================================================================== */
+
+/* ---- Top navigation ---- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.navbar-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.navbar-brand {
+  font-weight: 700;
+  color: var(--indigo-dark);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.navbar-links { display: flex; gap: 4px; margin-left: 12px; flex: 1; flex-wrap: wrap; }
+.navbar-link {
+  padding: 7px 12px;
+  border-radius: 999px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.navbar-link:hover { background: var(--indigo-soft); color: var(--indigo-dark); }
+.navbar-link.active { background: var(--indigo); color: #fff; }
+.navbar-user { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.navbar-name { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+.navbar-logout {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+.navbar-logout:hover { border-color: var(--indigo); color: var(--indigo); }
+.navbar-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+@media (max-width: 860px) {
+  .navbar-toggle { display: block; order: 2; margin-left: auto; }
+  .navbar-user { order: 3; }
+  .navbar-links {
+    order: 4;
+    flex-basis: 100%;
+    display: none;
+    flex-direction: column;
+    margin: 8px 0 4px;
+  }
+  .navbar-links.open { display: flex; }
+  .navbar-link { padding: 10px 12px; }
+}
+
+/* ---- Buttons ---- */
+.quiet-btn {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 9px 14px;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+.quiet-btn:hover { border-color: var(--indigo); color: var(--indigo-dark); }
+.quiet-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ---- Empty state ---- */
+.empty-state { text-align: center; padding: 32px 12px; }
+.empty-icon { font-size: 2.4rem; }
+.empty-state h3 { margin: 8px 0 4px; }
+.empty-state p { margin: 0 0 16px; }
+
+/* ---- Toast ---- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(560px, calc(100vw - 32px));
+  padding: 12px 14px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  background: var(--red-soft);
+  color: var(--red);
+  font-size: 0.9rem;
+}
+.toast-success { background: var(--green-soft); color: var(--green); }
+.toast-info { background: var(--indigo-soft); color: var(--indigo-dark); }
+.toast-message { flex: 1; }
+.toast-close {
+  background: none; border: none; cursor: pointer;
+  font-size: 1.2rem; line-height: 1; color: inherit; padding: 0 2px;
+}
+
+/* ---- Progress bar ---- */
+.bar {
+  display: block;
+  background: #eef2ff;
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+}
+.bar-fill { display: block; height: 100%; transition: width 0.3s ease; }
+.bar-indigo { background: var(--indigo); }
+.bar-green { background: var(--green); }
+.bar-amber { background: #d97706; }
+.bar-red { background: var(--red); }
+
+/* ---- Skeleton loaders ---- */
+.skeleton {
+  display: block;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #eef2f7 25%, #f7fafc 50%, #eef2f7 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.3s ease-in-out infinite;
+}
+.skeleton-lines { display: flex; flex-direction: column; gap: 10px; }
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* ---- Accessibility helper ---- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---- Read-only story replay ---- */
+.archive-chapter { border-top: 1px solid var(--border); padding-top: 16px; margin-top: 20px; }
+.archive-chapter:first-child { border-top: none; padding-top: 0; margin-top: 8px; }
+.archive-options { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 8px; }
+.archive-option {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border: 1px solid var(--border); border-radius: 12px;
+  font-size: 0.95rem;
+}
+.archive-option.correct { border-color: var(--green); background: var(--green-soft); }
+.archive-option.wrong { border-color: var(--red); background: var(--red-soft); }
+.archive-tag {
+  margin-left: auto; font-size: 0.72rem; text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--muted);
+}
+
+/* ---- Paragraph interaction (provenance / read-aloud) ---- */
+.story-p-clickable { cursor: pointer; border-radius: 8px; transition: background 0.15s; }
+.story-p-clickable:hover { background: var(--indigo-soft); }
+.story-p-active { background: var(--amber-soft); border-radius: 8px; }

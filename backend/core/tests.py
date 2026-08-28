@@ -364,3 +364,93 @@ class StoryLoopTests(APITestCase):
                 "/api/sessions", {"topic": "Photosynthesis", "grade": 8}, format="json")
         self.assertEqual(second.status_code, status.HTTP_429_TOO_MANY_REQUESTS)
         cache.clear()  # drop this test's throttle history
+
+
+class EndToEndSmokeTests(APITestCase):
+    """The whole existing learner journey in one test, driven only through HTTP
+    with a real token: register -> start -> read -> answer -> next chapter -> ask
+    -> resume -> finish.
+
+    It exists as the regression gate for the user-facing expansion: the new pages
+    are surfaces over this flow, so if any of them disturbs it this fails.
+    """
+
+    def setUp(self):
+        os.environ["USE_MOCK_LLM"] = "true"
+        cache.clear()
+
+    def test_full_journey_through_the_api(self):
+        # 1. Register — this is the only call made unauthenticated.
+        reg = self.client.post(
+            "/api/auth/register",
+            {"username": "amaya", "password": "pw12345!", "display_name": "Amaya"},
+            format="json")
+        self.assertEqual(reg.status_code, status.HTTP_201_CREATED)
+        token = reg.data["token"]
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {token}")
+
+        # 2. The token identifies the learner.
+        me = self.client.get("/api/auth/me")
+        self.assertEqual(me.status_code, status.HTTP_200_OK)
+        self.assertEqual(me.data["display_name"], "Amaya")
+
+        # 3. Start a story.
+        started = self.client.post(
+            "/api/sessions", {"topic": "Water Cycle", "grade": 7}, format="json")
+        self.assertEqual(started.status_code, status.HTTP_201_CREATED)
+        sid = started.data["session_id"]
+        chapter = started.data["chapter"]
+        self.assertTrue(chapter["paragraphs"])
+        self.assertTrue(chapter["questions"])
+
+        # 4. Read the story back in full.
+        full = self.client.get(f"/api/sessions/{sid}")
+        self.assertEqual(full.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(full.data["chapters"]), 1)
+        self.assertEqual(full.data["topic"], "Water Cycle")
+
+        # 5. Answer every question in the chapter, correctly.
+        for q in chapter["questions"]:
+            ci = Question.objects.get(pk=q["question_id"]).correct_index
+            res = self.client.post(
+                f"/api/sessions/{sid}/answer",
+                {"question_id": q["question_id"], "answer_index": ci, "response_time_ms": 1200},
+                format="json")
+            self.assertEqual(res.status_code, status.HTTP_200_OK)
+            self.assertTrue(res.data["is_correct"])
+        self.assertTrue(res.data["chapter_complete"])
+
+        # 6. Move to the next chapter.
+        nxt = self.client.post(f"/api/sessions/{sid}/next", {}, format="json")
+        self.assertEqual(nxt.status_code, status.HTTP_200_OK)
+        self.assertFalse(nxt.data["is_complete"])
+        chapter2 = nxt.data["chapter"]
+        self.assertEqual(chapter2["order"], 2)
+
+        # 7. Ask a grounded question — it must not disturb the session state.
+        points_before = nxt.data["points"]
+        asked = self.client.post(
+            f"/api/sessions/{sid}/ask", {"question": "Why does mist form?"}, format="json")
+        self.assertEqual(asked.status_code, status.HTTP_200_OK)
+        self.assertTrue(asked.data["answer"])
+        self.assertEqual(Session.objects.get(pk=sid).points, points_before)
+
+        # 8. Coming back to the same topic resumes the same story, not a new one.
+        before = Session.objects.count()
+        resumed = self.client.post(
+            "/api/sessions", {"topic": "Water Cycle", "grade": 7}, format="json")
+        self.assertEqual(resumed.status_code, status.HTTP_200_OK)
+        self.assertTrue(resumed.data["resumed"])
+        self.assertEqual(resumed.data["session_id"], sid)
+        self.assertEqual(Session.objects.count(), before)
+
+        # 9. Finish the story off and collect the completion badge.
+        for q in chapter2["questions"]:
+            ci = Question.objects.get(pk=q["question_id"]).correct_index
+            self.client.post(
+                f"/api/sessions/{sid}/answer",
+                {"question_id": q["question_id"], "answer_index": ci}, format="json")
+        done = self.client.post(f"/api/sessions/{sid}/next", {}, format="json")
+        self.assertTrue(done.data["is_complete"])
+        self.assertIn("Water Cycle Explorer", done.data["badges"])
+        self.assertGreater(done.data["points"], 0)
