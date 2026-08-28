@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getSession } from "../api";
+import FallbackNotice from "./FallbackNotice";
+import ReaderToolbar from "./ReaderToolbar";
 import { BadgeList, SourceNote } from "./StoryReader";
 import { Button, Card, EmptyState, SkeletonLines, Toast, useToast } from "./ui";
 
@@ -75,11 +77,19 @@ export default function StoryArchive({ sessionId, toolbar = null }) {
           : "No questions answered yet."}
       </p>
 
-      {toolbar}
+      {toolbar || (
+        <ReaderToolbar
+          sessionId={sessionId}
+          story={story}
+          paragraphs={story.chapters[0]?.paragraphs || []}
+          learnerName={story.learner_name}
+        />
+      )}
 
       <div id="printable-story">
         {story.chapters.map((c) => (
           <section key={c.id} className="archive-chapter">
+            <FallbackNotice sessionId={story.id} chapterId={c.id} />
             <h3>Chapter {c.order}: {c.title}</h3>
             <div className="story">
               {c.paragraphs.map((p, i) => <p key={i}>{p}</p>)}

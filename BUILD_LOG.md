@@ -176,3 +176,113 @@ with a real token before any lane started.
    lanes own, so a single lane could not deliver it without breaking file
    ownership. The shared vocabulary was built in Phase 1 and every lane brief
    requires its use; the orchestrator audits compliance in Phase 4.
+
+---
+
+## Phase 2 — Feature lanes
+
+Four lanes ran concurrently in one working tree, each owning its files
+exclusively and writing its shared-file requests to a handoff.
+
+**Lane A — Discovery. Completed by the lane.** Syllabus browser
+(`api_curriculum.py`, `BrowsePage.jsx`) and My Stories (`api_library.py`,
+`LibraryPage.jsx`). The contents-page parser was checked against the source
+file: 64 chapters and 228 sub-sections across the four grades, with Grade 9
+correctly presented as one continuous list of chapters 1-19 spanning its two
+printed parts. The library endpoint costs four queries regardless of how many
+stories a learner has, measured rather than assumed.
+
+**Lane B — Learner insight. Completed by the lane.** Extended progress endpoint
+(`api_progress.py`, `ProgressPage.jsx`) and the provenance viewer
+(`api_provenance.py`, `ProvenancePanel.jsx`). The original `progress` key was
+shown to be byte-identical to the pre-change response. Provenance recovered 3 of
+3 references for chapter 1 and 2 of 2 for chapter 2, all by the semantic path;
+the exact-lookup fallback and the index-unavailable path were exercised
+deliberately, since live data never reaches them.
+
+**Lane C — Study tools. Files delivered; the lane was cut short.** Revision mode
+(`api_revision.py`, `RevisePage.jsx`), export (`exportStory.js`), read-aloud
+(`useReadAloud.js`) and the mountable `ReaderToolbar.jsx` were all written and
+its handoffs recorded before the lane stopped partway through its final
+verification. Its own handoff warned that a temporary verification harness in
+`RevisePage.jsx` might not have been removed; it had not been, and it was
+removed during integration. The remaining verification was completed by the
+orchestrator.
+
+**Lane D — Robustness. The lane produced nothing and the work was done by the
+orchestrator.** The lane stalled without writing a file. Rather than restart it,
+the orchestrator built D1, D2 and D3 directly: `GenerationEvent` and migration
+`0007`, `api_fallback.py`, `api_achievements.py`, `FallbackNotice.jsx`,
+`AchievementsPage.jsx` and `robustness.css`.
+
+**Passed.** Every endpoint answered over real HTTP with a token, refused an
+unauthenticated request with 401, and returned 404 for another learner's data.
+
+**Decisions taken.**
+
+1. *The fallback detection is suppressed in mock mode, and this is load-bearing.*
+   Demonstrated directly: with an empty `sources` list, the predicate returns
+   `False` with mock mode on and `True` with it off. Without the guard the notice
+   would fire on every chapter of every offline demonstration and the whole test
+   suite would fail. There is now a test asserting exactly this.
+2. *Retry regenerates at `chapter.difficulty_at_time`, not `session.difficulty`.*
+   The chapter is replaced in place, so it must stay consistent with the
+   difficulty already stored on the row.
+3. *Retry is refused outright once any question in the chapter has been answered*,
+   so a recorded answer can never be discarded.
+4. *A retry that falls back again keeps the original chapter* rather than
+   swapping one canned chapter for another, and says so plainly.
+5. *Best streak is derived, not stored.* `Session.current_streak` holds only the
+   run in progress, so the best run is recovered by walking a session's answered
+   questions in presentation order. The definition is returned in the payload
+   rather than left implicit.
+
+---
+
+## Phase 3 — Integration
+
+**Done.** Merged all eight handoffs into `views.py`, `StoryPage.jsx` and
+`StoryArchive.jsx`; the pre-wired routes and client functions meant `urls.py` and
+`api.js` needed nothing further. Removed Lane C's temporary harness. Deleted both
+`_integration` directories. Added 18 functional tests for the new endpoints.
+
+**Passed.** `manage.py test core` → **46 tests, OK** (27 original + the smoke
+test + 18 new, against a target of 12). `npm run build` → exit 0, 58 modules.
+`makemigrations --check --dry-run` → no changes detected. The four frozen modules
+are byte-identical to the branch point and no frozen constant was altered.
+
+**Failed, and fixed.** Wiring `record_fallback_if_needed` into `views.py`
+introduced a circular import — `views` imported `api_fallback`, which imported
+`views` for `_chapter_kwargs` — which took the development server down. The
+import in `api_fallback` was deferred into the function that needs it. This is
+exactly the class of defect the integration step exists to catch: each lane's
+module imported cleanly on its own.
+
+**Decisions taken.**
+
+1. *Arbitration between Lanes B and C over the reader's `activeParagraph` prop.*
+   Both claimed it — B to mark a clicked paragraph, C to mark the paragraph being
+   spoken. `activeParagraph` was given to read-aloud, because a moving highlight
+   most naturally means "this is being read now", and the click was left to open
+   the provenance panel only. Nothing is lost: provenance is recorded per
+   chapter, not per paragraph, so which paragraph was clicked does not change
+   what the panel shows.
+2. *The fallback notice is mounted in the read-only replay as well as the live
+   reader*, per chapter, so a story reread later still discloses which of its
+   chapters were not textbook-grounded.
+3. *The toolbar in the replay is passed the already-loaded story*, so export
+   there costs no second request.
+
+**Verified in the browser** against the live backend: the read-only replay showed
+the listening and export controls, the disclosure notice and its honest blocked
+reason ("You have already answered a question in this chapter") together on one
+page; the live reader showed the toolbar, the citation line
+("Based on: Grade 6 textbook (p. 12, pp. 99-101, pp. 101-102)"), no notice for a
+grounded chapter, and clicking a paragraph opened the provenance panel
+(`role="dialog"`, `aria-modal="true"`) containing the textbook's own wording.
+
+**Throwaway data removed.** A session, chapter, question and two generation
+events were created to exercise the fallback and retry paths, including one real
+regeneration that produced a genuine textbook-grounded chapter with four page
+citations. All of it was deleted afterwards; the database is back to the two real
+stories.

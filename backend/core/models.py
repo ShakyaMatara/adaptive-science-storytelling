@@ -148,3 +148,39 @@ class ConceptStat(models.Model):
 
     def __str__(self):
         return f"{self.learner.name}: {self.topic}/{self.concept} {self.correct}/{self.attempts}"
+
+
+class GenerationEvent(models.Model):
+    """A record of a chapter whose generation did not go to plan.
+
+    When the model's reply fails schema validation twice, the generator returns a
+    canned chapter rather than raising, so the learner is never blocked. That
+    fallback is correct behaviour and is kept — but it used to be invisible, and
+    the evaluation programme measured it at 2.8% of chapters. This model is what
+    makes the rate observable in ordinary use rather than only under measurement:
+    one row per chapter that fell back, plus a row for the outcome of any retry
+    the learner asked for.
+    """
+
+    FALLBACK_SERVED = "fallback_served"
+    RETRY_SUCCEEDED = "retry_succeeded"
+    RETRY_FAILED = "retry_failed"
+    KIND_CHOICES = [
+        (FALLBACK_SERVED, "Canned chapter served instead of a generated one"),
+        (RETRY_SUCCEEDED, "Retry produced a textbook-grounded chapter"),
+        (RETRY_FAILED, "Retry fell back again; the original chapter was kept"),
+    ]
+
+    session = models.ForeignKey(Session, on_delete=models.CASCADE, related_name="generation_events")
+    chapter = models.ForeignKey(
+        Chapter, on_delete=models.CASCADE, related_name="generation_events", null=True, blank=True
+    )
+    kind = models.CharField(max_length=32, choices=KIND_CHOICES)
+    detail = models.TextField(blank=True)  # a short human-readable note, never an error dump
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.kind} (session {self.session_id}, chapter {self.chapter_id})"

@@ -1,0 +1,179 @@
+/* Styles for the study surfaces: revision mode and the reader toolbar.
+ *
+ * Kept out of the application stylesheet on purpose — these rules belong to the
+ * components that import them, and nothing here redefines an existing class. The
+ * design tokens (--indigo, --muted, --radius …) are the ones already declared on
+ * :root in styles.css, so these surfaces inherit the app's look rather than
+ * introducing a second one.
+ *
+ * The stylesheet for the PRINTED story is not here: it is part of the
+ * self-contained document built in utils/exportStory.js, which is written into
+ * its own iframe and therefore cannot see this file.
+ */
+
+/* ---- Reader toolbar --------------------------------------------------------- */
+
+.reader-toolbar {
+  margin: 0 0 18px;
+  padding: 10px 12px;
+  background: var(--indigo-soft);
+  border: 1px solid #e0e7ff;
+  border-radius: 12px;
+}
+
+.reader-toolbar-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+}
+
+.reader-toolbar-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Smaller than a page-level button: this strip must not compete with the story. */
+.reader-toolbar .toolbar-btn {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  background: var(--card-bg);
+}
+
+.reader-toolbar .toolbar-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.reader-toolbar-note {
+  margin: 8px 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* The toolbar is a control, not content: never print it. */
+@media print {
+  .reader-toolbar { display: none; }
+}
+
+/* ---- Revision page ---------------------------------------------------------- */
+
+.revise-intro {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.revise-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 20px;
+}
+
+.revise-topic {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* The topic the progress dashboard sent the learner here to work on. */
+.revise-topic.is-focused {
+  border-color: var(--indigo);
+  box-shadow: 0 0 0 3px var(--indigo-soft);
+}
+
+.revise-topic-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.revise-topic-head h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.revise-topic-mastery {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 4px;
+}
+
+.revise-topic-mastery .bar { flex: 1; }
+
+.revise-mastery-value {
+  font-size: 0.8rem;
+  color: var(--muted);
+  min-width: 74px;
+  text-align: right;
+}
+
+.revise-concepts {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+.revise-concept {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #f8fafc;
+  margin-bottom: 6px;
+}
+
+/* The single concept the dashboard pointed at, if it named one. */
+.revise-concept.is-focused {
+  background: var(--amber-soft);
+}
+
+.revise-concept-name {
+  font-weight: 600;
+  flex: 1 1 40%;
+  min-width: 140px;
+}
+
+.revise-concept .bar {
+  flex: 1 1 120px;
+  min-width: 100px;
+}
+
+.revise-concept-score {
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.revise-topic-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.revise-topic-actions .muted {
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.revise-note {
+  margin: 20px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+}

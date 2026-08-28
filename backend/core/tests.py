@@ -13,7 +13,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from . import adaptation
-from .models import ConceptStat, Learner, Question, Session
+from .models import ConceptStat, GenerationEvent, Learner, Question, Session
 from .throttles import AskThrottle, StoryGenThrottle
 
 
@@ -454,3 +454,252 @@ class EndToEndSmokeTests(APITestCase):
         self.assertTrue(done.data["is_complete"])
         self.assertIn("Water Cycle Explorer", done.data["badges"])
         self.assertGreater(done.data["points"], 0)
+
+
+class NewSurfaceTests(APITestCase):
+    """The endpoints behind the pages added in the capability expansion.
+
+    Every one of them is a read-only surface over data the system already keeps,
+    so what matters is that each requires a token, refuses another learner's
+    data, returns the shape its page consumes, and behaves sensibly for a learner
+    with no history at all.
+    """
+
+    def setUp(self):
+        os.environ["USE_MOCK_LLM"] = "true"
+        cache.clear()
+        self.user = User.objects.create_user(username="nimal", password="pw12345!")
+        Learner.objects.create(user=self.user, name="Nimal")
+        # A second learner, used to prove one learner cannot read another's data.
+        self.other = User.objects.create_user(username="amaya", password="pw12345!")
+        Learner.objects.create(user=self.other, name="Amaya")
+        self.client.force_authenticate(user=self.user)
+
+    def _play_one_chapter(self, topic="Water Cycle", grade=7, correct=True):
+        """Start a story and answer its first chapter; return (session_id, chapter)."""
+        data = self.client.post(
+            "/api/sessions", {"topic": topic, "grade": grade}, format="json").data
+        sid, chapter = data["session_id"], data["chapter"]
+        for q in chapter["questions"]:
+            ci = Question.objects.get(pk=q["question_id"]).correct_index
+            self.client.post(
+                f"/api/sessions/{sid}/answer",
+                {"question_id": q["question_id"],
+                 "answer_index": ci if correct else (ci + 1) % 4},
+                format="json")
+        return sid, chapter
+
+    # --- authentication --------------------------------------------------------
+
+    def test_every_new_endpoint_requires_authentication(self):
+        self.client.force_authenticate(user=None)
+        for path in ("/api/curriculum", "/api/me/library", "/api/me/progress",
+                     "/api/me/weak-concepts", "/api/me/achievements",
+                     "/api/chapters/1/provenance", "/api/chapters/1/generation-status"):
+            with self.subTest(path=path):
+                self.assertEqual(self.client.get(path).status_code,
+                                 status.HTTP_401_UNAUTHORIZED)
+
+    # --- cross-user isolation --------------------------------------------------
+
+    def test_another_learners_chapter_is_not_readable(self):
+        _, chapter = self._play_one_chapter()
+        chapter_id = chapter["chapter_id"]
+        self.client.force_authenticate(user=self.other)
+        for path in (f"/api/chapters/{chapter_id}/provenance",
+                     f"/api/chapters/{chapter_id}/generation-status"):
+            with self.subTest(path=path):
+                self.assertEqual(self.client.get(path).status_code,
+                                 status.HTTP_404_NOT_FOUND)
+
+    def test_library_only_lists_the_requesting_learners_stories(self):
+        self._play_one_chapter(topic="Water Cycle")
+        self.client.force_authenticate(user=self.other)
+        res = self.client.get("/api/me/library")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data["stories"], [])   # sees none of Nimal's stories
+        self.assertEqual(res.data["count"], 0)
+
+    def test_another_learners_chapter_cannot_be_retried(self):
+        sid, chapter = self._play_one_chapter()
+        self.client.force_authenticate(user=self.other)
+        res = self.client.post(
+            f"/api/sessions/{sid}/chapters/{chapter['chapter_id']}/retry", {}, format="json")
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
+
+    # --- response shapes -------------------------------------------------------
+
+    def test_curriculum_returns_the_four_grades_with_page_ranges(self):
+        res = self.client.get("/api/curriculum")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        grades = res.data["grades"]
+        self.assertEqual([g["grade"] for g in grades], [6, 7, 8, 9])
+        # Grade 6 is printed as one book of 11 chapters; grade 9 spans two parts
+        # and its chapter numbering continues across them.
+        g6 = grades[0]
+        self.assertEqual(g6["chapter_count"], 11)
+        self.assertEqual(g6["chapters"][0]["title"], "Wonders of the Living World")
+        g9 = grades[3]
+        self.assertEqual([c["number"] for c in g9["chapters"]], list(range(1, 20)))
+        # Every section carries a printed page and an honest range flag.
+        section = g6["chapters"][0]["sections"][0]
+        for key in ("number", "title", "page_start", "page_end", "has_range"):
+            self.assertIn(key, section)
+
+    def test_library_reports_progress_for_a_story(self):
+        sid, _ = self._play_one_chapter(topic="Photosynthesis", grade=8)
+        res = self.client.get("/api/me/library")
+        story = next(s for s in res.data["stories"] if s["id"] == sid)
+        self.assertEqual(story["topic"], "Photosynthesis")
+        self.assertEqual(story["grade"], 8)
+        self.assertEqual(story["chapters_completed"], 1)
+        self.assertFalse(story["is_complete"])
+        self.assertEqual(res.data["in_progress"], 1)
+
+    def test_progress_keeps_its_original_shape_and_gains_counters(self):
+        self._play_one_chapter()
+        res = self.client.get("/api/me/progress")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        # The original contract, unchanged — this is what the older test asserts.
+        first = res.data["progress"][0]
+        self.assertIn("topic", first)
+        for key in ("concept", "attempts", "correct", "mastery"):
+            self.assertIn(key, first["concepts"][0])
+        # ...and the extension alongside it.
+        for key in ("summary", "topics", "strongest", "weakest", "definitions"):
+            self.assertIn(key, res.data)
+        self.assertEqual(res.data["summary"]["topics_studied"], 1)
+        self.assertGreaterEqual(res.data["summary"]["questions_attempted"], 1)
+
+    def test_weak_concepts_lists_only_concepts_that_were_missed(self):
+        self._play_one_chapter(correct=False)   # every answer wrong
+        res = self.client.get("/api/me/weak-concepts")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertGreaterEqual(res.data["count"], 1)
+        for concept in res.data["concepts"]:
+            self.assertLess(concept["correct"], concept["attempts"])  # missed at least once
+            self.assertIn("grade", concept)                           # revisable
+        self.assertTrue(res.data["topics"])
+
+    def test_weak_concepts_excludes_a_concept_answered_correctly_every_time(self):
+        self._play_one_chapter(correct=True)    # every answer right
+        res = self.client.get("/api/me/weak-concepts")
+        self.assertEqual(res.data["concepts"], [])
+
+    def test_achievements_reports_badges_earned_and_still_to_earn(self):
+        self._play_one_chapter()
+        res = self.client.get("/api/me/achievements")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        by_name = {b["name"]: b for b in res.data["badges"]}
+        # "On Fire" needs a longer streak than one chapter gives, so it is listed
+        # as unearned WITH its criterion — that is the point of the gallery.
+        self.assertFalse(by_name["On Fire"]["earned"])
+        self.assertTrue(by_name["On Fire"]["criterion"])
+        self.assertIn("current", res.data["streaks"])
+        self.assertIn("best", res.data["streaks"])
+        self.assertGreaterEqual(res.data["totals"]["questions_answered"], 1)
+
+    def test_provenance_is_honest_when_a_chapter_has_no_sources(self):
+        # Mock mode attaches no textbook references, which is exactly the
+        # "not grounded" case the panel has to report rather than fail on.
+        _, chapter = self._play_one_chapter()
+        res = self.client.get(f"/api/chapters/{chapter['chapter_id']}/provenance")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertFalse(res.data["grounded"])
+        self.assertEqual(res.data["passages"], [])
+        self.assertTrue(res.data["message"])       # says why, rather than erroring
+
+    # --- the fallback disclosure ----------------------------------------------
+
+    def test_mock_chapters_are_never_reported_as_fallbacks(self):
+        """The guard that keeps the notice off every offline chapter.
+
+        Mock chapters legitimately carry no sources, so the "no sources" signal
+        must not fire here — if it did, every chapter of every offline run would
+        be labelled a failure.
+        """
+        _, chapter = self._play_one_chapter()
+        res = self.client.get(f"/api/chapters/{chapter['chapter_id']}/generation-status")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data["source_count"], 0)   # genuinely no sources...
+        self.assertFalse(res.data["used_fallback"])     # ...but not a fallback
+        self.assertFalse(res.data["can_retry"])
+
+    def test_a_chapter_that_did_not_fall_back_cannot_be_retried(self):
+        sid, chapter = self._play_one_chapter()
+        res = self.client.post(
+            f"/api/sessions/{sid}/chapters/{chapter['chapter_id']}/retry", {}, format="json")
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("nothing to retry", res.data["error"])
+
+    def test_no_generation_event_is_recorded_in_mock_mode(self):
+        self.assertEqual(GenerationEvent.objects.count(), 0)
+        self._play_one_chapter()
+        self.assertEqual(GenerationEvent.objects.count(), 0)
+
+    # --- empty states ----------------------------------------------------------
+
+    def test_a_learner_with_no_history_gets_empty_results_not_errors(self):
+        for path, keys in (
+            ("/api/me/library", ("stories", "count")),
+            ("/api/me/progress", ("progress",)),
+            ("/api/me/weak-concepts", ("concepts", "count")),
+        ):
+            with self.subTest(path=path):
+                res = self.client.get(path)
+                self.assertEqual(res.status_code, status.HTTP_200_OK)
+                for key in keys:
+                    self.assertFalse(res.data[key])  # empty list or zero, never an error
+
+    def test_achievements_for_a_learner_with_no_history(self):
+        res = self.client.get("/api/me/achievements")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data["totals"]["points"], 0)
+        self.assertEqual(res.data["totals"]["badges_earned"], 0)
+        self.assertEqual(res.data["explorer"]["earned"], [])
+        # The catalogue is still listed, so the page can show what to aim for.
+        self.assertEqual(len(res.data["badges"]), 2)
+        self.assertFalse(any(b["earned"] for b in res.data["badges"]))
+
+    # --- revision mode must not write ------------------------------------------
+
+    def test_revision_selection_writes_nothing(self):
+        """Revision mode chooses what to study; it must not itself change any
+        learner state. Only the ordinary answer and generation endpoints may."""
+        sid, _ = self._play_one_chapter(correct=False)
+        session = Session.objects.get(pk=sid)
+        before = (session.points, session.difficulty, session.current_streak,
+                  session.chapter_count)
+        stats_before = {
+            (s.topic, s.concept): (s.attempts, s.correct)
+            for s in ConceptStat.objects.filter(learner=session.learner)
+        }
+
+        # Everything the revision page does before a story is started.
+        self.client.get("/api/me/weak-concepts")
+        self.client.get("/api/me/progress")
+
+        session.refresh_from_db()
+        self.assertEqual(
+            (session.points, session.difficulty, session.current_streak,
+             session.chapter_count), before)
+        stats_after = {
+            (s.topic, s.concept): (s.attempts, s.correct)
+            for s in ConceptStat.objects.filter(learner=session.learner)
+        }
+        self.assertEqual(stats_after, stats_before)
+
+    def test_revision_starts_an_ordinary_session_on_the_weak_topic(self):
+        """The page starts a story through the existing endpoint, so a revision
+        session is an ordinary session — resumed if one is already open."""
+        sid, _ = self._play_one_chapter(topic="Water Cycle", correct=False)
+        weak = self.client.get("/api/me/weak-concepts").data
+        topic = weak["topics"][0]
+        before = Session.objects.count()
+
+        res = self.client.post(
+            "/api/sessions", {"topic": topic["topic"], "grade": topic["grade"]}, format="json")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)   # resumed, not created
+        self.assertTrue(res.data["resumed"])
+        self.assertEqual(res.data["session_id"], sid)
+        self.assertEqual(Session.objects.count(), before)       # nothing new made

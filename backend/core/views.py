@@ -18,6 +18,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from . import adaptation, gamification, llm_config, personalization, planning
+from .api_fallback import record_fallback_if_needed
 from .constants import TOPICS
 from .llm import LLMError, answer_question, generate_chapter
 from .models import Chapter, Learner, Question, Session
@@ -57,6 +58,9 @@ def _persist_chapter(session, data):
             concept=q.get("concept", ""),
         )
     session.save()
+    # Note a chapter that arrived without textbook grounding, so the fallback rate
+    # measured during evaluation stays observable in ordinary use. Never raises.
+    record_fallback_if_needed(session, chapter)
     return chapter
 
 

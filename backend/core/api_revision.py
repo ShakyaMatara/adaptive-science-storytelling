@@ -106,6 +106,10 @@ def weak_concepts(request):
     gets empty lists and a 200. That is not an error state; it is a good result.
     """
     learner = _learner_for(request.user)
+    if learner is None:
+        return Response({"count": 0, "concepts": [], "topics": [],
+                         "revisit_per_story": _revisit_limit()})
+
     sessions = _session_index(learner)
 
     stats = list(learner.concept_stats.filter(attempts__gte=1))
@@ -179,6 +183,6 @@ def weak_concepts(request):
         "topics": topics,
         # How many concepts the generator will be asked to revisit per story, so
         # the page can say so plainly instead of implying every weak concept is
-        # covered at once. Mirrors personalization.weak_concepts' default limit.
-        "revisit_per_story": 3,
+        # covered at once.
+        "revisit_per_story": _revisit_limit(),
     })
