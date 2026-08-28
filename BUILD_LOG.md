@@ -424,3 +424,62 @@ formal impersonal prose. Two entries state explicitly what the implementation
 depth would have been had the frozen modules been editable — persisting passage
 text for provenance, and reporting the fallback as a fact rather than inferring
 it from an absence — since that distinction belongs in the evaluation chapter.
+
+### Screenshot checklist
+
+The sequence below is ordered as a demonstration, so the same run produces both
+the thesis figures and the live walk-through. Sign in beforehand; the account
+needs at least one completed story and one story in progress, and at least one
+concept answered incorrectly, or the insight screens will be empty. Capture at a
+desktop width, then repeat the starred items at 375 px to evidence the responsive
+layout.
+
+1. **Login screen** — the unauthenticated state, with no navigation bar.
+2. **Home** — the topic field, suggestion chips and grade selector.
+3. **Syllabus browser, collapsed*** — the four grades with their chapter and
+   sub-section counts. *The single most important figure of the phase: it is the
+   evidence that grounding is curricular rather than asserted.*
+4. **Syllabus browser, one grade expanded** — chapters with page ranges, one
+   chapter expanded to its sub-sections.
+5. **Syllabus browser, searching** — a term such as "magnet", showing the match
+   count, the filtered tree and the highlighted matches.
+6. **Home, pre-filled from the syllabus** — topic and grade carried over. Capture
+   immediately after step 5 so the hand-off is visible as a pair.
+7. **Generation in progress** — the loading animation with its cycling message.
+8. **Story reader** — chapter title, prose, the "Based on: Grade N textbook"
+   citation line, the listening and export controls, and the questions.
+9. **A question answered** — the correct option green, the feedback line, the
+   points pill updated.
+10. **Provenance panel open*** — triggered by selecting a paragraph. Ensure the
+    textbook extract, its page citation and the "printed exactly as it appears"
+    label are all legible. *The second headline figure.*
+11. **Read-aloud active** — the highlighted paragraph with the Pause control
+    showing, so the highlight and the control state appear together.
+12. **Grounded Q&A panel** — a question answered from the textbook, with sources.
+13. **Q&A refusal** — a question too close to an unanswered quiz question, showing
+    the anti-cheat refusal.
+14. **Chapter complete** — the continue control and any badge notification.
+15. **Session complete** — final points and badges.
+16. **My Stories*** — the card grid with both filters visible, one story in
+    progress and one complete.
+17. **Read-only replay** — a completed story with the answer key shown.
+18. **Print preview of the export** — the browser's own preview, showing the
+    chapters, questions, citations and the source-textbook footer.
+19. **Progress dashboard, upper*** — the headline counters and the
+    mastery-against-practice plot.
+20. **Progress dashboard, lower** — mastery bars by topic and the strengths and
+    gaps panel.
+21. **Revision page** — weak concepts ranked with their mastery, and the
+    explanatory copy stating what revision does.
+22. **Achievements** — earned badges with dates beside an unearned badge showing
+    its criterion, plus streaks and totals.
+23. **Fallback disclosure notice** — above a chapter with no textbook grounding,
+    with the retry control. Hard to obtain naturally at a 2.8% rate; it can be
+    staged by clearing one chapter's stored references in a scratch database.
+24. **An empty state** — any insight page for a newly registered learner, to show
+    the system invites a first story rather than presenting an empty grid.
+25. **Navigation bar collapsed*** — the mobile menu open, evidencing the
+    responsive shell.
+
+Figures 3, 10 and 19 are the three that carry the phase's argument: curriculum
+made navigable, grounding made inspectable, and learning made measurable.
