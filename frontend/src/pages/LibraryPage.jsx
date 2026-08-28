@@ -202,7 +202,13 @@ function StoryCard({ story, resuming, busy, onResume, onRead }) {
   // Show progress against the planned length where there is one; a story from
   // before planning falls back to the chapters it actually has.
   const total = Math.max(story.planned_chapters || 0, story.chapter_count, 1);
-  const done = story.is_complete ? total : story.chapters_completed;
+  // Report what was actually read. Completion used to fill the bar to 100% and
+  // claim every chapter had been read, which was untrue of a story ended early —
+  // a story abandoned at chapter 1 of 2 with nothing answered still announced
+  // "All 2 chapters read". A chapter counts as read once its questions are
+  // answered, so this is the same measure the reader itself uses.
+  const done = Math.min(story.chapters_completed, total);
+  const endedEarly = story.is_complete && done < total;
   const scored = story.questions_answered > 0;
 
   return (
@@ -224,7 +230,9 @@ function StoryCard({ story, resuming, busy, onResume, onRead }) {
         <div className="lib-progress-label">
           <span>
             {story.is_complete
-              ? `All ${total} chapter${total === 1 ? "" : "s"} read`
+              ? (endedEarly
+                  ? `Ended early — ${done} of ${total} chapter${total === 1 ? "" : "s"} read`
+                  : `All ${total} chapter${total === 1 ? "" : "s"} read`)
               : `Chapter ${Math.min(done + 1, total)} of ${total}`}
           </span>
           <span>{Math.round((done / total) * 100)}%</span>
@@ -232,7 +240,7 @@ function StoryCard({ story, resuming, busy, onResume, onRead }) {
         <ProgressBar
           value={done}
           max={total}
-          tone={story.is_complete ? "green" : "indigo"}
+          tone={endedEarly ? "amber" : story.is_complete ? "green" : "indigo"}
           label={`${done} of ${total} chapters completed`}
         />
       </div>

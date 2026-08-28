@@ -604,3 +604,71 @@ to delete. Run against the development database: two duplicate rows removed
 ("Atomic structure Explorer" and "Water Cycle Explorer", each held twice), the
 earliest award of each kept so the date shown is the date it was first earned.
 Three badges remain.
+
+---
+
+## Post-review change — pausing a story, and honest progress reporting
+
+**Requested.** Two things about ending a story early: that finishing without
+answering anything did not register properly in My Stories, and that the footer
+control should offer to *pause* rather than *finish* while the current chapter
+still has unanswered questions — leaving the story exactly as closing the tab
+would.
+
+**What was found.** The reported symptom did not reproduce as described: a story
+finished with nothing answered *is* marked complete, and the card does show
+"Finished". The backend was confirmed correct in isolation —
+`is_complete = True`, and the library endpoint counts it under `completed`.
+
+What was wrong is what the card said next to that label. Progress was computed as
+`done = is_complete ? total : chapters_completed`, so completion filled the bar to
+100% and claimed every chapter had been read. A story abandoned at chapter 1 of a
+planned 2, with neither of its questions answered, announced **"All 2 chapters
+read, 100%"**. Every one of the three stories in the development database was in
+exactly that state — complete, zero questions answered, zero points — so the
+dashboard was describing work that had not happened. That is almost certainly the
+substance of the report, and it is fixed.
+
+**Done.**
+
+1. *The footer offers a pause until the chapter is answered.* While any question
+   in the current chapter is unanswered the control reads "⏸ Pause — keep this for
+   later" and simply navigates to My Stories; it calls no endpoint and writes
+   nothing, because every answer is already saved as it is given. Once the last
+   question is answered it becomes "Finish & see results →" as before. A chapter
+   with no questions counts as answered, so a thin-content chapter can still be
+   finished.
+2. *The library card reports what was actually read.* `done` is now the count of
+   chapters whose questions were all answered — the same measure the reader uses —
+   and a story completed before reaching the end reads "Ended early — 0 of 2
+   chapters read" with an amber bar, rather than claiming a full read.
+
+**Verified in the browser**, against the live backend and a real session: with
+0 of 2 answered the control read "⏸ Pause"; with 1 of 2 it still read "⏸ Pause";
+with 2 of 2 it became "Finish & see results →" alongside the chapter-complete
+banner. Clicking pause landed on My Stories with the story still "In progress"
+and resumable, and the session row was confirmed unchanged afterwards
+(`is_complete=False`, points and streak untouched, no badge). The three existing
+stories now read "Ended early — 0 of N chapters read" instead of "All N chapters
+read".
+
+**Decisions taken.**
+
+1. *Pause navigates to My Stories rather than resetting the session.* The story
+   stays live in memory, so returning to it immediately is instant, and it is
+   equally resumable from the library later.
+2. *The finish endpoint stays permissive.* Refusing a finish with nothing answered
+   was considered and not done: ending a story early is a legitimate operation
+   once a learner has engaged, and a chapter with no questions is a real case. The
+   interface now governs when finishing is offered, which is what was asked for,
+   and the library no longer overstates what happened either way.
+
+**Not covered by automated tests, and this is a real gap.** Both changes are in
+React components, and the project has no frontend test harness — `package.json`
+declares only `dev`, `build` and `preview`, with no testing dependency. Adding one
+is a larger change than this fix warrants, so both were verified by hand in the
+browser as described above. The backend suite (61 tests) still passes, but it does
+not and cannot cover these two behaviours.
+
+**Passed.** 61 tests, build exit 0, no migration drift, frozen modules
+byte-identical.

@@ -54,6 +54,7 @@ export default function StoryPage() {
 // provenance panel instead; provenance is recorded per chapter rather than per
 // paragraph, so which paragraph was clicked does not change what the panel shows.
 function LiveReader({ session }) {
+  const navigate = useNavigate();
   const [spokenParagraph, setSpokenParagraph] = useState(null);
   const [provenanceOpen, setProvenanceOpen] = useState(false);
 
@@ -76,6 +77,10 @@ function LiveReader({ session }) {
         onAnswer={session.answer}
         onNext={session.next}
         onFinish={session.finish}
+        // Pausing writes nothing: every answer is already saved, so leaving the
+        // story where it stands is all that is needed. It stays resumable from
+        // My Stories, exactly as it would after closing the tab.
+        onPause={() => navigate("/library")}
         notice={
           <FallbackNotice
             sessionId={session.sessionId}

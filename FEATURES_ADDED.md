@@ -79,6 +79,15 @@ authenticated learner.
 `POST /api/sessions` endpoint, whose resume branch returns the unfinished session
 and writes nothing.
 
+**Progress reporting.** A card reports the chapters whose questions were actually
+answered, which is the same measure the reader uses to decide whether a chapter is
+finished. Completion does not by itself fill the bar: a story ended before its
+planned last chapter is shown as "Ended early — N of M chapters read", because
+marking it complete and simultaneously claiming every chapter had been read
+misdescribed a story that was abandoned early. Ending a story early is itself
+offered only once the current chapter's questions are answered; before that the
+reader offers to pause instead, which leaves the story in progress and resumable.
+
 **Limitations.** The endpoint costs four queries irrespective of how many stories
 a learner has, but it loads each chapter's full text in order to count questions;
 for a learner with a very large history this is more data than the summary

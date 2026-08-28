@@ -14,6 +14,7 @@ import { ask } from "../api";
 export default function StoryReader({
   chapter, sessionId, grade, resumed, sources, points, difficulty, totalChapters,
   badges, justEarned, answers, chapterComplete, loading, onAnswer, onNext, onFinish,
+  onPause = null,
   notice = null, toolbar = null, onParagraphClick = null, activeParagraph = null,
 }) {
   return (
@@ -73,10 +74,21 @@ export default function StoryReader({
       {/* Keyed by chapter so the panel (and any previous answer) resets per chapter. */}
       <QnAPanel key={chapter.chapter_id} sessionId={sessionId} />
 
+      {/* A story can only be FINISHED once the chapter's questions are answered.
+          Before that the only way out is to pause: the story is already saved
+          after every answer, so pausing simply leaves it where it is, which is
+          exactly what closing the tab does. Finishing early with questions still
+          open would record the story as read when it had not been. */}
       <div className="finish-early">
-        <button className="link-btn" onClick={onFinish} disabled={loading}>
-          Finish &amp; see results →
-        </button>
+        {chapterComplete ? (
+          <button className="link-btn" onClick={onFinish} disabled={loading}>
+            Finish &amp; see results →
+          </button>
+        ) : (
+          <button className="link-btn" onClick={onPause} disabled={loading}>
+            ⏸ Pause — keep this for later
+          </button>
+        )}
       </div>
     </div>
   );
