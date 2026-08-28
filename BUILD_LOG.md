@@ -391,3 +391,36 @@ it. The comment is accurate and was left alone.
 
 **Passed after the pass.** 46 tests OK, build exit 0, no migration drift, the four
 frozen modules still byte-identical.
+
+### Manual verification pass
+
+Every one of the ten features was exercised in a browser against the live
+backend. Evidence, feature by feature:
+
+| Feature | What was observed |
+|---|---|
+| Syllabus browser | Tree renders with page badges; searching "photosynth" reported "1 chapter and 1 sub-section match"; selecting `11.1 Photosynthesis pp. 46–50` arrived at the start flow with the topic and Grade 8 filled in |
+| Story library | Grade filters offered only the grades the learner owns; Resume opened the live reader at `/story/2`; Read again opened the replay |
+| Progress dashboard | Eight counters, the mastery-against-practice plot, per-topic bars, and a revision link on every concept |
+| Provenance viewer | `role="dialog"`, `aria-modal="true"`, containing the textbook's own wording cited to its printed page |
+| Revision mode | Two concepts across one topic, weakest first |
+| Story export | An 8,965-character document containing both chapters, three marked answers, five citations and its print stylesheet — inspected without opening a print dialogue |
+| Read-aloud | Engine reported speaking; controls tracked its real state through Listen, Pause, Resume and Stop; paragraph 0 of 4 highlighted while spoken |
+| Fallback disclosure | Notice rendered above a fallback chapter with its retry blocked and the reason given; all three guards refused correctly |
+| Loading and error states | Skeletons and toasts on every asynchronous view |
+| Achievements | Earned badges dated, "On Fire" shown unearned with its criterion, streaks and totals |
+
+Two honest qualifications. Read-aloud does not highlight in the read-only replay,
+which renders every chapter at once and has no current paragraph — a deliberate
+choice, not a defect. The verification machine has no speech voices installed, so
+the engine was observed accepting and tracking utterances but no audio was heard;
+audio output on a device with voices remains unverified.
+
+### Documentation
+
+`FEATURES_ADDED.md` written: ten entries, each recording the feature, its
+requirement, its files, what it reads, what it writes and its limitations, in
+formal impersonal prose. Two entries state explicitly what the implementation
+depth would have been had the frozen modules been editable — persisting passage
+text for provenance, and reporting the fallback as a fact rather than inferring
+it from an absence — since that distinction belongs in the evaluation chapter.
