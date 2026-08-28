@@ -111,10 +111,10 @@ export default function ProgressPage() {
             message="Answer a chapter's questions and your concept mastery will show up here."
           />
         ) : (
-          topics.map((t) => (
-            <TopicBlock
-              key={t.topic}
-              topic={t}
+          groupBySyllabus(topics).map((group) => (
+            <SyllabusGroup
+              key={group.key}
+              group={group}
               onRevise={revise}
               onShowSource={setProvenance}
             />
@@ -303,6 +303,64 @@ function MasteryChart({ topics, onPick }) {
 }
 
 // --- One topic, its aggregate mastery and its concepts -------------------------
+// A learner types a topic freely, so "Light emitting diode" is nobody's chapter
+// heading. The API resolves each topic to the section of the printed syllabus its
+// story was actually grounded in, and the dashboard groups by that, so what shows
+// up here is the curriculum rather than a list of whatever wording was typed.
+// Topics whose stories were not textbook-grounded keep a group of their own
+// rather than being hidden or filed under a section they did not come from.
+function groupBySyllabus(topics) {
+  const groups = new Map();
+  topics.forEach((t) => {
+    const s = t.syllabus;
+    const key = s
+      ? `${s.grade}|${s.book}|${s.chapter.number}|${s.section ? s.section.number : ""}`
+      : "unplaced";
+    if (!groups.has(key)) groups.set(key, { key, syllabus: s || null, topics: [] });
+    groups.get(key).topics.push(t);
+  });
+  // Syllabus order: by grade, then chapter, then sub-section. Unplaced last.
+  return [...groups.values()].sort((a, b) => {
+    if (!a.syllabus) return 1;
+    if (!b.syllabus) return -1;
+    return (
+      a.syllabus.grade - b.syllabus.grade ||
+      a.syllabus.chapter.number - b.syllabus.chapter.number ||
+      String(a.syllabus.section?.number || "").localeCompare(
+        String(b.syllabus.section?.number || ""))
+    );
+  });
+}
+
+function SyllabusGroup({ group, onRevise, onShowSource }) {
+  const s = group.syllabus;
+  return (
+    <div className="ins-syllabus-group">
+      {s ? (
+        <div className="ins-syllabus-head">
+          <span className="ins-syllabus-section">
+            {s.section ? `${s.section.number} ${s.section.title}` : s.chapter.title}
+          </span>
+          <span className="ins-syllabus-parent">
+            Grade {s.grade} · {s.chapter.number}. {s.chapter.title}
+          </span>
+        </div>
+      ) : (
+        <div className="ins-syllabus-head">
+          <span className="ins-syllabus-section">Not matched to the syllabus</span>
+          <span className="ins-syllabus-parent">
+            These stories carry no textbook page references, so they could not be
+            placed in the contents pages.
+          </span>
+        </div>
+      )}
+      {group.topics.map((t) => (
+        <TopicBlock key={t.topic} topic={t} onRevise={onRevise} onShowSource={onShowSource} />
+      ))}
+    </div>
+  );
+}
+
 function TopicBlock({ topic, onRevise, onShowSource }) {
   const grades = topic.grades && topic.grades.length ? topic.grades : (topic.grade ? [topic.grade] : []);
   const source = topic.source_chapter;
@@ -310,7 +368,12 @@ function TopicBlock({ topic, onRevise, onShowSource }) {
   return (
     <div className="ins-topic">
       <div className="ins-topic-head">
-        <h4 className="ins-topic-name">{topic.topic}</h4>
+        <h4 className="ins-topic-name">
+          {topic.topic}
+          {topic.syllabus && (
+            <span className="ins-topic-asked">what you asked for</span>
+          )}
+        </h4>
         {grades.map((g) => (
           <span className="ins-chip" key={g}>Grade {g}</span>
         ))}

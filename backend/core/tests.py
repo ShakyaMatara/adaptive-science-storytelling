@@ -13,7 +13,10 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from . import adaptation
-from .models import Badge, ConceptStat, GenerationEvent, Learner, Question, Session
+from . import api_curriculum
+from .models import (
+    Badge, Chapter, ConceptStat, GenerationEvent, Learner, Question, Session,
+)
 from .throttles import AskThrottle, StoryGenThrottle
 
 
@@ -805,3 +808,130 @@ class BadgeAwardingTests(APITestCase):
 
         res = self.client.post(f"/api/sessions/{sid}/finish", {}, format="json")
         self.assertIn("Water Cycle Explorer", res.data["badges"])
+
+
+class SyllabusPlacementTests(APITestCase):
+    """Placing a freely-typed topic in the printed syllabus.
+
+    A learner types whatever they want to learn about, so the topic is rarely a
+    chapter heading. The passages the story was grounded on do have printed page
+    numbers, and the contents pages say which section owns those pages, so the
+    placement is a lookup rather than a guess about wording.
+    """
+
+    def setUp(self):
+        os.environ["USE_MOCK_LLM"] = "true"
+        cache.clear()
+        self.user = User.objects.create_user(username="nimal", password="pw12345!")
+        Learner.objects.create(user=self.user, name="Nimal")
+        self.client.force_authenticate(user=self.user)
+
+    def _ref(self, book, printed, pdf_page):
+        """A stored source reference as `llm._passage_refs` writes them."""
+        return {"source_file": book, "page": pdf_page,
+                "page_citation": f"p. {printed}", "chapter": "", "section": ""}
+
+    # --- the lookup ------------------------------------------------------------
+
+    def test_a_page_resolves_to_its_printed_sub_section(self):
+        """The worked example: a Grade 6 story about light emitting diodes is
+        grounded around printed page 122, which the contents pages place in
+        8.5 Electronic Appliances, under 8. Electricity for a Comfortable Life."""
+        found = api_curriculum.locate_page("G6.pdf", 122)
+        self.assertEqual(found["grade"], 6)
+        self.assertEqual(found["chapter"]["number"], 8)
+        self.assertEqual(found["chapter"]["title"], "Electricity for a Comfortable Life")
+        self.assertEqual(found["section"]["number"], "8.5")
+        self.assertEqual(found["section"]["title"], "Electronic Appliances")
+
+    def test_a_page_before_the_first_sub_section_is_a_chapter_opening(self):
+        # Grade 6 chapter 7 "Magnets" starts at 99; its first sub-section at 100.
+        found = api_curriculum.locate_page("G6.pdf", 99)
+        self.assertEqual(found["chapter"]["number"], 7)
+        self.assertIsNone(found["section"])
+
+    def test_a_page_in_the_second_part_of_a_grade_resolves(self):
+        # Grade 9 part 2 carries chapters 10 onwards.
+        found = api_curriculum.locate_page("G9P2.pdf", 11)
+        self.assertEqual(found["grade"], 9)
+        self.assertEqual(found["chapter"]["number"], 11)
+        self.assertEqual(found["chapter"]["title"], "Density")
+
+    def test_an_unknown_book_does_not_resolve(self):
+        self.assertIsNone(api_curriculum.locate_page("NotABook.pdf", 12))
+        self.assertIsNone(api_curriculum.locate_page("G6.pdf", None))
+
+    # --- the citation guard ----------------------------------------------------
+
+    def test_a_citation_that_is_really_the_pdf_index_is_not_trusted(self):
+        """About 11% of pages have no parsable footer, and the citation falls back
+        to the PDF page index. Mapping that as a printed page would place the
+        story in the wrong section, so it is treated as unresolvable."""
+        # Citation and PDF page agree -> ambiguous, refused.
+        self.assertIsNone(api_curriculum._printed_page(
+            {"page_citation": "p. 12", "page": 12}))
+        # Citation differs from the PDF index -> a real folio.
+        self.assertEqual(api_curriculum._printed_page(
+            {"page_citation": "pp. 99-101", "page": 113}), 99)
+
+    # --- the vote --------------------------------------------------------------
+
+    def test_placement_votes_on_the_chapter_before_the_sub_section(self):
+        """A story usually draws on several sub-sections, so no one of them holds
+        a majority. Deciding the chapter first keeps the placement stable."""
+        sources = [
+            self._ref("G6.pdf", 36, 50),    # 3.1 States of Water
+            self._ref("G6.pdf", 48, 62),    # 3.5 Water, a Limited Resource
+            self._ref("G6.pdf", 144, 158),  # 9.3, a different chapter entirely
+        ]
+        placed = api_curriculum.place_sources(sources)
+        self.assertEqual(placed["chapter"]["number"], 3)      # two refs agree
+        self.assertEqual(placed["matched"], 2)
+        self.assertEqual(placed["total"], 3)
+
+    def test_placement_is_none_when_nothing_can_be_resolved(self):
+        self.assertIsNone(api_curriculum.place_sources([]))
+        self.assertIsNone(api_curriculum.place_sources(
+            [{"source_file": "G6.pdf", "page": 12, "page_citation": "p. 12"}]))
+
+    # --- through the progress endpoint -----------------------------------------
+
+    def test_progress_places_a_freely_typed_topic_in_the_syllabus(self):
+        data = self.client.post(
+            "/api/sessions", {"topic": "Light emitting diode", "grade": 6}, format="json").data
+        sid, chapter = data["session_id"], data["chapter"]
+
+        # Mock mode attaches no references, so stand in the ones a live run would
+        # have stored for a story grounded in the electronics pages.
+        row = Chapter.objects.get(pk=chapter["chapter_id"])
+        row.sources = [self._ref("G6.pdf", 122, 136), self._ref("G6.pdf", 123, 137)]
+        row.save(update_fields=["sources"])
+
+        for q in chapter["questions"]:
+            ci = Question.objects.get(pk=q["question_id"]).correct_index
+            self.client.post(f"/api/sessions/{sid}/answer",
+                             {"question_id": q["question_id"], "answer_index": ci},
+                             format="json")
+
+        topics = self.client.get("/api/me/progress").data["topics"]
+        entry = next(t for t in topics if t["topic"] == "Light emitting diode")
+        placed = entry["syllabus"]
+        self.assertIsNotNone(placed)
+        self.assertEqual(placed["chapter"]["title"], "Electricity for a Comfortable Life")
+        self.assertEqual(placed["section"]["number"], "8.5")
+        # The learner's own wording is kept — the placement annotates it, and the
+        # topic remains the key that mastery and resumption are recorded against.
+        self.assertEqual(entry["topic"], "Light emitting diode")
+
+    def test_an_ungrounded_topic_is_reported_as_unplaced_rather_than_guessed(self):
+        data = self.client.post(
+            "/api/sessions", {"topic": "Water Cycle", "grade": 7}, format="json").data
+        for q in data["chapter"]["questions"]:
+            ci = Question.objects.get(pk=q["question_id"]).correct_index
+            self.client.post(f"/api/sessions/{data['session_id']}/answer",
+                             {"question_id": q["question_id"], "answer_index": ci},
+                             format="json")
+
+        topics = self.client.get("/api/me/progress").data["topics"]
+        entry = next(t for t in topics if t["topic"] == "Water Cycle")
+        self.assertIsNone(entry["syllabus"])   # no references, so no claim made

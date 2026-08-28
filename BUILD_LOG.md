@@ -544,3 +544,63 @@ duplicates; it does not delete the ones already awarded. The gallery presents
 them correctly regardless, so this is cosmetic in the database rather than in the
 interface, and deleting a learner's badge history is not a change to make
 unprompted.
+
+---
+
+## Post-review change — syllabus placement for freely-typed topics
+
+**Reported.** The progress dashboard's "Mastery by topic" listed topics as the
+learner had typed them, so entries appeared that are not headings anywhere in the
+syllabus. A Grade 6 story on "Light emitting diode" should read as
+*8.5 Electronic Appliances*, under *8. Electricity for a Comfortable Life*.
+
+**Done.** Topics are now resolved to a section of the printed syllabus and the
+mastery list is grouped by it. The resolution is a page lookup, not a text match:
+every stored source reference carries a printed page citation, and the contents
+pages record where each chapter and sub-section begins, so the owning section
+follows from the pages the story was actually grounded on.
+`api_curriculum.locate_page()` and `place_sources()` do the lookup;
+`api_progress` attaches the result to each topic; `ProgressPage` groups by it.
+
+**Verified live, on the reported case.** A Grade 6 "Light emitting diode" story
+was generated against the real model, grounded on pp. 123-125, and appears as:
+
+```
+8.5 Electronic Appliances
+Grade 6 · 8. Electricity for a Comfortable Life
+   Light emitting diode        (2/2 references agreed)
+```
+
+**Decisions taken.**
+
+1. *The contents pages are the authority, not the vector index's metadata.* The
+   index's own `section` labels are wrong in places — a Grade 6 chunk citing
+   pp. 99-101, inside chapter 7 "Magnets", is labelled "Applications of Light",
+   which is 5.5 and begins at page 78 — and some carry the placeholder
+   "(document)". The page lookup corrects these rather than propagating them; the
+   Magnets topic now resolves to chapter 7 as it should.
+2. *A two-stage vote, chapter before sub-section.* A single vote across
+   sub-sections is brittle: a water cycle story draws on 3.1, 3.5 and 9.3, so no
+   sub-section holds a majority and the winner would come down to storage order.
+   Voting on the chapter first raised that placement from 1 of 3 references to
+   2 of 3, and made it stable.
+3. *A citation equal to its own PDF page index is treated as unresolvable.* The
+   citation falls back to the PDF index when a page footer could not be parsed,
+   for about 11% of pages, and that is indistinguishable from a genuine folio
+   except by this test. Refusing it costs the occasional real coincidence and
+   avoids placing a story in the wrong section — the right trade, since a chapter
+   carries several references and only needs a majority.
+4. *The typed topic is never rewritten.* It is the key concept mastery, story
+   resumption and badges are recorded against, so the placement annotates it. The
+   learner's own wording stays visible beneath the syllabus heading.
+5. *An unplaceable topic is grouped separately and labelled*, rather than being
+   hidden or filed under a section it did not come from.
+
+**Passed.** 61 tests (52 + 9 new), build exit 0, no migration drift, frozen
+modules byte-identical.
+
+**Data repair.** `manage.py dedupe_badges` added — a dry run by default, `--apply`
+to delete. Run against the development database: two duplicate rows removed
+("Atomic structure Explorer" and "Water Cycle Explorer", each held twice), the
+earliest award of each kept so the date shown is the date it was first earned.
+Three badges remain.

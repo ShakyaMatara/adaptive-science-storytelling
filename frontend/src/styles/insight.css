@@ -361,3 +361,30 @@
   color: var(--muted);
   line-height: 1.5;
 }
+
+/* ---- Syllabus grouping on the mastery list ----
+   The heading is the textbook's own wording; the learner's typed topic sits
+   beneath it, so the page reads as the curriculum rather than as a list of
+   whatever phrasing happened to be entered. */
+.ins-syllabus-group { margin-top: 22px; }
+.ins-syllabus-group:first-of-type { margin-top: 10px; }
+.ins-syllabus-head {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 8px 12px;
+  border-left: 3px solid var(--indigo);
+  background: var(--indigo-soft);
+  border-radius: 0 10px 10px 0;
+  margin-bottom: 10px;
+}
+.ins-syllabus-section { font-weight: 700; font-size: 0.95rem; color: var(--indigo-dark); }
+.ins-syllabus-parent { font-size: 0.78rem; color: var(--muted); }
+.ins-topic-asked {
+  margin-left: 8px;
+  font-size: 0.68rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}

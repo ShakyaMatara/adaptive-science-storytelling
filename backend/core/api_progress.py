@@ -27,6 +27,7 @@ from django.db.models import Count, Q
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from .api_curriculum import place_sources
 from .models import Badge, Chapter, Learner, Question
 
 # How many concepts each of the two highlight lists may contain.
@@ -84,6 +85,11 @@ def _session_facts(learner):
 
     return {
         "grades_by_topic": {t: sorted(g) for t, g in grades_by_topic.items()},
+        "syllabus_placement":
+            "Where a topic sits in the printed syllabus, found by looking the "
+            "pages its story was grounded on up in the textbook contents pages. "
+            "Voted by chapter first, then by sub-section within it; `matched` of "
+            "`total` says how many of the stored references agreed.",
         "revision_grade": revision_grade,
         "total_points": total_points,
         "stories_completed": completed,
@@ -103,6 +109,7 @@ def _chapter_facts(learner):
     """
     chapters_read = 0
     by_topic = {}
+    sources_by_topic = {}   # every stored reference for a topic, for placing it
 
     # `paragraphs` and `summary` hold the whole story text and nothing here reads
     # them, so they are deferred: this loop only needs the citation refs and the
@@ -115,6 +122,7 @@ def _chapter_facts(learner):
         chapters_read += 1
         topic = chapter.session.topic
         grounded = bool(chapter.sources)
+        sources_by_topic.setdefault(topic, []).extend(chapter.sources or [])
         current = by_topic.get(topic)
         if current is None or (grounded and not current["grounded"]):
             by_topic[topic] = {
@@ -124,7 +132,16 @@ def _chapter_facts(learner):
                 "grounded": grounded,
             }
 
-    return {"chapters_read": chapters_read, "source_chapter_by_topic": by_topic}
+    # Where each topic sits in the printed syllabus. A learner types a topic
+    # freely — "Light emitting diode" is nobody's chapter heading — but the pages
+    # the story was grounded on belong to a numbered section, so the placement is
+    # a lookup against the contents pages rather than a guess about the wording.
+    syllabus_by_topic = {
+        topic: place_sources(refs) for topic, refs in sources_by_topic.items()
+    }
+
+    return {"chapters_read": chapters_read, "source_chapter_by_topic": by_topic,
+            "syllabus_by_topic": syllabus_by_topic}
 
 
 def _highlights(stats, revision_grade):
@@ -260,6 +277,9 @@ def me_progress(request):
             "grade": facts["revision_grade"].get(topic),
             # The chapter to open to see the textbook passages behind this topic.
             "source_chapter": chapter_facts["source_chapter_by_topic"].get(topic),
+            # Where the topic sits in the printed syllabus; null when the story
+            # was not textbook-grounded, or its citations could not be resolved.
+            "syllabus": chapter_facts["syllabus_by_topic"].get(topic),
             "concepts": enriched,
         })
         flat.extend(dict(c, topic=topic) for c in concepts)

@@ -109,6 +109,37 @@ at the pre-existing `GET /api/me/progress`.
 in contrast to the superseded implementation, which created a profile row on a
 `GET`.
 
+**Syllabus placement.** A learner types a topic freely, so the mastery list
+originally read as an inventory of whatever wording had been entered —
+"Light emitting diode" is not a heading in any of the books. Each topic is
+therefore resolved to the section of the printed syllabus its story was actually
+grounded in, and the list is grouped under that section: the example above is
+presented as *8.5 Electronic Appliances*, under *8. Electricity for a Comfortable
+Life*, with the learner's own wording retained beneath it.
+
+The resolution is a lookup, not a guess about wording. Each stored source
+reference carries a printed page citation, and the contents pages record the page
+at which every chapter and sub-section begins, so the section that owns a page is
+determined by the same artefact the syllabus browser is built from. The vote is
+taken in two stages — the chapter first, then the sub-section within it — because
+a story typically draws on several sub-sections and no single one of them holds a
+majority; deciding the chapter first finds the part of the book the story came
+from and keeps the placement stable. The response reports how many of the stored
+references supported the placement, so the interface can be honest about how much
+of the grounding agreed.
+
+This deliberately does *not* trust the vector index's own `chapter` and `section`
+metadata, which is unreliable: a Grade 6 chunk citing pp. 99-101 — squarely inside
+chapter 7, "Magnets" — carries the section label "Applications of Light", and some
+chunks carry the placeholder label "(document)". The contents pages are the
+authority, and the lookup corrects those errors rather than propagating them.
+
+The topic string itself is never rewritten. It is the key that concept mastery,
+story resumption and badges are recorded against, so the placement annotates it
+rather than replacing it. A topic whose story carried no page references, or whose
+citations could not be resolved, is reported as unplaced and grouped separately
+rather than being filed under a section it did not come from.
+
 **Limitations.** The endpoint was extended rather than replaced: its original
 `progress` key retains its exact prior shape, ordering and rounding, and the
 pre-existing test asserting that contract passes unchanged. This is the evidence
@@ -324,7 +355,16 @@ within one.
 
 **Limitations.** Badge criteria are read from `gamification.py` rather than
 restated, so the gallery cannot advertise a rule the awarding logic does not
-apply. Two badges have fixed names and can therefore be shown as unearned; the
+apply. Two defects in the awarding rules were corrected after the feature was
+first built: a badge was checked only against the current session, so returning
+to a topic earned its badge again on every run, and completing a story awarded
+its topic badge even when the learner had answered nothing in it. Badges are now
+earned once per learner — compared case-insensitively, matching the rule the
+system already uses to decide whether two topic strings are the same topic — and
+the topic badge additionally requires at least one answered question. The
+endpoint also collapses duplicate rows created before that change, so a database
+carrying them still presents one badge per achievement; `manage.py dedupe_badges`
+removes them from the data. Two badges have fixed names and can therefore be shown as unearned; the
 third, awarded once per topic completed, has no fixed list and is presented as a
 family with its criterion stated once. Best streak is *derived* rather than
 stored, since the data model retains only the streak currently in progress: it is

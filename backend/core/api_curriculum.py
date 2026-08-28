@@ -32,6 +32,7 @@ once on the first request and then held in a module-level cache.
 """
 
 import re
+from collections import Counter
 import threading
 from pathlib import Path
 
@@ -259,3 +260,111 @@ def curriculum(request, *args, **kwargs):
         "chapter_count": sum(g["chapter_count"] for g in grades),
         "section_count": sum(g["section_count"] for g in grades),
     })
+
+
+# --- Placing a story within the syllabus -----------------------------------------
+#
+# A learner types a topic freely: "Light emitting diode" is not a heading in any
+# of the books, but the passages the story was grounded on have printed page
+# numbers, and the contents pages say which section owns those pages. That makes
+# the placement a lookup rather than a guess, and the contents pages are the
+# authority — which matters, because the vector index's own `section` metadata is
+# demonstrably wrong in places (a Grade 6 chunk citing pp. 99-101, squarely inside
+# chapter 7 "Magnets", carries the label "Applications of Light").
+
+_CITATION_PAGE_RE = re.compile(r"(\d+)")
+
+
+def _printed_page(ref):
+    """The printed folio a stored source reference points at, or None.
+
+    `page_citation` reads "p. 41" or "pp. 40-41" when the page footer was parsed
+    during ingestion, and falls back to "p. <PDF page index>" when it was not —
+    about 11% of pages. The fallback is indistinguishable from a real citation
+    except that it equals the reference's own `page`, so a citation matching the
+    PDF index is treated as unresolvable rather than risked against the wrong
+    section. That conservatism costs the occasional genuine coincidence, which is
+    the right trade: a chapter carries several references and only needs a
+    majority to be placed.
+    """
+    citation = (ref.get("page_citation") or "").strip()
+    match = _CITATION_PAGE_RE.search(citation)
+    if not match:
+        return None
+    printed = int(match.group(1))
+    return None if printed == ref.get("page") else printed
+
+
+def locate_page(book, printed_page):
+    """Where a printed page of `book` sits in the contents pages.
+
+    Returns {"chapter": {...}, "section": {...} or None} or None when the book is
+    not one of the transcribed files. A page before the book's first numbered
+    sub-section belongs to its chapter but to no section, which is the correct
+    answer for a chapter opening.
+    """
+    if printed_page is None:
+        return None
+    for grade in _curriculum_tree():
+        # "The last heading that starts at or before this page" is what a contents
+        # page means; a strict range test would drop the final chapter of a book,
+        # whose end cannot be derived.
+        chapters = [c for c in grade["chapters"] if c["book"] == book
+                    and c["page_start"] <= printed_page]
+        if not chapters:
+            continue
+        chapter = max(chapters, key=lambda c: (c["page_start"], c["number"]))
+        sections = [s for s in chapter["sections"] if s["page_start"] <= printed_page]
+        section = max(sections, key=lambda s: s["page_start"]) if sections else None
+        return {
+            "grade": grade["grade"],
+            "book": book,
+            "chapter": {"number": chapter["number"], "title": chapter["title"]},
+            "section": None if section is None else
+                       {"number": section["number"], "title": section["title"]},
+        }
+    return None
+
+
+def place_sources(sources):
+    """The syllabus section a set of stored source references sits in.
+
+    Voted in two stages: first the chapter, then the sub-section within it. A
+    single stage would be brittle — a story on the water cycle draws on three
+    different sub-sections, so no one of them holds a majority, and the winner
+    would come down to ordering. Voting on the chapter first finds the part of the
+    book the story really came from, and the sub-section is then decided only
+    among the references that agree on it.
+
+    `matched` and `total` are returned alongside, so a caller can say how much of
+    the grounding supported the placement rather than implying certainty.
+    """
+    placements = []
+    for ref in sources or []:
+        located = locate_page(ref.get("source_file"), _printed_page(ref))
+        if located:
+            placements.append(located)
+
+    if not placements:
+        return None
+
+    # Stage one: which chapter of which book. Ties break towards the earliest
+    # chapter, so the answer does not depend on the order references were stored.
+    chapter_votes = Counter((p["book"], p["chapter"]["number"]) for p in placements)
+    top = max(chapter_votes.values())
+    book, chapter_number = min(k for k, v in chapter_votes.items() if v == top)
+    in_chapter = [p for p in placements
+                  if p["book"] == book and p["chapter"]["number"] == chapter_number]
+
+    # Stage two: which sub-section within that chapter. `None` is a legitimate
+    # winner — it means the story came from the chapter's opening pages.
+    section_votes = Counter(
+        p["section"]["number"] if p["section"] else None for p in in_chapter)
+    top = max(section_votes.values())
+    winners = [k for k, v in section_votes.items() if v == top]
+    section_number = min((w for w in winners if w is not None), default=None)
+    best = next((p for p in in_chapter
+                 if (p["section"]["number"] if p["section"] else None) == section_number),
+                in_chapter[0])
+
+    return {**best, "matched": len(in_chapter), "total": len(sources or [])}
