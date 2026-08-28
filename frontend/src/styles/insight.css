@@ -1,0 +1,390 @@
+/* Styles for the two "insight" surfaces: the progress dashboard and the
+   provenance panel.
+
+   Kept out of styles.css deliberately — these are the only two screens that
+   need them, and both import this file themselves. Every class is prefixed
+   (`ins-` for the dashboard, `prov-` for the panel) so nothing here can collide
+   with the shared vocabulary. Colours come from the existing design tokens; the
+   only new ones are the paper tones for the textbook extract, which exist to
+   make it look like a page from a book rather than part of the app. */
+
+/* ---- Headline counters ------------------------------------------------- */
+.ins-counters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin: 16px 0 8px;
+}
+
+.ins-counter {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.ins-counter-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--indigo-dark);
+  line-height: 1.2;
+}
+
+.ins-counter-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.ins-counter-sub { color: var(--muted); font-weight: 600; font-size: 0.95rem; }
+
+/* ---- Section scaffolding ----------------------------------------------- */
+.ins-section { margin-top: 28px; }
+.ins-section > h3 { margin: 0 0 4px; }
+
+.ins-section-note {
+  margin: 0 0 14px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ---- Mastery against practice (SVG) ------------------------------------ */
+.ins-chart-wrap { overflow-x: auto; }
+
+.ins-chart { display: block; max-width: 100%; height: auto; }
+.ins-chart-grid { stroke: var(--border); stroke-width: 1; }
+.ins-chart-axis { stroke: #cbd5e1; stroke-width: 1; }
+.ins-chart-label { fill: var(--muted); font-size: 10px; }
+.ins-chart-axis-title { fill: var(--muted); font-size: 10px; font-weight: 600; }
+
+.ins-dot { cursor: pointer; stroke: #ffffff; stroke-width: 2; }
+.ins-dot:hover { stroke: var(--ink); }
+.ins-dot:focus { outline: none; stroke: var(--ink); stroke-width: 3; }
+.ins-dot-strong { fill: var(--green); }
+.ins-dot-middling { fill: #d97706; }
+.ins-dot-weak { fill: var(--red); }
+
+.ins-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 8px 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.ins-legend-key { display: inline-flex; align-items: center; gap: 5px; }
+.ins-legend-swatch { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+/* ---- Per-topic mastery -------------------------------------------------- */
+.ins-topic {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.ins-topic-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.ins-topic-name { margin: 0; font-size: 1.05rem; }
+
+.ins-chip {
+  background: var(--indigo-soft);
+  color: var(--indigo-dark);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.ins-chip-quiet { background: #f1f5f9; color: var(--muted); }
+
+.ins-topic-bar { display: grid; grid-template-columns: 1fr 52px; gap: 10px; align-items: center; }
+.ins-topic-pct { font-size: 0.8rem; color: var(--muted); text-align: right; }
+
+.ins-concept {
+  display: grid;
+  grid-template-columns: 1fr 110px 54px auto;
+  gap: 10px;
+  align-items: center;
+  padding: 7px 0;
+  border-top: 1px solid var(--border);
+}
+
+.ins-concept:first-of-type { margin-top: 10px; }
+.ins-concept-name { font-size: 0.9rem; }
+.ins-concept-seen { display: block; font-size: 0.72rem; color: var(--muted); }
+.ins-concept-num { font-size: 0.8rem; color: var(--muted); text-align: right; }
+/* Wrapper around the shared ProgressBar, so the concept row's grid still has a
+   single element to place in its bar column. */
+.ins-concept-bar { display: block; min-width: 0; }
+
+.ins-revise {
+  background: none;
+  border: 1px solid var(--indigo);
+  color: var(--indigo-dark);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ins-revise:hover { background: var(--indigo-soft); }
+
+.ins-source-btn {
+  background: none;
+  border: 1px dashed var(--border);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.ins-source-btn:hover { border-color: var(--indigo); color: var(--indigo-dark); }
+
+/* On a narrow screen the four-column concept row does not fit: the mastery bar
+   drops onto a line of its own rather than pushing the Revise button off the
+   side. The chart keeps its readable width and scrolls inside its own wrapper,
+   so the page itself never scrolls sideways. */
+@media (max-width: 560px) {
+  .ins-concept {
+    grid-template-columns: 1fr auto auto;
+    grid-template-areas:
+      "name num btn"
+      "bar  bar bar";
+    row-gap: 7px;
+  }
+
+  .ins-concept-name { grid-area: name; }
+  .ins-concept .ins-concept-bar { grid-area: bar; }
+  .ins-concept-num { grid-area: num; }
+  .ins-concept .ins-revise { grid-area: btn; }
+
+  .ins-chart { min-width: 480px; }
+}
+
+/* ---- Strengths and weaknesses ------------------------------------------ */
+.ins-highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.ins-highlight {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.ins-highlight h4 { margin: 0 0 2px; font-size: 0.98rem; }
+.ins-highlight-strong { background: var(--green-soft); border-color: #bbf7d0; }
+.ins-highlight-weak { background: var(--red-soft); border-color: #fecaca; }
+
+.ins-highlight-def {
+  margin: 0 0 10px;
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.ins-highlight-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-top: 1px solid rgba(30, 41, 59, 0.08);
+}
+
+.ins-highlight-row .ins-concept-name { flex: 1 1 auto; min-width: 110px; }
+.ins-highlight-topic { display: block; font-size: 0.72rem; color: var(--muted); }
+.ins-highlight-score { font-size: 0.8rem; font-weight: 600; color: var(--ink); }
+
+/* ---- Provenance panel --------------------------------------------------- */
+.prov-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  z-index: 90;
+}
+
+.prov-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(460px, 100vw);
+  background: var(--card-bg);
+  box-shadow: -12px 0 34px rgba(15, 23, 42, 0.2);
+  z-index: 91;
+  display: flex;
+  flex-direction: column;
+  animation: prov-slide-in 0.22s ease-out;
+}
+
+@keyframes prov-slide-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prov-panel { animation: none; }
+}
+
+/* On a narrow screen the side panel becomes a full-width sheet. */
+@media (max-width: 720px) {
+  .prov-panel { width: 100vw; }
+}
+
+.prov-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.prov-head-text { flex: 1 1 auto; min-width: 0; }
+.prov-title { margin: 0; font-size: 1.05rem; color: var(--indigo-dark); }
+.prov-subtitle { margin: 2px 0 0; font-size: 0.82rem; color: var(--muted); }
+
+.prov-close {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.prov-close:hover { background: #f1f5f9; color: var(--ink); }
+
+.prov-body { padding: 16px 20px 28px; overflow-y: auto; flex: 1 1 auto; }
+
+.prov-explain {
+  background: var(--indigo-soft);
+  color: var(--indigo-dark);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+.prov-passage { margin-bottom: 22px; }
+
+.prov-passage-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--amber-text);
+  margin-bottom: 6px;
+}
+
+/* The extract itself. A serif face on paper-coloured ground, ruled down the
+   left, so it can never be mistaken for the app's own generated prose. */
+.prov-text {
+  font-family: Georgia, "Times New Roman", "Nimbus Roman", serif;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #3f3a31;
+  background: #fbf7ee;
+  border: 1px solid #e8dfcc;
+  border-left: 4px solid #c8a951;
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.prov-cite {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.prov-where { font-weight: 400; color: var(--muted); }
+
+.prov-recovery {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.prov-note {
+  background: var(--amber-soft);
+  color: var(--amber-text);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+.prov-error {
+  background: var(--red-soft);
+  color: #991b1b;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  margin: 0 0 12px;
+}
+
+.prov-footer {
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+  padding-top: 12px;
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ---- Syllabus grouping on the mastery list ----
+   The heading is the textbook's own wording; the learner's typed topic sits
+   beneath it, so the page reads as the curriculum rather than as a list of
+   whatever phrasing happened to be entered. */
+.ins-syllabus-group { margin-top: 22px; }
+.ins-syllabus-group:first-of-type { margin-top: 10px; }
+.ins-syllabus-head {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 8px 12px;
+  border-left: 3px solid var(--indigo);
+  background: var(--indigo-soft);
+  border-radius: 0 10px 10px 0;
+  margin-bottom: 10px;
+}
+.ins-syllabus-section { font-weight: 700; font-size: 0.95rem; color: var(--indigo-dark); }
+.ins-syllabus-parent { font-size: 0.78rem; color: var(--muted); }
+.ins-topic-asked {
+  margin-left: 8px;
+  font-size: 0.68rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}

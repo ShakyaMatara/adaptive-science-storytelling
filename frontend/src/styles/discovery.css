@@ -1,0 +1,407 @@
+/* ============================================================================
+   Discovery surfaces: the syllabus browser (/browse) and My Stories (/library).
+
+   Every colour, radius and shadow here comes from the custom properties already
+   defined in styles.css, so these two pages sit inside the existing visual
+   language rather than beside it. Nothing in this file changes a rule that any
+   other page depends on — every selector is prefixed `syl-` (syllabus) or
+   `lib-` (library).
+   ========================================================================== */
+
+/* ---- Shared page furniture -------------------------------------------------- */
+
+.disc-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-bottom: 4px;
+}
+.disc-head h2 { margin: 0; }
+.disc-lede { margin: 6px 0 0; color: var(--muted); font-size: 0.92rem; }
+.disc-count {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* A row of filter buttons (grade, status). */
+.disc-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 0;
+}
+.disc-filter {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font: inherit;
+  font-size: 0.86rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.disc-filter:hover { border-color: var(--indigo); }
+.disc-filter.selected {
+  border-color: var(--indigo);
+  background: var(--indigo-soft);
+  color: var(--indigo-dark);
+  font-weight: 600;
+}
+.disc-filter:focus-visible,
+.syl-grade-toggle:focus-visible,
+.syl-chapter-toggle:focus-visible,
+.syl-section:focus-visible,
+.syl-start:focus-visible {
+  outline: 2px solid var(--indigo);
+  outline-offset: 2px;
+}
+
+/* The printed page reference carried by every syllabus row. */
+.page-badge {
+  flex: none;
+  background: var(--indigo-soft);
+  color: var(--indigo-dark);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ---- Syllabus browser ------------------------------------------------------- */
+
+.syl-search { position: relative; margin-top: 16px; }
+.syl-search .text-input { padding-left: 38px; }
+.syl-search-icon {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  opacity: 0.55;
+  pointer-events: none;
+}
+.syl-search-clear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.syl-search-clear:hover { color: var(--ink); background: var(--indigo-soft); }
+
+.syl-tree { margin-top: 18px; display: flex; flex-direction: column; gap: 12px; }
+
+.syl-grade {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+}
+.syl-grade.open { border-color: #c7d2fe; }
+
+.syl-grade-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.syl-grade-toggle:hover { background: #f8faff; }
+
+.syl-grade-num {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: var(--indigo-soft);
+  color: var(--indigo-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+.syl-grade.open .syl-grade-num { background: var(--indigo); color: #fff; }
+
+.syl-grade-text { flex: 1; min-width: 0; }
+.syl-grade-title { font-weight: 700; font-size: 1.02rem; }
+.syl-grade-meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.syl-chevron {
+  flex: none;
+  color: var(--muted);
+  transition: transform 0.18s ease;
+  font-size: 0.8rem;
+}
+.syl-chevron.open { transform: rotate(90deg); color: var(--indigo); }
+
+.syl-chapters {
+  border-top: 1px solid var(--border);
+  padding: 6px 10px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.syl-chapter { border-bottom: 1px solid #f1f5f9; }
+.syl-chapter:last-child { border-bottom: none; }
+
+.syl-chapter-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+}
+.syl-chapter-toggle {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 6px;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.syl-chapter-toggle:hover { background: var(--indigo-soft); }
+
+.syl-chapter-num {
+  flex: none;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.syl-chapter-text { flex: 1; min-width: 0; }
+.syl-chapter-title { display: block; font-weight: 600; font-size: 0.96rem; }
+.syl-chapter-meta { display: block; font-size: 0.76rem; color: var(--muted); margin-top: 2px; }
+
+/* "Start" beside a chapter, and the same affordance on a sub-section row. */
+.syl-start {
+  flex: none;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--indigo-dark);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.15s, background 0.15s;
+}
+.syl-start:hover { border-color: var(--indigo); background: var(--indigo-soft); }
+
+.syl-sections {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0 0 0 18px;
+  border-left: 2px solid var(--indigo-soft);
+  margin-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.syl-section {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.syl-section:hover { background: var(--indigo-soft); }
+.syl-section-num {
+  flex: none;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--indigo);
+  font-variant-numeric: tabular-nums;
+  min-width: 30px;
+}
+.syl-section-title { flex: 1; min-width: 0; font-size: 0.9rem; }
+.syl-section-go {
+  flex: none;
+  color: var(--indigo);
+  font-size: 0.78rem;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.syl-section:hover .syl-section-go,
+.syl-section:focus-visible .syl-section-go { opacity: 1; }
+
+.syl-no-sections {
+  padding: 0 10px 12px 38px;
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* Live search highlight. */
+.syl-mark {
+  background: var(--amber-soft);
+  color: var(--amber-text);
+  border-radius: 4px;
+  padding: 0 2px;
+}
+
+/* ---- My Stories ------------------------------------------------------------- */
+
+.lib-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.lib-card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.lib-card:hover { border-color: #c7d2fe; box-shadow: 0 6px 18px rgba(30, 41, 59, 0.07); }
+
+.lib-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.lib-topic {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.lib-status {
+  flex: none;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.lib-status-done { background: var(--green-soft); color: var(--green); }
+.lib-status-open { background: var(--amber-soft); color: var(--amber-text); }
+
+.lib-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 0.76rem;
+  color: var(--muted);
+  align-items: center;
+}
+.lib-meta-dot { opacity: 0.5; }
+
+.lib-progress-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.lib-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.lib-stat {
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  background: #f1f5f9;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.lib-stat-points { background: var(--amber-soft); color: var(--amber-text); }
+.lib-stat-score { background: var(--green-soft); color: var(--green); }
+
+.lib-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+.lib-actions .primary-btn,
+.lib-actions .quiet-btn {
+  margin: 0;
+  width: auto;
+  flex: 1;
+  padding: 9px 12px;
+  font-size: 0.86rem;
+}
+
+.lib-skeleton-card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---- Narrow screens (down to 375px) ----------------------------------------- */
+
+@media (max-width: 560px) {
+  .syl-grade-toggle { padding: 12px 12px; gap: 10px; }
+  .syl-chapters { padding: 4px 6px 8px; }
+  .syl-chapter-row { flex-wrap: wrap; }
+  .syl-chapter-toggle { flex-basis: 100%; }
+  .syl-start { margin: 0 0 10px 42px; }
+  .syl-sections { padding-left: 12px; margin-left: 12px; }
+  .syl-section-go { display: none; }
+  .lib-grid { grid-template-columns: 1fr; }
+  .lib-actions { flex-direction: column; }
+}

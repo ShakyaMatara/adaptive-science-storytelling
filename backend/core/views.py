@@ -18,6 +18,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from . import adaptation, gamification, llm_config, personalization, planning
+from .api_fallback import record_fallback_if_needed
 from .constants import TOPICS
 from .llm import LLMError, answer_question, generate_chapter
 from .models import Chapter, Learner, Question, Session
@@ -57,6 +58,9 @@ def _persist_chapter(session, data):
             concept=q.get("concept", ""),
         )
     session.save()
+    # Note a chapter that arrived without textbook grounding, so the fallback rate
+    # measured during evaluation stays observable in ordinary use. Never raises.
+    record_fallback_if_needed(session, chapter)
     return chapter
 
 
@@ -197,23 +201,6 @@ def login(request):
 def me(request):
     """GET /api/auth/me -> the current user's profile (requires a valid token)."""
     return Response(_profile(_learner_for(request.user)))
-
-
-@api_view(["GET"])
-def me_progress(request):
-    """GET /api/me/progress -> the learner's concept mastery, grouped by topic.
-    Useful for showing strengths/weaknesses (and for the report)."""
-    learner = _learner_for(request.user)
-    by_topic = {}
-    for s in learner.concept_stats.all().order_by("topic", "concept"):
-        by_topic.setdefault(s.topic, []).append({
-            "concept": s.concept,
-            "attempts": s.attempts,
-            "correct": s.correct,
-            "mastery": round(s.mastery, 2),
-        })
-    progress = [{"topic": topic, "concepts": concepts} for topic, concepts in by_topic.items()]
-    return Response({"progress": progress})
 
 
 # --- Endpoints ------------------------------------------------------------------
