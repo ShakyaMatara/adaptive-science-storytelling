@@ -127,3 +127,52 @@ fallback (building the new pages inside the old `App.jsx`) was not needed and
    phase, but each later lane writes its page rules to its own file under
    `frontend/src/styles/` and imports it from its page. `styles.css` is a shared
    file in all but name and four concurrent lanes would collide in it.
+
+---
+
+## Phase 2 (setup) — contracts fixed before the lanes started
+
+Four lanes were to run concurrently in one working tree, so the shared surface was
+settled first and committed on its own
+(`Wire the routes and API client for the feature lanes, with placeholder handlers`).
+
+**Done.**
+
+* All eight new backend routes were added to `urls.py` up front, each pointing at
+  a placeholder module the owning lane then replaces wholesale:
+  `GET /api/curriculum`, `GET /api/me/library`, `GET /api/me/weak-concepts`,
+  `GET /api/me/achievements`, `GET /api/chapters/<id>/provenance`,
+  `GET /api/chapters/<id>/generation-status`,
+  `POST /api/sessions/<id>/chapters/<id>/retry`, and `GET /api/me/progress`
+  re-pointed from `views.me_progress` to `api_progress.me_progress`.
+* The matching client functions were added to `api.js` in the alphabetical
+  positions the file's convention dictates.
+* `api_progress.py` was created as a one-line delegation to the original view, so
+  re-pointing the URL changed nothing and the existing progress test kept passing
+  while the extension was written.
+* `_integration/` directories and `frontend/src/styles/` were created.
+
+**Passed.** `manage.py test core` → 28, OK. All eight routes answered over HTTP
+with a real token before any lane started.
+
+**Decisions taken.**
+
+1. *The shared surface was pre-wired rather than merged at the end.* The brief
+   has each lane write its route and client additions into a handoff for the
+   orchestrator to merge afterwards. Deciding the eight endpoint contracts in
+   advance and wiring them to placeholders achieves the same collision-free
+   result and buys something the handoff-only approach cannot: every lane can
+   exercise its own endpoint over real HTTP and see its own page at its real
+   route while building it, instead of waiting for integration to find out
+   whether it works. The handoff protocol still stands for everything else, and
+   for any endpoint a lane finds it additionally needs.
+2. *Per-lane stylesheets under `frontend/src/styles/`.* `styles.css` is shared in
+   all but name.
+3. *`models.py` and `migrations/` were assigned exclusively to Lane D*, the only
+   lane that needs to persist anything (the record of a served fallback). The
+   other three were told the file is off limits.
+4. *The loading-and-error requirement was made every lane's responsibility rather
+   than one lane's.* Skeletons and toasts have to appear inside pages that other
+   lanes own, so a single lane could not deliver it without breaking file
+   ownership. The shared vocabulary was built in Phase 1 and every lane brief
+   requires its use; the orchestrator audits compliance in Phase 4.
