@@ -483,3 +483,64 @@ layout.
 
 Figures 3, 10 and 19 are the three that carry the phase's argument: curriculum
 made navigable, grounding made inspectable, and learning made measurable.
+
+---
+
+## Post-review defect fix — badge awarding
+
+Two defects reported from use, both in `gamification.py` (which is not one of the
+frozen modules, so the rules themselves could be corrected rather than worked
+around).
+
+**Defect 1 — a badge was re-earned on every run.** `award_badges` checked
+`session.badges`, the badges of the *current* session, so a returning learner
+started every story with an empty badge set and earned everything again. A
+learner who completed the water cycle three times collected three "Water Cycle
+Explorer" badges, and "First Steps" — nominally the first correct answer they
+ever gave — was re-earned once per story. The check now spans every session the
+learner has ever run.
+
+Topic names are free text, so the comparison is case-insensitive: "water cycle"
+and "Water Cycle" are one topic for this purpose, matching the `topic__iexact`
+rule `create_session` already uses when deciding whether to resume. The badge
+keeps whichever spelling was earned first rather than being rewritten.
+
+*Deliberately not done:* fuzzy matching of similar-but-not-identical topics
+("Water Cycle" against "The Water Cycle"). It would risk suppressing a genuinely
+different topic, and exact-ignoring-case is the identity rule the rest of the
+system already applies to topics.
+
+**Defect 2 — completing a story earned its badge with no work done.**
+`finish_session` ends a story at any point and awarded the explorer badge purely
+on completion, so starting a story and immediately ending it earned one. The
+badge now additionally requires at least one answered question in that session.
+The bar is engagement, not correctness — a wrong answer still counts — because
+"Explorer" marks having worked through the topic, which is what "First Steps"
+and "On Fire" measure the quality of.
+
+**Consequential fix — the gallery mis-rendered existing duplicates.** The
+achievements endpoint listed one tile per badge *row*, so a duplicated badge
+produced two tiles sharing a React key. Rows created before the rule was enforced
+still exist in any database that ran the old code, so the endpoint now collapses
+badges to one entry per distinct name, keeping the earliest award, and
+`badges_earned` counts distinct badges. Verified against a database still holding
+the duplicates: five rows, correctly presented as three badges.
+
+**Passed.** 52 tests (46 + 6 new), build exit 0, no migration drift, frozen
+modules still byte-identical.
+
+**The regression tests were verified to fail without the fix.** Running the six
+new tests against the original `gamification.py` produces four failures, each
+reproducing a reported symptom exactly — `['Water Cycle Explorer']` awarded for a
+story with nothing answered; the same badge awarded a second time on a replay;
+`'water cycle Explorer'` created as a badge distinct from `'Water Cycle
+Explorer'`; and `'First Steps'` earned again in a second story. The remaining two
+tests pass both before and after, and exist to catch over-correction: a genuinely
+different topic must still earn its own badge, and one answer must still be
+enough.
+
+**Not done: existing duplicate rows are not cleaned up.** The fix prevents new
+duplicates; it does not delete the ones already awarded. The gallery presents
+them correctly regardless, so this is cosmetic in the database rather than in the
+interface, and deleting a learner's badge history is not a change to make
+unprompted.

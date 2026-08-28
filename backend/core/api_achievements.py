@@ -99,12 +99,11 @@ def achievements(request):
     def _summarise(name):
         rows = [(b, s) for b, s in earned_rows if b.name == name]
         if not rows:
-            return {"earned": False, "first_earned_at": None, "times_earned": 0, "topics": []}
+            return {"earned": False, "first_earned_at": None, "topics": []}
         rows.sort(key=lambda pair: pair[0].awarded_at)
         return {
             "earned": True,
             "first_earned_at": rows[0][0].awarded_at,
-            "times_earned": len(rows),
             "topics": sorted({s.topic for _, s in rows}),
         }
 
@@ -118,14 +117,22 @@ def achievements(request):
         (b, s) for b, s in earned_rows if b.name.endswith(f" {gamification.EXPLORER_SUFFIX}")
     ]
     explorer_rows.sort(key=lambda pair: pair[0].awarded_at)
+    # One entry per distinct badge, keeping the earliest award. Badges are earned
+    # once per learner now, but rows created before that rule was enforced can
+    # still be duplicated, and the gallery must show one tile per badge either
+    # way. Matched case-insensitively, for the same reason the awarder is.
+    explorer_by_name = {}
+    for badge, session in explorer_rows:
+        key = badge.name.casefold()
+        if key not in explorer_by_name:
+            explorer_by_name[key] = {
+                "name": badge.name, "topic": session.topic, "awarded_at": badge.awarded_at,
+            }
     explorer = {
         "icon": "🧭",
         "criterion": "Finish a whole story on a topic. You earn one for every topic you complete.",
-        "earned_count": len({b.name for b, _ in explorer_rows}),
-        "earned": [
-            {"name": b.name, "topic": s.topic, "awarded_at": b.awarded_at}
-            for b, s in explorer_rows
-        ],
+        "earned_count": len(explorer_by_name),
+        "earned": list(explorer_by_name.values()),
     }
 
     # --- Streaks --------------------------------------------------------------
@@ -167,7 +174,7 @@ def achievements(request):
         },
         "totals": {
             "points": sum(s.points for s in sessions),
-            "badges_earned": len(earned_rows),
+            "badges_earned": len({b.name.casefold() for b, _ in earned_rows}),
             "stories_started": len(sessions),
             "stories_completed": len(completed),
             "topics_completed": len({s.topic for s in completed}),

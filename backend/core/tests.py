@@ -13,7 +13,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from . import adaptation
-from .models import ConceptStat, GenerationEvent, Learner, Question, Session
+from .models import Badge, ConceptStat, GenerationEvent, Learner, Question, Session
 from .throttles import AskThrottle, StoryGenThrottle
 
 
@@ -703,3 +703,105 @@ class NewSurfaceTests(APITestCase):
         self.assertTrue(res.data["resumed"])
         self.assertEqual(res.data["session_id"], sid)
         self.assertEqual(Session.objects.count(), before)       # nothing new made
+
+
+class BadgeAwardingTests(APITestCase):
+    """Badges must mean something: earned once per learner, and only for work
+    actually done. Both rules below were defects found in use — a learner who
+    revisited a topic collected the same explorer badge again and again, and a
+    story that was started and immediately ended earned one for no work at all.
+    """
+
+    def setUp(self):
+        os.environ["USE_MOCK_LLM"] = "true"
+        cache.clear()
+        self.user = User.objects.create_user(username="nimal", password="pw12345!")
+        Learner.objects.create(user=self.user, name="Nimal")
+        self.client.force_authenticate(user=self.user)
+
+    def _start(self, topic="Water Cycle", grade=7):
+        return self.client.post(
+            "/api/sessions", {"topic": topic, "grade": grade}, format="json").data
+
+    def _play_to_completion(self, topic="Water Cycle", grade=7):
+        """Answer every question of every chapter until the story ends."""
+        data = self._start(topic=topic, grade=grade)
+        sid, chapter = data["session_id"], data["chapter"]
+        awarded = []
+        for _ in range(10):  # safety bound
+            for q in chapter["questions"]:
+                ci = Question.objects.get(pk=q["question_id"]).correct_index
+                self.client.post(
+                    f"/api/sessions/{sid}/answer",
+                    {"question_id": q["question_id"], "answer_index": ci}, format="json")
+            nxt = self.client.post(f"/api/sessions/{sid}/next", {}, format="json").data
+            awarded += nxt.get("badges_awarded", [])
+            if nxt["is_complete"]:
+                break
+            chapter = nxt["chapter"]
+        return sid, awarded
+
+    # --- earned once per learner ----------------------------------------------
+
+    def test_replaying_a_topic_does_not_award_the_explorer_badge_again(self):
+        _, first = self._play_to_completion(topic="Water Cycle")
+        self.assertIn("Water Cycle Explorer", first)
+
+        _, second = self._play_to_completion(topic="Water Cycle")
+        self.assertNotIn("Water Cycle Explorer", second)
+        self.assertEqual(
+            Badge.objects.filter(session__learner__user=self.user,
+                                 name="Water Cycle Explorer").count(), 1)
+
+    def test_the_same_topic_typed_differently_is_still_one_explorer_badge(self):
+        self._play_to_completion(topic="Water Cycle")
+        _, second = self._play_to_completion(topic="water cycle")
+        self.assertEqual(second, [])   # nothing new to earn
+        explorers = Badge.objects.filter(
+            session__learner__user=self.user, name__endswith="Explorer")
+        self.assertEqual(explorers.count(), 1)
+        self.assertEqual(explorers.first().name, "Water Cycle Explorer")  # first spelling kept
+
+    def test_first_steps_is_earned_once_not_once_per_story(self):
+        _, first = self._play_to_completion(topic="Water Cycle")
+        self.assertIn("First Steps", first)
+        _, second = self._play_to_completion(topic="Photosynthesis", grade=8)
+        self.assertNotIn("First Steps", second)
+        self.assertEqual(
+            Badge.objects.filter(session__learner__user=self.user,
+                                 name="First Steps").count(), 1)
+
+    def test_a_different_topic_still_earns_its_own_explorer_badge(self):
+        """The dedup must not suppress a genuinely different topic."""
+        self._play_to_completion(topic="Water Cycle")
+        _, second = self._play_to_completion(topic="Photosynthesis", grade=8)
+        self.assertIn("Photosynthesis Explorer", second)
+
+    # --- earned only for work actually done ------------------------------------
+
+    def test_finishing_without_answering_anything_earns_no_explorer_badge(self):
+        data = self._start(topic="Water Cycle")
+        sid = data["session_id"]
+        self.assertTrue(data["chapter"]["questions"])   # there was something to answer
+
+        res = self.client.post(f"/api/sessions/{sid}/finish", {}, format="json")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertTrue(res.data["is_complete"])
+        self.assertEqual(res.data["badges_awarded"], [])
+        self.assertEqual(res.data["badges"], [])
+        self.assertEqual(res.data["points"], 0)
+        self.assertFalse(Badge.objects.filter(session_id=sid).exists())
+
+    def test_answering_one_question_then_finishing_does_earn_it(self):
+        """The bar is engagement, not perfection: one answer is enough, and the
+        answer does not have to be correct."""
+        data = self._start(topic="Water Cycle")
+        sid = data["session_id"]
+        q0 = data["chapter"]["questions"][0]
+        wrong = (Question.objects.get(pk=q0["question_id"]).correct_index + 1) % 4
+        self.client.post(f"/api/sessions/{sid}/answer",
+                         {"question_id": q0["question_id"], "answer_index": wrong},
+                         format="json")
+
+        res = self.client.post(f"/api/sessions/{sid}/finish", {}, format="json")
+        self.assertIn("Water Cycle Explorer", res.data["badges"])

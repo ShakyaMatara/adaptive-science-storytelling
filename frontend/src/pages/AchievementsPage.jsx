@@ -113,13 +113,7 @@ export default function AchievementsPage() {
               name={b.name}
               criterion={b.criterion}
               earned={b.earned}
-              detail={
-                b.earned
-                  ? `Earned ${formatDate(b.first_earned_at)}${
-                      b.times_earned > 1 ? ` · ${b.times_earned} times` : ""
-                    }`
-                  : null
-              }
+              detail={b.earned ? `Earned ${formatDate(b.first_earned_at)}` : null}
             />
           ))}
 
