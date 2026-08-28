@@ -203,23 +203,6 @@ def me(request):
     return Response(_profile(_learner_for(request.user)))
 
 
-@api_view(["GET"])
-def me_progress(request):
-    """GET /api/me/progress -> the learner's concept mastery, grouped by topic.
-    Useful for showing strengths/weaknesses (and for the report)."""
-    learner = _learner_for(request.user)
-    by_topic = {}
-    for s in learner.concept_stats.all().order_by("topic", "concept"):
-        by_topic.setdefault(s.topic, []).append({
-            "concept": s.concept,
-            "attempts": s.attempts,
-            "correct": s.correct,
-            "mastery": round(s.mastery, 2),
-        })
-    progress = [{"topic": topic, "concepts": concepts} for topic, concepts in by_topic.items()]
-    return Response({"progress": progress})
-
-
 # --- Endpoints ------------------------------------------------------------------
 
 @api_view(["GET"])

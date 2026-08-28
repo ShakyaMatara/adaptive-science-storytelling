@@ -23,6 +23,7 @@ Learner profile if one is missing (an account with no profile simply has no
 progress yet), so a GET can never write a row.
 """
 
+from django.db.models import Count, Q
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -103,9 +104,13 @@ def _chapter_facts(learner):
     chapters_read = 0
     by_topic = {}
 
+    # `paragraphs` and `summary` hold the whole story text and nothing here reads
+    # them, so they are deferred: this loop only needs the citation refs and the
+    # session's topic and grade.
     for chapter in (Chapter.objects
                     .filter(session__learner=learner)
                     .select_related("session")
+                    .defer("paragraphs", "summary")
                     .order_by("-created_at", "-id")):
         chapters_read += 1
         topic = chapter.session.topic
@@ -217,8 +222,11 @@ def me_progress(request):
     answered = Question.objects.filter(
         chapter__session__learner=learner, user_answer_index__isnull=False
     )
-    questions_attempted = answered.count()
-    questions_correct = answered.filter(is_correct=True).count()
+    # One pass rather than two counts over the same three-table join.
+    tally = answered.aggregate(
+        attempted=Count("id"), correct=Count("id", filter=Q(is_correct=True)))
+    questions_attempted = tally["attempted"]
+    questions_correct = tally["correct"]
 
     summary = {
         "topics_studied": facts["topics_studied"],

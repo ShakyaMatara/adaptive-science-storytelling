@@ -16,7 +16,7 @@ import ReaderToolbar from "./ReaderToolbar";
 import { BadgeList, SourceNote } from "./StoryReader";
 import { Button, Card, EmptyState, SkeletonLines, Toast, useToast } from "./ui";
 
-export default function StoryArchive({ sessionId, toolbar = null }) {
+export default function StoryArchive({ sessionId }) {
   const navigate = useNavigate();
   const { toast, showToast, clearToast } = useToast();
   const [story, setStory] = useState(null);
@@ -77,19 +77,22 @@ export default function StoryArchive({ sessionId, toolbar = null }) {
           : "No questions answered yet."}
       </p>
 
-      {toolbar || (
-        <ReaderToolbar
-          sessionId={sessionId}
-          story={story}
-          paragraphs={story.chapters[0]?.paragraphs || []}
-          learnerName={story.learner_name}
-        />
-      )}
+      <ReaderToolbar
+        sessionId={sessionId}
+        story={story}
+        paragraphs={story.chapters[0]?.paragraphs || []}
+        learnerName={story.learner_name}
+      />
 
       <div id="printable-story">
         {story.chapters.map((c) => (
           <section key={c.id} className="archive-chapter">
-            <FallbackNotice sessionId={story.id} chapterId={c.id} />
+            <FallbackNotice
+              sessionId={story.id}
+              chapterId={c.id}
+              status={{ used_fallback: c.used_fallback, can_retry: c.can_retry,
+                        retry_blocked_reason: "" }}
+            />
             <h3>Chapter {c.order}: {c.title}</h3>
             <div className="story">
               {c.paragraphs.map((p, i) => <p key={i}>{p}</p>)}

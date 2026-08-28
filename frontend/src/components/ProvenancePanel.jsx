@@ -139,7 +139,7 @@ export default function ProvenancePanel({
             part of the story. Use the page number to find it in your printed book.
           </p>
 
-          {error && <p className="prov-error">⚠️ {error}</p>}
+          {error && <p className="banner banner-error">⚠️ {error}</p>}
 
           {!ready && !error && <SkeletonLines lines={5} />}
 
@@ -190,7 +190,7 @@ function PanelBody({ data }) {
             {where && <span className="prov-where">{" — "}{where}</span>}
           </span>
           <span className="prov-recovery">
-            {p.recovered_by === "exact lookup"
+            {p.recovered_by === "exact"
               ? "Found by looking up this exact page in the textbook index."
               : "Matched back to this chapter by searching the textbook index."}
             {p.page != null ? ` (file ${p.source_file}, PDF page ${p.page})` : ""}

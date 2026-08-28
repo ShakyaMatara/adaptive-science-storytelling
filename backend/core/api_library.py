@@ -92,7 +92,7 @@ def library(request, *args, **kwargs):
     # One query for the sessions and one each for the chapters, questions and
     # badges — the per-story counting below then touches no database at all.
     sessions = (
-        Session.objects.filter(learner=learner, learner__user=request.user)
+        Session.objects.filter(learner=learner)
         .prefetch_related("chapters__questions", "badges")
     )
 

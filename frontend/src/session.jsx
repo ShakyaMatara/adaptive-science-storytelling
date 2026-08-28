@@ -35,7 +35,20 @@ export function SessionProvider({ children }) {
   const [generating, setGenerating] = useState(false); // a long LLM call (start / next chapter)
   const [error, setError] = useState("");
 
-  const patch = useCallback((changes) => setState((prev) => ({ ...prev, ...changes })), []);
+  // Swap in a chapter that was regenerated in place. This is the same transition
+  // `next` performs, including restarting the response-time clock — timing a
+  // retried chapter's answers from the previous chapter's load would put a wrong
+  // `response_time_ms` on every one of them.
+  const replaceChapter = useCallback((result) => {
+    setState((prev) => ({
+      ...prev,
+      chapter: result.chapter,
+      sources: result.sources || [],
+      answers: {},
+      chapterComplete: result.chapter_complete || false,
+      chapterStart: Date.now(),
+    }));
+  }, []);
 
   const reset = useCallback(() => {
     setState(EMPTY);
@@ -178,8 +191,9 @@ export function SessionProvider({ children }) {
   }, [state.sessionId]);
 
   const value = useMemo(
-    () => ({ ...state, loading, generating, error, setError, patch, reset, start, answer, next, finish }),
-    [state, loading, generating, error, patch, reset, start, answer, next, finish]
+    () => ({ ...state, loading, generating, error, setError, replaceChapter, reset,
+             start, answer, next, finish }),
+    [state, loading, generating, error, replaceChapter, reset, start, answer, next, finish]
   );
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;

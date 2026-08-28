@@ -80,14 +80,7 @@ function LiveReader({ session }) {
           <FallbackNotice
             sessionId={session.sessionId}
             chapterId={session.chapter.chapter_id}
-            onRetried={(result) => {
-              session.patch({
-                chapter: result.chapter,
-                sources: result.sources || [],
-                answers: {},
-                chapterComplete: result.chapter_complete || false,
-              });
-            }}
+            onRetried={session.replaceChapter}
           />
         }
         toolbar={

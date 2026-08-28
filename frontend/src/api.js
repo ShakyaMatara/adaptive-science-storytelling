@@ -57,6 +57,10 @@ async function request(path, options = {}) {
 // Token-only; makes no request.
 export function logout() {
   clearToken();
+  // Drop the cached constants too, so a different learner on a shared device
+  // starts from a clean slate.
+  curriculumCache = null;
+  topicsCache = null;
 }
 
 // --- Endpoints (alphabetical) -------------------------------------------------
@@ -83,8 +87,13 @@ export function getAchievements() {
 }
 
 // GET /api/curriculum — the syllabus tree parsed from the textbook contents pages.
-export function getCurriculum() {
-  return request("/curriculum");
+// Held after the first success: the tree is parsed from a file that cannot change
+// while the server runs, and it is ~35 kB, which is not worth re-fetching every
+// time a learner opens the syllabus over an intermittent connection.
+let curriculumCache = null;
+export async function getCurriculum() {
+  if (!curriculumCache) curriculumCache = await request("/curriculum");
+  return curriculumCache;
 }
 
 // GET /api/chapters/<id>/generation-status — whether a chapter fell back to
@@ -118,9 +127,12 @@ export function getSession(sessionId) {
   return request(`/sessions/${sessionId}`);
 }
 
-// GET /api/topics — the fixed suggestion list.
-export function getTopics() {
-  return request("/topics");
+// GET /api/topics — the fixed suggestion list. Cached for the same reason as the
+// curriculum: it is a constant, and Home is the route learners return to most.
+let topicsCache = null;
+export async function getTopics() {
+  if (!topicsCache) topicsCache = await request("/topics");
+  return topicsCache;
 }
 
 // GET /api/me/weak-concepts — the concepts this learner is weakest at.

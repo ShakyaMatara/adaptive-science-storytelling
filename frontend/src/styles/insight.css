@@ -123,6 +123,9 @@
 .ins-concept-name { font-size: 0.9rem; }
 .ins-concept-seen { display: block; font-size: 0.72rem; color: var(--muted); }
 .ins-concept-num { font-size: 0.8rem; color: var(--muted); text-align: right; }
+/* Wrapper around the shared ProgressBar, so the concept row's grid still has a
+   single element to place in its bar column. */
+.ins-concept-bar { display: block; min-width: 0; }
 
 .ins-revise {
   background: none;
@@ -165,7 +168,7 @@
   }
 
   .ins-concept-name { grid-area: name; }
-  .ins-concept .mastery-bar { grid-area: bar; }
+  .ins-concept .ins-concept-bar { grid-area: bar; }
   .ins-concept-num { grid-area: num; }
   .ins-concept .ins-revise { grid-area: btn; }
 

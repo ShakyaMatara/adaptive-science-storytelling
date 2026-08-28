@@ -286,3 +286,108 @@ events were created to exercise the fallback and retry paths, including one real
 regeneration that produced a genuine textbook-grounded chapter with four page
 citations. All of it was deleted afterwards; the database is back to the two real
 stories.
+
+---
+
+## Phase 4 — Review and documentation
+
+### Simplification pass
+
+Four reviews were run over the new code — reuse, simplification, efficiency and
+altitude — and their findings deduplicated. What was acted on, and what was
+declined, is recorded here because the split matters for the write-up.
+
+**Fixed — measured effects.**
+
+* *Achievements did one query per session.* `_best_streak_in` re-queried the
+  learner's questions for every session even though the caller had already
+  prefetched them, and two aggregate counts re-joined the same three tables. Both
+  now read the prefetched rows in one pass. **9 queries falling to 5, and flat
+  in the number of stories rather than 7 + N** — 47 queries at forty stories
+  before, 5 after.
+* *The read-only replay issued one HTTP request per chapter.* `FallbackNotice`
+  asked the server about each chapter's grounding, even though the page had
+  already loaded every chapter. `used_fallback` and `can_retry` now travel with
+  the chapter on `ChapterSerializer`, and the notice accepts them as a prop.
+  **Confirmed in the server log: opening a two-chapter story now makes one
+  request where it previously made three.** This matters specifically because the
+  deployment context is intermittent connectivity.
+* *The progress endpoint counted the same queryset twice* (7 → 6 queries) and
+  *pulled every chapter's full prose back to count chapters*; the text columns are
+  now deferred. At forty stories that was roughly 450 kB of story text fetched to
+  produce one integer.
+* *Revision ran a query per session inside a loop* to test for chapters; it is now
+  a single annotation (4 → 3 queries).
+* *The provenance cache could grow without bound* — every chapter any learner ever
+  opened stayed resident for the life of the process at several kilobytes each. It
+  is now an LRU bounded at 256 chapters. The cache itself is well justified and was
+  kept: 1,020 ms cold against 1.0 ms warm.
+
+**Fixed — defects the reviews surfaced.**
+
+* *`useToast` returned fresh callbacks on every render*, and `Toast` lists
+  `onDismiss` among its effect dependencies, so the dismissal timer was cleared
+  and restarted on every render — a page re-rendering faster than the timeout
+  would never have dismissed its toast at all. Both callbacks and the returned
+  object are now stable.
+* *The retry path did not restart the response-time clock.* The chapter swap was
+  performed through a generic `patch` escape hatch that reimplemented — and had
+  already drifted from — the transition `next` performs, so answers to a
+  regenerated chapter would have been timed from the previous chapter's load and
+  recorded a wrong `response_time_ms`. Replaced with a named `replaceChapter`
+  action on the session, and `patch` removed.
+* *Half the mastery bars on the progress dashboard were not announced.* The
+  per-concept bars were hand-written markup while the per-topic bars used the
+  shared component; the concept bars now use it too and carry a
+  `role="progressbar"` with a label. Verified: 5 of 5 bars labelled.
+* *A human-readable sentence was being used as a wire value.* Provenance returned
+  `"semantic match"` / `"exact lookup"` and the panel compared against those
+  strings, so a copy edit on the server would have silently flipped every passage
+  into the wrong branch. Now stable `"semantic"` / `"exact"` tokens, with the
+  wording owned by the component that renders it.
+
+**Fixed — dead and duplicated code.**
+
+* `views.me_progress` deleted: unrouted since the URL was re-pointed, and its two
+  copies had already diverged (the old one created a `Learner` row on a GET; the
+  new one deliberately does not).
+* The reflection over `personalization.weak_concepts`'s signature is gone,
+  replaced by a named `REVISIT_LIMIT` constant where the rule lives. The
+  reflection's own fallback re-hardcoded the literal it existed to avoid.
+* A redundant ownership join in the library query that could never exclude a row.
+* An unreachable `toolbar` slot on the read-only replay.
+* The panel's bespoke error box, which restated the shared error banner.
+* The mastery chart is memoised; it was fully rebuilt whenever a toast appeared or
+  the textbook panel opened or closed.
+* The curriculum tree (~35 kB) and the fixed topic list are now held after their
+  first fetch instead of being re-downloaded on every visit, and cleared on log
+  out. The profile is no longer re-fetched immediately after logging in, which
+  already returns it.
+
+**Declined, with reasons.**
+
+* *One shared data-fetching hook to replace seven near-identical effects.* A real
+  duplication, but it touches eight files at the end of the phase, and two of the
+  seven have genuinely different behaviour. The regression risk outweighs the
+  tidiness now; recorded as future work.
+* *One shared `lifetime_totals(learner)` for the counters computed in both the
+  progress and achievements endpoints.* The right change, and a genuine artefact
+  of parallel development — but it alters two response-shaping paths at once. The
+  N+1 fix already removed the expensive half of the problem.
+* *Consolidating the pill and stat-tile CSS across the lane stylesheets.* Visual
+  regression risk across four pages for no functional gain.
+* *Extracting a shared `ChapterBody` used by both reading surfaces.* Correct in
+  principle and the sharpest altitude finding, but a structural refactor of the
+  reading experience is not a Phase 4 change.
+* *Consolidating `pct`/`formatDate` helpers across pages.* Partially addressed via
+  the shared bar; the rest is churn.
+* Suggestions to remove explanatory comments were declined outright: the prose is
+  part of the deliverable.
+
+**One review claim was wrong and is worth noting**: the efficiency review reported
+`api_library` at "5 queries, not the 4 the comment claims". The comment describes
+the summarising path, which is 4; the fifth is the learner lookup that precedes
+it. The comment is accurate and was left alone.
+
+**Passed after the pass.** 46 tests OK, build exit 0, no migration drift, the four
+frozen modules still byte-identical.

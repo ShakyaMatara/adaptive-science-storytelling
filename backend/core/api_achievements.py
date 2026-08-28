@@ -16,7 +16,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from . import gamification
-from .models import Learner, Question
+from django.db.models import Prefetch
+
+from .models import Chapter, Learner
 
 
 def _learner_for(user):
@@ -44,24 +46,31 @@ def _fixed_badge_catalogue():
     ]
 
 
+def _walk_answers(session):
+    """The session's answered questions, in the order they were presented.
+
+    Reads the rows already loaded by the caller's `prefetch_related`, so this
+    costs no query. `Chapter.Meta.ordering` and `Question.Meta.ordering` mean the
+    prefetched rows arrive in chapter-then-question order, which is presentation
+    order, so nothing has to be re-sorted either.
+    """
+    for chapter in session.chapters.all():
+        for question in chapter.questions.all():
+            if question.user_answer_index is not None:
+                yield question
+
+
 def _best_streak_in(session):
     """The longest run of consecutive correct answers within one session.
 
     A streak here means what it means everywhere else in the system: consecutive
     CORRECT ANSWERS, reset by a wrong one. `Session.current_streak` holds only the
     run in progress, so the best run has to be recovered by walking the session's
-    answered questions in the order they were presented — chapter order first,
-    then question order within the chapter.
+    answered questions in the order they were presented.
     """
-    answered = (
-        Question.objects
-        .filter(chapter__session=session, user_answer_index__isnull=False)
-        .order_by("chapter__order", "order")
-        .values_list("is_correct", flat=True)
-    )
     best = run = 0
-    for correct in answered:
-        run = run + 1 if correct else 0
+    for question in _walk_answers(session):
+        run = run + 1 if question.is_correct else 0
         best = max(best, run)
     return best
 
@@ -71,7 +80,12 @@ def achievements(request):
     """GET /api/me/achievements -> badge gallery, streaks and lifetime totals."""
     learner = _learner_for(request.user)
     sessions = list(
-        learner.sessions.prefetch_related("badges", "chapters__questions").order_by("-created_at")
+        learner.sessions
+        .prefetch_related("badges", Prefetch(
+            "chapters",
+            queryset=Chapter.objects.defer("paragraphs", "summary").prefetch_related("questions"),
+        ))
+        .order_by("-created_at")
     )
 
     # --- Badges ---------------------------------------------------------------
@@ -126,12 +140,16 @@ def achievements(request):
             best_streak, best_streak_topic = streak, session.topic
 
     # --- Totals ---------------------------------------------------------------
-    all_questions = Question.objects.filter(chapter__session__learner=learner)
-    answered = all_questions.filter(user_answer_index__isnull=False)
-    answered_count = answered.count()
-    correct_count = answered.filter(is_correct=True).count()
+    # Counted from the rows already prefetched above rather than with fresh
+    # aggregate queries, so the endpoint's cost does not grow with how many
+    # stories the learner has read.
+    answered_count = correct_count = chapters_read = 0
+    for session in sessions:
+        chapters_read += len(session.chapters.all())
+        for question in _walk_answers(session):
+            answered_count += 1
+            correct_count += 1 if question.is_correct else 0
     completed = [s for s in sessions if s.is_complete]
-    chapters_read = sum(s.chapters.count() for s in sessions)
 
     return Response({
         "badges": badges,

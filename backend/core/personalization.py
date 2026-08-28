@@ -8,6 +8,11 @@ rule-based so it is easy to explain and defend.
 from . import adaptation
 from .models import ConceptStat
 
+# How many weak concepts one story is asked to revisit. Named here, where the
+# rule lives, so the surfaces that tell a learner what revision will do can
+# import the number instead of restating it.
+REVISIT_LIMIT = 3
+
 
 def record_answer(learner, topic, concept, is_correct):
     """Update the learner's mastery of (topic, concept) after one answer."""
@@ -20,7 +25,7 @@ def record_answer(learner, topic, concept, is_correct):
     stat.save()  # last_seen auto-updates
 
 
-def weak_concepts(learner, topic, limit=3):
+def weak_concepts(learner, topic, limit=REVISIT_LIMIT):
     """Return up to `limit` concepts in this topic the learner is weakest at.
 
     "Weak" = attempted at least once and missed at least once, ranked by lowest

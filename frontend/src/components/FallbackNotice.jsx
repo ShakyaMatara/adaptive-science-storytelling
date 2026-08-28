@@ -16,9 +16,16 @@ import { getGenerationStatus, retryChapter } from "../api";
 import { Button, Spinner, Toast, useToast } from "./ui";
 import "../styles/robustness.css";
 
-export default function FallbackNotice({ sessionId, chapterId, onRetried = null }) {
+// `status` lets a caller that already knows the verdict — a page that loaded the
+// whole story, and so received `used_fallback` with each chapter — supply it
+// instead of provoking another request per chapter.
+export default function FallbackNotice({ sessionId, chapterId, status: known = null, onRetried = null }) {
   const { toast, showToast, clearToast } = useToast();
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState(known);
+  // Callers pass `status` as an object literal, so the effect below keys off its
+  // values rather than its identity, which changes on every render.
+  const knownFallback = known ? known.used_fallback : null;
+  const knownCanRetry = known ? known.can_retry : null;
   const [retrying, setRetrying] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
@@ -27,14 +34,16 @@ export default function FallbackNotice({ sessionId, chapterId, onRetried = null 
   // fails quietly and the chapter reads as normal.
   useEffect(() => {
     let cancelled = false;
-    setStatus(null);
     setDismissed(false);
+    if (known) { setStatus(known); return undefined; }   // nothing to ask for
+    setStatus(null);
     if (!chapterId) return undefined;
     getGenerationStatus(chapterId)
       .then((data) => { if (!cancelled) setStatus(data); })
       .catch(() => { if (!cancelled) setStatus({ used_fallback: false }); });
     return () => { cancelled = true; };
-  }, [chapterId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chapterId, knownFallback, knownCanRetry]);
 
   async function handleRetry() {
     setRetrying(true);

@@ -45,12 +45,28 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 class ChapterSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True, read_only=True)
+    # Whether this chapter came from the textbook or from standby material, and
+    # whether another attempt is allowed. Carried here so a reader showing a whole
+    # story can disclose it without asking again per chapter — which, over an
+    # intermittent connection, is the difference between one request and one per
+    # chapter.
+    used_fallback = serializers.SerializerMethodField()
+    can_retry = serializers.SerializerMethodField()
+
+    def get_used_fallback(self, chapter):
+        from .api_fallback import chapter_used_fallback  # avoids a circular import
+        return chapter_used_fallback(chapter)
+
+    def get_can_retry(self, chapter):
+        from .api_fallback import _retry_is_possible     # avoids a circular import
+        return _retry_is_possible(chapter)[0]
 
     class Meta:
         model = Chapter
         fields = [
             "id", "order", "title", "paragraphs", "summary",
             "difficulty_at_time", "sources", "questions", "created_at",
+            "used_fallback", "can_retry",
         ]
 
 

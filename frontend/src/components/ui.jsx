@@ -6,7 +6,7 @@
 // look that is not expressible with these, it should add a rule to its own page
 // stylesheet rather than change one of these.
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 // A white rounded panel. `center` mirrors the existing `.card.center` variant.
 export function Card({ children, className = "", center = false, ...rest }) {
@@ -123,9 +123,11 @@ export function SkeletonLines({ lines = 3 }) {
 // Convenience hook for pages that show one toast at a time.
 export function useToast() {
   const [toast, setToast] = useState(null); // {message, tone}
-  return {
-    toast,
-    showToast: (message, tone = "error") => setToast({ message, tone }),
-    clearToast: () => setToast(null),
-  };
+  // Both callbacks and the returned object are stable. `Toast` lists `onDismiss`
+  // in its effect dependencies, so fresh closures here would clear and restart
+  // the dismissal timer on every render of the host page — and a page that
+  // re-renders faster than the timeout would never dismiss its toast at all.
+  const showToast = useCallback((message, tone = "error") => setToast({ message, tone }), []);
+  const clearToast = useCallback(() => setToast(null), []);
+  return useMemo(() => ({ toast, showToast, clearToast }), [toast, showToast, clearToast]);
 }

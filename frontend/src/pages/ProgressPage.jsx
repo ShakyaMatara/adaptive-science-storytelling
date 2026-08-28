@@ -12,7 +12,7 @@
 // bars cannot: how much evidence sits behind each score. No charting library is
 // used; nothing on this page needs one.
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getProgress } from "../api";
@@ -178,12 +178,18 @@ function Counters({ summary }) {
 // low dot on the left is simply not practised enough to say yet. Every dot is a
 // revision link, like every concept elsewhere on the page.
 function MasteryChart({ topics, onPick }) {
-  const points = [];
-  topics.forEach((t) => {
-    (t.concepts || []).forEach((c) => {
-      if (c.attempts > 0) points.push({ ...c, topic: t.topic, grade: t.grade });
+  // Derived from `topics` alone, so it is memoised: the parent re-renders every
+  // time the textbook panel opens or a toast appears, and none of that changes
+  // the chart.
+  const points = useMemo(() => {
+    const out = [];
+    topics.forEach((t) => {
+      (t.concepts || []).forEach((c) => {
+        if (c.attempts > 0) out.push({ ...c, topic: t.topic, grade: t.grade });
+      });
     });
-  });
+    return out;
+  }, [topics]);
   if (points.length === 0) return null;
 
   const W = 640;
@@ -212,6 +218,7 @@ function MasteryChart({ topics, onPick }) {
     seen[key] = n + 1;
     return { ...p, cx: x(p.attempts) + n * 9, cy: y(p.mastery) };
   });
+
 
   const band = (m) => (m >= 0.8 ? "strong" : m >= 0.5 ? "middling" : "weak");
 
@@ -329,8 +336,15 @@ function TopicBlock({ topic, onRevise, onShowSource }) {
               <span className="ins-concept-seen">Last seen {formatDate(c.last_seen)}</span>
             )}
           </span>
-          <span className="mastery-bar">
-            <span className="mastery-fill" style={{ width: pct(c.mastery) }} />
+          {/* The shared bar rather than a hand-written one: it carries the
+              progressbar role and value that a screen reader needs, which the
+              topic bars above already had and these did not. */}
+          <span className="ins-concept-bar">
+            <ProgressBar
+              value={Math.round(c.mastery * 100)}
+              tone="green"
+              label={`${c.concept}: ${c.correct} of ${c.attempts} correct`}
+            />
           </span>
           <span className="ins-concept-num">{c.correct}/{c.attempts}</span>
           <button

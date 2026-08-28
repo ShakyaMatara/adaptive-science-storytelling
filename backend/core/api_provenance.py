@@ -30,6 +30,8 @@ text. The only state is an in-memory cache, so opening the panel repeatedly
 costs one lookup.
 """
 
+from collections import OrderedDict
+
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -43,15 +45,23 @@ from .models import Chapter
 # it is generated, so an entry never needs invalidating. Only successful
 # resolutions are cached — a run that could not reach the index is not stored,
 # so a later request retries rather than serving a permanent failure.
-_PASSAGE_CACHE = {}
+# Bounded: every chapter a learner opens the panel on would otherwise stay
+# resident for the life of the process, and a recovered chapter runs to several
+# kilobytes of textbook prose. Oldest entries are evicted once the cap is
+# reached; a miss simply costs the lookup again.
+_PASSAGE_CACHE = OrderedDict()
+_PASSAGE_CACHE_MAX = 256
 
 # How many passages to ask the index for in the semantic pass. Deliberately wide:
 # a chapter's stored references came from the planner's own sweep, so the display
 # query needs room to return them all before the exact lookup is needed.
 SEMANTIC_K = 40
 
-SEMANTIC = "semantic match"
-EXACT = "exact lookup"
+# Stable tokens, not sentences: the wording a learner sees belongs to the panel
+# that renders it, and rewording a sentence here must not silently change which
+# branch the frontend takes.
+SEMANTIC = "semantic"
+EXACT = "exact"
 
 
 def _citation(ref, meta):
@@ -218,6 +228,9 @@ def provenance(request, chapter_id):
         resolved, index_reachable = _resolve(chapter)
         if index_reachable:
             _PASSAGE_CACHE[chapter.pk] = resolved
+            _PASSAGE_CACHE.move_to_end(chapter.pk)
+            while len(_PASSAGE_CACHE) > _PASSAGE_CACHE_MAX:
+                _PASSAGE_CACHE.popitem(last=False)
         cached = resolved
         if not index_reachable:
             return Response({

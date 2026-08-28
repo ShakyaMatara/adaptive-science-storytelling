@@ -28,16 +28,22 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // With a token, load the profile; clear auth state if the token ever expires.
+  // Clear auth state if the token ever expires. Registered once, not per token.
   useEffect(() => {
-    if (token) getMe().then(setProfile).catch(() => {});
     const onExpired = () => {
       setTokenState(null);
       setProfile(null);
     };
     window.addEventListener("auth-expired", onExpired);
     return () => window.removeEventListener("auth-expired", onExpired);
-  }, [token]);
+  }, []);
+
+  // Load the profile only when it is not already known: logging in returns the
+  // profile with the token, so the common path needs no request at all. This
+  // fetch is for a returning visit, where only the stored token survives.
+  useEffect(() => {
+    if (token && !profile) getMe().then(setProfile).catch(() => {});
+  }, [token, profile]);
 
   async function handleAuth(mode, username, password, displayName) {
     setError("");

@@ -20,27 +20,14 @@ this view spans every topic the learner has touched and is uncapped, because it
 fills a page.
 """
 
-import inspect
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from django.db.models import Exists, OuterRef
+
 from . import personalization
-from .models import Learner
-
-
-def _revisit_limit():
-    """How many weak concepts the generator is actually given per story.
-
-    Read from `personalization.weak_concepts` rather than repeated here, so the
-    number the page shows the learner cannot drift away from the number the
-    prompt receives. Falls back to the documented default if the signature ever
-    stops taking a `limit`.
-    """
-    try:
-        return inspect.signature(personalization.weak_concepts).parameters["limit"].default
-    except (KeyError, TypeError, ValueError):
-        return 3
+from .models import Chapter, Learner
 
 
 def _learner_for(user):
@@ -76,7 +63,15 @@ def _session_index(learner):
     """
     index = {}
     # Newest first, so the first session seen for a topic is the most recent one.
-    for session in learner.sessions.all().order_by("-created_at", "-id"):
+    # `has_chapters` is annotated rather than tested per session: the resume rule
+    # needs it for every candidate, and a query inside the loop would grow with
+    # how many stories the learner has.
+    sessions = (
+        learner.sessions
+        .annotate(has_chapters=Exists(Chapter.objects.filter(session=OuterRef("pk"))))
+        .order_by("-created_at", "-id")
+    )
+    for session in sessions:
         key = _topic_key(session.topic)
         entry = index.setdefault(key, {"grade": None, "topic": session.topic, "unfinished": None})
         if entry["grade"] is None:
@@ -89,7 +84,7 @@ def _session_index(learner):
             entry["unfinished"] is None
             and not session.is_complete
             and session.grade == entry["grade"]
-            and session.chapters.exists()
+            and session.has_chapters
         ):
             entry["unfinished"] = session
     return index
@@ -108,7 +103,7 @@ def weak_concepts(request):
     learner = _learner_for(request.user)
     if learner is None:
         return Response({"count": 0, "concepts": [], "topics": [],
-                         "revisit_per_story": _revisit_limit()})
+                         "revisit_per_story": personalization.REVISIT_LIMIT})
 
     sessions = _session_index(learner)
 
@@ -184,5 +179,5 @@ def weak_concepts(request):
         # How many concepts the generator will be asked to revisit per story, so
         # the page can say so plainly instead of implying every weak concept is
         # covered at once.
-        "revisit_per_story": _revisit_limit(),
+        "revisit_per_story": personalization.REVISIT_LIMIT,
     })
