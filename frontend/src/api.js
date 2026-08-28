@@ -77,6 +77,27 @@ export function finishSession(sessionId) {
   });
 }
 
+// GET /api/me/achievements — badge gallery, streaks and totals.
+export function getAchievements() {
+  return request("/me/achievements");
+}
+
+// GET /api/curriculum — the syllabus tree parsed from the textbook contents pages.
+export function getCurriculum() {
+  return request("/curriculum");
+}
+
+// GET /api/chapters/<id>/generation-status — whether a chapter fell back to
+// canned content instead of a generated, textbook-grounded one.
+export function getGenerationStatus(chapterId) {
+  return request(`/chapters/${chapterId}/generation-status`);
+}
+
+// GET /api/me/library — every story this learner has started.
+export function getLibrary() {
+  return request("/me/library");
+}
+
 // GET /api/auth/me — the signed-in learner's profile.
 export function getMe() {
   return request("/auth/me");
@@ -87,6 +108,11 @@ export function getProgress() {
   return request("/me/progress");
 }
 
+// GET /api/chapters/<id>/provenance — the textbook passages that grounded a chapter.
+export function getProvenance(chapterId) {
+  return request(`/chapters/${chapterId}/provenance`);
+}
+
 // GET /api/sessions/<id> — full state of one story: chapters, questions, badges.
 export function getSession(sessionId) {
   return request(`/sessions/${sessionId}`);
@@ -95,6 +121,11 @@ export function getSession(sessionId) {
 // GET /api/topics — the fixed suggestion list.
 export function getTopics() {
   return request("/topics");
+}
+
+// GET /api/me/weak-concepts — the concepts this learner is weakest at.
+export function getWeakConcepts() {
+  return request("/me/weak-concepts");
 }
 
 // POST /api/auth/login
@@ -118,6 +149,15 @@ export function register(username, password, displayName) {
   return request("/auth/register", {
     method: "POST",
     body: JSON.stringify({ username, password, display_name: displayName }),
+  });
+}
+
+// POST /api/sessions/<id>/chapters/<id>/retry — regenerate a chapter that fell
+// back to canned content.
+export function retryChapter(sessionId, chapterId) {
+  return request(`/sessions/${sessionId}/chapters/${chapterId}/retry`, {
+    method: "POST",
+    body: JSON.stringify({}),
   });
 }
 
