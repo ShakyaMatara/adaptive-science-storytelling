@@ -82,7 +82,7 @@ def _chapter_is_answered(chapter):
 
 
 def _chapter_kwargs(group):
-    """Translate a plan group (Phase B) into generate_chapter kwargs: the grounding
+    """Translate a plan group into generate_chapter kwargs: the grounding
     passages and this chapter's paragraph/question ranges. Empty for no group."""
     if not group:
         return {}
@@ -125,7 +125,7 @@ def _matches_active_question(question_text, active_questions):
 
 def _answered_state(chapter):
     """Frontend-ready answer state for the already-answered questions in a chapter.
-    Used when RESUMING a story so prior answers show correctly (Phase C). Keyed by
+    Used when RESUMING a story so prior answers show correctly. Keyed by
     question id; only answered questions appear, so unanswered answer keys never leak.
     """
     state = {}
@@ -231,7 +231,7 @@ def create_session(request):
     if grade not in (6, 7, 8, 9):
         return Response({"error": "Grade must be 6, 7, 8 or 9."}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Cross-session story memory (Phase C): if there's an unfinished story for this
+    # Cross-session story memory: if there's an unfinished story for this
     # learner + topic + grade, resume it (same setting/characters, preserved points/
     # difficulty/plan) instead of starting a new one.
     existing = (
@@ -258,11 +258,11 @@ def create_session(request):
             }, status=status.HTTP_200_OK)
 
     # Personalise for a returning learner: an adaptive starting difficulty and a
-    # list of weak concepts to revisit on this topic (Phase 4).
+    # list of weak concepts to revisit on this topic.
     start_difficulty = personalization.starting_difficulty(learner, topic)
     revisit = personalization.weak_concepts(learner, topic)
 
-    # Build the content-driven plan (Phase B): how many chapters, and how many
+    # Build the content-driven plan: how many chapters, and how many
     # paragraphs/questions each, from how much textbook content exists. Mock mode
     # has no retrieval, so it uses a fixed small plan.
     if llm_config.use_mock():
@@ -362,7 +362,7 @@ def answer(request, session_id):
     points_awarded = adaptation.score_question(session, is_correct)
     session.save()
 
-    # Update cross-session concept mastery (Phase 4).
+    # Update cross-session concept mastery.
     personalization.record_answer(session.learner, session.topic, question.concept, is_correct)
 
     return Response({
@@ -398,7 +398,7 @@ def next_chapter(request, session_id):
     adaptation.adjust_difficulty_for_chapter(session, correct, total)
     had_correct = correct > 0
 
-    # Finished once the planned chapters are covered (Phase B), capped for safety.
+    # Finished once the planned chapters are covered, capped for safety.
     plan = session.plan or []
     planned = min(len(plan), adaptation.MAX_CHAPTERS_CAP) if plan else adaptation.MAX_CHAPTERS_CAP
     session.is_complete = session.chapter_count >= max(planned, adaptation.MIN_CHAPTERS)
@@ -420,7 +420,7 @@ def next_chapter(request, session_id):
     # Revisit the learner's weak concepts on this topic (cross-session; already
     # includes this chapter's mistakes, since stats update on every answer).
     revisit = personalization.weak_concepts(session.learner, session.topic)
-    # The next chapter's grounding + length come from the plan (Phase B).
+    # The next chapter's grounding + length come from the plan.
     group = plan[session.chapter_count] if session.chapter_count < len(plan) else None
     try:
         data = generate_chapter(
