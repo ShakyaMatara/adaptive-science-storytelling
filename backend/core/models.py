@@ -47,7 +47,7 @@ class Session(models.Model):
     current_streak = models.IntegerField(default=0)  # consecutive correct QUESTIONS (for "On Fire")
     chapter_count = models.IntegerField(default=0)   # chapters generated so far
     setting = models.TextField(null=True, blank=True)  # persistent characters/place for continuity
-    # Content-driven plan (Phase B): how rich the topic is, and the ordered list of
+    # Content-driven plan: how rich the topic is, and the ordered list of
     # section groups (each with its passages + paragraph/question ranges) to cover.
     content_level = models.CharField(max_length=20, blank=True, default="")
     plan = models.JSONField(null=True, blank=True)

@@ -1,4 +1,4 @@
-# Science Story Quest — Adaptive Science Storytelling (FYP Midpoint MVP)
+# Science Story Quest — Adaptive Science Storytelling
 
 An adaptive digital storytelling web app that teaches science to Sri Lankan
 middle-school students (Grades 6–9). A learner logs in, picks a grade and types a
@@ -180,35 +180,71 @@ To enable it:
 
 ```
 adaptive-science-storytelling/
-├─ backend/                 # Django project + the single "core" app
-│  ├─ config/               # Django project settings & root URLs
-│  ├─ core/                 # all app code (see ARCHITECTURE.md)
-│  │  ├─ models.py          # Learner, Session, Chapter, Question, Badge, ConceptStat
-│  │  ├─ llm.py             # chapter generation + grounded Q&A (OpenRouter + mock + RAG)
-│  │  ├─ mock_content.py    # canned chapters for mock mode
-│  │  ├─ adaptation.py      # points + per-chapter difficulty (pedagogical engine)
-│  │  ├─ personalization.py # cross-session concept mastery (weak concepts, adaptive start)
-│  │  ├─ planning.py        # content-driven session plan (chapter count + per-chapter lengths)
-│  │  ├─ gamification.py    # badge logic
-│  │  ├─ throttles.py       # per-user rate limits on the paid LLM endpoints
-│  │  ├─ serializers.py     # DRF response shapes (presented vs full)
-│  │  ├─ views.py           # API endpoints: auth + story loop + Q&A
-│  │  ├─ urls.py            # /api routes
-│  │  ├─ constants.py       # topic suggestions
-│  │  ├─ retrieval.py       # RAG: query the textbook vector index
-│  │  ├─ management/commands/build_index.py  # RAG: ingest textbooks → index
-│  │  └─ tests.py           # end-to-end tests (mock mode)
-│  ├─ textbooks/            # (git-ignored) source PDFs: G6.pdf, G7P1.pdf, …
-│  ├─ chroma_store/         # (git-ignored) the built vector index
-│  ├─ .env.example          # config template (copy to .env)
+├─ backend/                    # Django project + the single "core" app
+│  ├─ config/                  # Django project settings & root URLs
+│  ├─ core/                    # all app code (see ARCHITECTURE.md)
+│  │  ├─ models.py             # Learner, Session, Chapter, Question, Badge,
+│  │  │                        #   ConceptStat, GenerationEvent
+│  │  ├─ views.py              # auth + the story loop + grounded Q&A
+│  │  ├─ urls.py               # /api routes
+│  │  ├─ serializers.py        # DRF response shapes (presented vs full)
+│  │  │
+│  │  ├─ llm.py                # chapter generation + Q&A (OpenRouter + mock + RAG)
+│  │  ├─ retrieval.py          # RAG: query the textbook vector index
+│  │  ├─ planning.py           # content-driven plan (chapter count + lengths)
+│  │  ├─ adaptation.py         # points + per-chapter difficulty
+│  │  ├─ personalization.py    # cross-session concept mastery
+│  │  ├─ gamification.py       # badge rules
+│  │  ├─ mock_content.py       # canned chapters for mock mode
+│  │  ├─ throttles.py          # per-user rate limits on the paid endpoints
+│  │  ├─ constants.py          # topic suggestions
+│  │  │
+│  │  ├─ api_curriculum.py     # syllabus tree + placing a topic in the syllabus
+│  │  ├─ api_library.py        # the learner's own stories
+│  │  ├─ api_progress.py       # progress dashboard aggregate
+│  │  ├─ api_provenance.py     # textbook passages behind a chapter
+│  │  ├─ api_revision.py       # weakest concepts, for revision
+│  │  ├─ api_achievements.py   # badge gallery, streaks, lifetime totals
+│  │  ├─ api_fallback.py       # disclosure + retry when generation fell back
+│  │  │
+│  │  ├─ management/commands/
+│  │  │  ├─ build_index.py     # RAG ingestion: textbooks → vector index
+│  │  │  ├─ dedupe_badges.py   # one-off data repair for legacy duplicate badges
+│  │  │  └─ eval_*.py          # the evaluation programme (see EVALUATION_README.md)
+│  │  └─ tests.py              # 61 end-to-end and unit tests (mock mode)
+│  │
+│  ├─ evaluation/              # probes, harness, results, figures and run logs
+│  ├─ textbooks/               # (git-ignored) source PDFs: G6.pdf, G7P1.pdf, …
+│  ├─ chroma_store/            # (git-ignored) the built vector index
+│  ├─ .env.example             # config template (copy to .env)
 │  └─ requirements.txt
-├─ frontend/                # Vite + React app
+│
+├─ frontend/                   # Vite + React app
 │  └─ src/
-│     ├─ App.jsx            # screens: auth / start / story / complete / progress
-│     ├─ api.js             # fetch wrappers for the API
-│     └─ styles.css         # all styling
+│     ├─ App.jsx               # auth gate, routes and the persistent shell
+│     ├─ session.jsx           # the live story session, shared across routes
+│     ├─ api.js                # fetch wrappers for the API
+│     ├─ pages/                # one component per route
+│     │  ├─ HomePage.jsx       # topic + grade entry
+│     │  ├─ StoryPage.jsx      # the reader (live) or the read-only replay
+│     │  ├─ BrowsePage.jsx     # syllabus browser
+│     │  ├─ LibraryPage.jsx    # my stories
+│     │  ├─ ProgressPage.jsx   # progress dashboard
+│     │  ├─ RevisePage.jsx     # revision mode
+│     │  └─ AchievementsPage.jsx
+│     ├─ components/           # NavBar, StoryReader, StoryArchive, AuthScreen,
+│     │                        #   ProvenancePanel, ReaderToolbar, FallbackNotice,
+│     │                        #   Loading, ui.jsx (shared vocabulary)
+│     ├─ hooks/useReadAloud.js # Web Speech API read-aloud
+│     ├─ utils/exportStory.js  # printable/offline export of a story
+│     ├─ styles.css            # shared styling
+│     └─ styles/               # per-feature stylesheets
+│
+├─ scripts/make_submission_zip.ps1
 ├─ README.md
-└─ ARCHITECTURE.md          # how the code maps to the project's conceptual layers
+├─ ARCHITECTURE.md             # how the code maps to the conceptual layers
+├─ EVALUATION_README.md        # how to reproduce the evaluation programme
+└─ FEATURES_ADDED.md           # the learner-facing feature set, per requirement
 ```
 
 ---

@@ -145,7 +145,7 @@ class StoryLoopTests(APITestCase):
         nxt = self._next(data["session_id"])
         self.assertEqual(nxt["difficulty"], 2)  # 3 -> 2 after a 0% chapter
 
-    # --- content-adaptive length (Phase B) -------------------------------------
+    # --- content-adaptive length ------------------------------------------------
 
     def test_zero_question_chapter_keeps_difficulty(self):
         # A chapter with no questions gives no signal -> difficulty must not change.
@@ -188,7 +188,7 @@ class StoryLoopTests(APITestCase):
         res = self.client.get(f"/api/sessions/{data['session_id']}")
         self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
 
-    # --- syllabus gate (Phase 3) -----------------------------------------------
+    # --- syllabus gate -----------------------------------------------------------
 
     def test_empty_topic_is_rejected(self):
         res = self.client.post("/api/sessions", {"topic": "", "grade": 7}, format="json")
@@ -206,7 +206,7 @@ class StoryLoopTests(APITestCase):
         self.assertIn("reason", res.data)
         self.assertEqual(Session.objects.count(), before)  # nothing was created
 
-    # --- personalisation (Phase 4) ---------------------------------------------
+    # --- personalisation ---------------------------------------------------------
 
     def test_concept_stats_recorded_on_answer(self):
         data = self._start(topic="Water Cycle")
@@ -241,7 +241,7 @@ class StoryLoopTests(APITestCase):
         self.assertIn("Water Cycle", topics)
         self.assertTrue(any(c["attempts"] >= 1 for p in res.data["progress"] for c in p["concepts"]))
 
-    # --- grounded Q&A (Phase 5) ------------------------------------------------
+    # --- grounded Q&A ------------------------------------------------------------
 
     def test_ask_returns_answer_without_changing_session_state(self):
         data = self._start(topic="Water Cycle")
@@ -263,7 +263,7 @@ class StoryLoopTests(APITestCase):
             f"/api/sessions/{data['session_id']}/ask", {"question": ""}, format="json")
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    # --- cross-session story memory (Phase C) ----------------------------------
+    # --- cross-session story memory ----------------------------------------------
 
     def test_returning_to_unfinished_topic_resumes_same_session(self):
         data = self._start(topic="Water Cycle")

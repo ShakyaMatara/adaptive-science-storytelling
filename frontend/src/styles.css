@@ -98,7 +98,7 @@ body {
 .topic-btn:hover { border-color: var(--indigo); }
 .topic-btn.selected { border-color: var(--indigo); background: var(--indigo-soft); font-weight: 600; }
 
-/* Topic suggestion chips (Phase 3: topic is a free-text input). */
+/* Topic suggestion chips (the topic itself is a free-text input). */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0 4px; }
 .chips-label { font-size: 0.85rem; color: var(--muted); }
 .chip {
@@ -197,7 +197,7 @@ body {
 }
 .question { font-size: 1.15rem; margin: 0 0 14px; }
 
-/* Chapter (Phase 2): a title + a block of paragraphs, then per-question blocks. */
+/* Chapter: a title + a block of paragraphs, then per-question blocks. */
 .chapter-title { margin: 0 0 14px; font-size: 1.4rem; color: var(--indigo-dark); }
 .story {
   background: #f8fafc;
@@ -275,7 +275,7 @@ body {
 .center .badges { justify-content: center; margin-bottom: 8px; }
 .muted { color: var(--muted); }
 
-/* Progress view (Phase 4): per-concept mastery bars. */
+/* Progress view: per-concept mastery bars. */
 .progress-topic { margin-bottom: 18px; }
 .progress-topic h3 { margin: 0 0 8px; }
 .progress-row {
@@ -290,7 +290,7 @@ body {
 .mastery-fill { display: block; height: 100%; background: var(--green); }
 .progress-num { font-size: 0.8rem; color: var(--muted); text-align: right; }
 
-/* Grounded Q&A panel (Phase 5). */
+/* Grounded Q&A panel. */
 .qna { margin-top: 24px; border-top: 1px solid var(--border); padding-top: 16px; }
 .qna-toggle {
   background: none; border: none; padding: 0; cursor: pointer;
@@ -306,7 +306,7 @@ body {
 .qna-answer p:last-child { margin-bottom: 0; }
 .qna-refused { background: var(--amber-soft); color: var(--amber-text); }
 
-/* Loading state (Phase A) — spinner + cycling message during generation. */
+/* Loading state — spinner + cycling message during generation. */
 .loading { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 36px 0; }
 .spinner {
   width: 44px;
